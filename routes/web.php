@@ -19,6 +19,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+Route::get('/chat', [
+    'uses' => 'App\Http\Controllers\ChatController@getChatpage',
+    'as' => 'chat'
+]);
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Google Login

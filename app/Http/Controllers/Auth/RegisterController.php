@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -52,7 +53,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:4', 'confirmed'],
+            'avatar' => 'mimes:jpg',
         ]);
     }
 
@@ -64,9 +66,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $request = request();
+
+        
+
+        $profileImage = $request->file('avatar');
+        $profileImageSaveAsName = time() . Auth::id() . "-profile." . $profileImage->getClientOriginalExtension();
+   
+        $upload_path = 'profile_images/';
+        $profile_image_url = $upload_path . $profileImageSaveAsName;
+        $success = $profileImage->move($upload_path, $profileImageSaveAsName);
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'avatar' => $profile_image_url,
             'password' => Hash::make($data['password']),
         ]);
     }
