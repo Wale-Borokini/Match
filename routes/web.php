@@ -25,6 +25,15 @@ Route::get('/chat', [
     'as' => 'chat'
 ]);
 
+Route::get('/message/{id}', [
+    'uses' => 'App\Http\Controllers\ChatController@getMessage',
+    'as' => 'message'
+]);
+
+Route::post('message', [
+    'uses' => 'App\Http\Controllers\ChatController@sendMessage'
+]);
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

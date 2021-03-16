@@ -7,14 +7,11 @@
             <h2>Sidebar</h2>
         </div>
 
-        {{-- Commented --}}
-
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-4">
-                    {{-- Users List --}}
                     <div class="user-wrapper">
-                        <ul class="user">
+                        <ul class="users">
                             @foreach($users as $user)    
                                 <li class="user" id="{{ $user->id }}">
                                     <span class="pending">1</span>
@@ -33,57 +30,8 @@
 
                     </div>
                 </div>
-                {{-- Messages --}}
                 <div class="col-md-8" id="messages">
-                    <div class="message-wrapper">
-                        <ul class="messages">
-                            <li class="message clearfix">
-                                <div class="sent">
-                                    <p>Lorem ipsum dolor</p>
-                                    <p class="date">1 Sep, 2021</p>
-                                </div>           
-                            </li>
-
-                            <li class="message clearfix">
-                                <div class="received">
-                                    <p>Lorem ipsum dolor</p>
-                                    <p class="date">1 Sep, 2021</p>
-                                </div>           
-                            </li>
-
-                            <li class="message clearfix">
-                                <div class="sent">
-                                    <p>Lorem ipsum dolor</p>
-                                    <p class="date">1 Sep, 2021</p>
-                                </div>           
-                            </li>
-
-                            <li class="message clearfix">
-                                <div class="received">
-                                    <p>Lorem ipsum dolor</p>
-                                    <p class="date">1 Sep, 2021</p>
-                                </div>           
-                            </li>
-
-                            <li class="message clearfix">
-                                <div class="sent">
-                                    <p>Lorem ipsum dolor</p>
-                                    <p class="date">1 Sep, 2021</p>
-                                </div>           
-                            </li>
-
-                            <li class="message clearfix">
-                                <div class="received">
-                                    <p>Lorem ipsum dolor</p>
-                                    <p class="date">1 Sep, 2021</p>
-                                </div>           
-                            </li>
-
-                        </ul>
-                    </div>
-                    <div class="input-text">
-                        <input type="text" name="message" class="submit">
-                    </div>
+                    
                 </div>
             </div>
         </div>
