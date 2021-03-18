@@ -19,7 +19,7 @@ class ChatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    //Edit
     public function getChatPage()
     {
         // Select all users execpt logged in user
