@@ -207,6 +207,7 @@
         </main>
     </div>
 
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     var receiver_id = '';
@@ -218,6 +219,26 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('320ee5f4fe0e767a8bb7', {
+        cluster: 'eu',
+        forceTLS: true,
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('message-sent', function(data) {
+        //alert(JSON.stringify(data));
+            if (my_id == data.from) {
+                alert('Sender');
+            } else if (my_id == data.to) {
+                alert('Receiver');
+            }
+
+        });
+
         $('.user').click(function (){
             $('.user').removeClass('active');
             $(this).addClass('active');

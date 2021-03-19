@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
 use Auth;
+use Pusher\Pusher;
+use App\Events\MessageSent;
 
 class ChatController extends Controller
 {
@@ -54,6 +56,26 @@ class ChatController extends Controller
         $data->message = $message;
         $data->is_read = 0; //Message will be unread by default
         $data->save();
+
+        //pusher
+        // $options = array(
+        //     'cluster' => env('PUSHER_APP_CLUSTER'),
+        //     'useTLS' => true,
+        // );
+
+        // $pusher = new Pusher(
+        //     env('PUSHER_APP_KEY'),
+        //     env('PUSHER_APP_SECRET'),
+        //     env('PUSHER_APP_ID'),
+        //     $options
+        // );
+
+        // $data = ['from' => $from, 'to' => $to];
+        // $pusher->trigger('my-channel', 'MessageSent', $data);
+        
+        $data = ['from' => $from, 'to' => $to];
+        event(new MessageSent($data));
+
     }
 
     /**
