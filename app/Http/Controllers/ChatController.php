@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
 use Auth;
+use DB;
 use Pusher\Pusher;
 use App\Events\MessageSent;
 
@@ -25,19 +26,31 @@ class ChatController extends Controller
     public function getChatPage()
     {
         // Select all users execpt logged in user
-        $users = User::where('id', '!=', Auth::id())->get();
+       // $users = User::where('id', '!=', Auth::id())->get();
+
+        // Count how many messages are unread from the selected user
+        $users = DB::select("select users.id, users.name, users.avatar, users.email, count(is_read) as unread 
+        from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
+        where users.id != " . Auth::id() . " 
+        group by users.id, users.name, users.avatar, users.email
+        ORDER BY messages.created_at desc
+        ");
+
         return view('chat', ['users' =>$users]);
     }
 
     public function getMessage($user_id)
     {
         $my_id = Auth::id();
+
+        // Make read all unread message
+        Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
+
         // Getting all messages For selected user
-        // Getting those messages which is from =  Auth::id() and to = user_id OR from = user_id and = Auth::id()
         $messages = Message::where(function ($query) use ($user_id, $my_id) {
-            $query->where('from', $my_id)->where('to', $user_id);
-        })->orWhere(function ($query) use ($user_id, $my_id) {
             $query->where('from', $user_id)->where('to', $my_id);
+        })->oRwhere(function ($query) use ($user_id, $my_id) {
+            $query->where('from', $my_id)->where('to', $user_id);
         })->get();
 
         return view('messages.index', ['messages' => $messages]);
@@ -50,12 +63,12 @@ class ChatController extends Controller
         $to = $request->receiver_id;
         $message = $request->message;
 
-        $data = new Message();
-        $data->from = $from;
-        $data->to = $to;
-        $data->message = $message;
-        $data->is_read = 0; //Message will be unread by default
-        $data->save();
+        $datas = new Message();
+        $datas->from = $from;
+        $datas->to = $to;
+        $datas->message = $message;
+        $datas->is_read = 0; //Message will be unread by default
+        $datas->save();
 
         //pusher
         // $options = array(
@@ -70,11 +83,11 @@ class ChatController extends Controller
         //     $options
         // );
 
-        // $data = ['from' => $from, 'to' => $to];
-        // $pusher->trigger('my-channel', 'MessageSent', $data);
+        // $datas = ['from' => $from, 'to' => $to];
+        // $pusher->trigger('my-channel', 'MessageSent', $datas);
         
-        $data = ['from' => $from, 'to' => $to];
-        event(new MessageSent($data));
+        $datas = ['from' => $from, 'to' => $to];
+        event(new MessageSent($datas));
 
     }
 

@@ -231,10 +231,22 @@
         var channel = pusher.subscribe('my-channel');
         channel.bind('message-sent', function(data) {
         //alert(JSON.stringify(data));
-            if (my_id == data.from) {
-                alert('Sender');
-            } else if (my_id == data.to) {
-                alert('Receiver');
+            if (my_id == data.datas.from) {
+                $('#' + data.datas.to).click();
+            } else if (my_id == data.datas.to) {
+                if (receiver_id == data.datas.from) {
+                    //If receiver is selected, reload the selected user..
+                    $('#' + data.datas.from).click();
+                } else {
+                    // If receiver is not selected, add notifications for that user
+                    var pending = parseInt($('#' + data.datas.from).find('.pending').html());
+
+                    if (pending) {
+                        $('#' + data.datas.from).find('.pending').html(pending + 1);
+                    } else {
+                        $('#' + data.datas.from).append('<span class="pending">1</span>');
+                    }
+                }
             }
 
         });
@@ -242,6 +254,7 @@
         $('.user').click(function (){
             $('.user').removeClass('active');
             $(this).addClass('active');
+            $(this).find('.pending').remove();
 
             receiver_id = $(this).attr('id');
             $.ajax({
@@ -251,6 +264,7 @@
                 cache: false,
                 success: function (data) {
                     $('#messages').html(data);
+                    scrollToBottomFunc();
                 }
             });
         });
@@ -274,11 +288,19 @@
                     error: function (jqXHR, status, err) {
                     },
                     complete: function () {
+                        scrollToBottomFunc();
                     }
                 })
             }
         });        
     });
+
+    // make a function to scroll down auto
+    function scrollToBottomFunc() {
+        $('.message-wrapper').animate({
+            scrollTop: $('.message-wrapper').get(0).scrollHeight
+        }, 50);
+    }
 </script>
 </body>
 </html>
