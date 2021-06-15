@@ -220,6 +220,8 @@
             }
         });
 
+            
+
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
 
@@ -228,9 +230,55 @@
         forceTLS: true,
         });
 
+            
+
+        var channelFetch = pusher.subscribe('fetch-chats');
+        channelFetch.bind('fetch-users', function() {
+        
+            //users;
+            
+            
+    
+        });
+
+        
+            $.ajax({
+                type:"get",
+                url: "userslist", //need to create their route
+                data: "",
+                cache: false,
+                success: function (data) {
+                    $('#userslist').html(data);
+                    $('.user').click(function (){
+                        //$("#userslist").remove();
+                        $('.user').removeClass('active');
+                        $(this).addClass('active');
+                        $(this).find('.pending').remove();
+
+                        receiver_id = $(this).attr('id');
+                        $.ajax({
+                            type:"get",
+                            url: "message/" + receiver_id, //need to create their route
+                            data: "",
+                            cache: false,
+                            success: function (data) {
+                                $('#messages').html(data);
+                                scrollToBottomFunc();
+                            }
+                        });
+                    
+                    });
+                
+                }//end success
+                
+            });
+           
+           
+
+
         var channel = pusher.subscribe('my-channel');
-        channel.bind('message-sent', function(data) {
-        //alert(JSON.stringify(data));
+            channel.bind('message-sent', function(data) {
+            // alert(JSON.stringify(data.datas));
             if (my_id == data.datas.from) {
                 $('#' + data.datas.to).click();
             } else if (my_id == data.datas.to) {
@@ -238,7 +286,7 @@
                     //If receiver is selected, reload the selected user..
                     $('#' + data.datas.from).click();
                 } else {
-                    // If receiver is not selected, add notifications for that user
+                    // if receiver is not seleted, add notification for that user
                     var pending = parseInt($('#' + data.datas.from).find('.pending').html());
 
                     if (pending) {
@@ -251,29 +299,18 @@
 
         });
 
-        $('.user').click(function (){
-            $('.user').removeClass('active');
-            $(this).addClass('active');
-            $(this).find('.pending').remove();
+        
+            
+            
 
-            receiver_id = $(this).attr('id');
-            $.ajax({
-                type:"get",
-                url: "message/" + receiver_id, //need to create their route
-                data: "",
-                cache: false,
-                success: function (data) {
-                    $('#messages').html(data);
-                    scrollToBottomFunc();
-                }
-            });
-        });
+        //
 
-        $(document).on('keyup', '.input-text input', function (e) {
-            var message = $(this).val();
+        $(document).on('click', '#sendMess', function (e) {
+            var message = $('#textMessage').val();
+            //var submit = $(this).val();
 
             // Check if enter key is pressed and mesage is not null also if receiver is selected
-            if (e.keyCode == 13 && message != '' && receiver_id != '') {
+            if (message != '' && receiver_id != '') {
                 $(this).val(''); //When pressed text box will be empty
 
                 var datastr = "receiver_id=" + receiver_id + "&message=" + message;
@@ -292,7 +329,9 @@
                     }
                 })
             }
-        });        
+        });
+
+            
     });
 
     // make a function to scroll down auto

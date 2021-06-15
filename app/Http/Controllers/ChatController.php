@@ -9,6 +9,7 @@ use Auth;
 use DB;
 use Pusher\Pusher;
 use App\Events\MessageSent;
+use App\Events\FetchUsers;
 
 class ChatController extends Controller
 {
@@ -29,15 +30,58 @@ class ChatController extends Controller
        // $users = User::where('id', '!=', Auth::id())->get();
 
         // Count how many messages are unread from the selected user
-        $users = DB::select("select users.id, users.name, users.avatar, users.email, count(is_read) as unread 
-        from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
-        where users.id != " . Auth::id() . " 
-        group by users.id, users.name, users.avatar, users.email
-        ORDER BY messages.created_at desc
-        ");
+        // $users = DB::select("select users.id, users.name, users.avatar, users.email, count(is_read) as unread 
+        // from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
+        // where users.id != " . Auth::id() . " 
+        // group by users.id, users.name, users.avatar, users.email
+        // ORDER BY messages.created_at desc
+        // ");
 
-        return view('chat', ['users' =>$users]);
+        // get all users that received/sent message from/to [Auth user]
+        // $users = Message::join('users',  function ($join) {
+        //     $join->on('messages.from', '=', 'users.id')
+        //         ->orOn('messages.to', '=', 'users.id');
+        // })
+        //     ->select('messages.id', 'messages.from', 'messages.to', 'messages.message',
+        //      'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar')
+        //     ->where('messages.from', Auth::id())
+        //     ->orWhere('messages.to', Auth::id())
+        //     ->orderBy('messages.created_at', 'desc')
+        //     ->get()
+        //     ->unique('id');
+
+        
+        return view('chat');
+        // event(new FetchUsers($users));
+
     }
+
+    public function getUsersList(Request $request)
+    {
+        $users = Message::join('users',  function ($join) {
+            $join->on('messages.from', '=', 'users.id')
+                ->orOn('messages.to', '=', 'users.id');
+        })
+            ->select('messages.id', 'messages.from', 'messages.to', 'messages.message',
+             'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar', DB::raw('count(is_read) as unread'))
+             //->selectRaw('count(is_read) as unread')
+             
+             
+            ->where('messages.from', Auth::id())
+            ->orWhere('messages.to', Auth::id())
+            ->groupBy('messages.id', 'messages.from', 'messages.to', 'messages.message',
+            'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar')
+            ->orderBy('messages.created_at', 'desc')
+            ->get()
+            ->unique('id');
+
+            event(new FetchUsers($users));
+        return view('messages.users', ['users' =>$users]);
+        
+
+    }
+
+    
 
     public function getMessage($user_id)
     {
@@ -70,21 +114,6 @@ class ChatController extends Controller
         $datas->is_read = 0; //Message will be unread by default
         $datas->save();
 
-        //pusher
-        // $options = array(
-        //     'cluster' => env('PUSHER_APP_CLUSTER'),
-        //     'useTLS' => true,
-        // );
-
-        // $pusher = new Pusher(
-        //     env('PUSHER_APP_KEY'),
-        //     env('PUSHER_APP_SECRET'),
-        //     env('PUSHER_APP_ID'),
-        //     $options
-        // );
-
-        // $datas = ['from' => $from, 'to' => $to];
-        // $pusher->trigger('my-channel', 'MessageSent', $datas);
         
         $datas = ['from' => $from, 'to' => $to];
         event(new MessageSent($datas));

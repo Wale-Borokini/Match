@@ -10,4 +10,15 @@ class Message extends Model
 {
     use HasFactory;
     protected $fillable = ['from', 'to', 'message', 'is_read',];
+
+    // public function messages()
+    // {
+    //     return $this->belongsToMany('Message');
+    // }
+
+    // public function sent_messages()
+    // {
+    //     return $this->hasMany('Messages', 'from');
+    // }
 }
+

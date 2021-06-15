@@ -41,4 +41,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin() {
+        
+        return $this->admin;
+    }
+
+    public static function getUserId($name){
+        $getUserId = User::select('id')->where('name', $name)->first();
+        return $getUserId->id;
+    }
+
+    public static function sender_id($receiver_id){
+        $sender_id = Friend::select('user_id')->where('friend_id', $receiver_id)->first();
+        return $sender->id;
+    }
+
 }
