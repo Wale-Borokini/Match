@@ -51,7 +51,7 @@ class ChatController extends Controller
         //     ->unique('id');
 
         
-        return view('chat');
+        return view('pages.chat');
         // event(new FetchUsers($users));
 
     }

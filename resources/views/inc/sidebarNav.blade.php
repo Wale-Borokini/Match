@@ -22,7 +22,7 @@
             @if (Auth::user())
               <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                 <span class="mr-1">{{ Auth::user()->name }}<span class="user-name text-bold-700"></span></span>
-                <span class="avatar avatar-online"><img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}"><i></i></span></a>
+                <span class="avatar avater-md avatar-online"><img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}"><i></i></span></a>
               </li>
             @endif
           </ul>

@@ -42,6 +42,10 @@ Route::get('/createAccount', function () {
     return view('pages.createAccount');
 });
 
+Route::get('/401', function () {
+    return view('errors.401');
+});
+
 // Route::get('/friendRequest', function () {
 //     return view('pages.friendRequest');
 // });
@@ -55,6 +59,15 @@ Route::get('/friends', [
     'uses' => 'App\Http\Controllers\FriendsController@getFriendsList',
     'as' => 'friends'
 ]);
+
+Route::get('/friendsProfile/{id}', [
+    'uses' => 'App\Http\Controllers\FriendsController@viewFriendProfile',
+    'as' => 'friendsProfile'
+]);
+
+// Route::get('/friendsProfile', function () {
+//     return view('pages.friendsProfile');
+// });
 
 Route::get('/acceptFriendRequest/{id}', [
     'uses' => 'App\Http\Controllers\FriendsController@acceptFriendRequest',

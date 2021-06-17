@@ -23,14 +23,14 @@
                                       {{-- \\\\\\\\\\\\\\ --}}
                                     @foreach($users as $user)
                                         <div class="text-center mb-1 card bg-gray p-2">
-                                            <a href="#" class=" border-0">
+                                            <a href=" {{url('friendsProfile/'.$user->id)}} " class=" border-0">
                                                 <div class="media-left pr-1">
                                                     <span class="avatar avatar-md"><img class="media-object rounded-circle" src=" {{$user->avatar}} "
                                                             alt="Generic placeholder image">
                                                         <i></i>
                                                     </span>
                                                 </div>
-                                                <div class="media-body w-100">
+                                                <div class="media-body w-100 mt-1">
                                                     <h2 class="list-group-item-heading"> {{$user->name}} <span class="font-small-3 float-right info">
                                                             </span></h2>
                                                     <p class="list-group-item-text text-muted mb-0">

@@ -25,10 +25,19 @@ class FriendsController extends Controller
             $friend->friend_id = $friend_id;
             $friend->accept = 0;
             $friend->save();
-            echo "Friend request Sent to ". $name; die;
+
+            // Check if a user has already sent a friend request to me to avoid a duplicate request
+            
+             if(Friend::where('user_id', '=', $friend_id )->where('friend_id', '=', $user_id)->exists()){
+                return redirect()->back()->with('error', 'This user sent a request to You recently');
+            }
+            
+            return redirect()->back()->with('success', 'Friend Request Sent');
         }else{
             abort(404);
         }
+
+        
     }
 
     public function getSuggestions()
@@ -108,8 +117,8 @@ class FriendsController extends Controller
         // $sender_id = Friend::select('user_id')->where('friend_id', $receiver_id)->first();
         Friend::where(['user_id'=> $sender_id, 'friend_id'=>$receiver_id])->update(['accept'=>1]);
         // return redirect()->back()->with('Succexxful');
-
-        echo "Friend request accepted "; die;
+        return redirect()->back()->with('success', 'Friend Request Accepted');
+        
     }
 
     public function rejectFriendRequest($sender_id)
@@ -120,7 +129,7 @@ class FriendsController extends Controller
         Friend::where(['user_id'=> $sender_id, 'friend_id'=>$receiver_id])->delete();
         // return redirect()->back()->with('Succexxful');
 
-        echo "Friend request rejected "; die;
+        return redirect()->back()->with('error', 'Friend Request Rejected');
     }
 
     public function viewProfile($name)
@@ -146,6 +155,29 @@ class FriendsController extends Controller
             abort(404);
         }
 
+    }
+
+    public function viewFriendProfile($id)
+    {
+    
+            // Check if the user is friend or not
+            $user_id = Auth::id();
+            $friendCount = Friend::where(['user_id'=>$id, 'friend_id'=>$user_id, 'accept'=> 1])->count();
+            $friendOfCount = Friend::where(['user_id'=>$user_id, 'friend_id'=>$id, 'accept'=> 1])->count();
+            if($friendCount>0){
+                $users = User::find($id);
+                
+            }elseif($friendOfCount >0){
+                $users = User::find($id);
+                
+            }else{
+                return redirect('/401');
+            }
+            
+        
+        
+
+        return view('pages.friendsProfile')->with(compact('users'));
     }
 
 
