@@ -37,4 +37,6 @@ class MessageFactory extends Factory
             'is_read' => $is_read
         ];
     }
+
+
 }

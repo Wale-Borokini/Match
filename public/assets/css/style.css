@@ -113,5 +113,16 @@ form .form-chats-send:-ms-input-placeholder
 
 .img-respx {
     max-width: 100%;
-    height: 150px;
+    height: 200px;
 }
+
+.fixed-crop {
+      height: 400px;
+      width: 100%;
+      max-height: 400px;
+      max-width: 100%;
+     }
+
+    /*width: 100%;
+    max-width: 100%;
+    height: auto;*/

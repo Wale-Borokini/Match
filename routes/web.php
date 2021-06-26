@@ -14,41 +14,57 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.index');
-});
 
-Route::get('/about', function () {
-    return view('pages.about');
-});
+Route::get('/', [
+    'uses' => 'App\Http\Controllers\PagesController@viewIndexPage',
+    'as' => 'index'
+]);
 
-Route::get('/blog', function () {
-    return view('pages.blog');
-});
+Route::get('/about', [
+    'uses' => 'App\Http\Controllers\PagesController@viewAboutPage',
+    'as' => 'about'
+]);
 
-Route::get('/blogDetails', function () {
-    return view('pages.blogDetails');
-});
+Route::get('/blog', [
+    'uses' => 'App\Http\Controllers\PostsController@viewBlogPage',
+    'as' => 'blog'
+]);
 
-Route::get('/codeOfConduct', function () {
-    return view('pages.codeOfConduct');
-});
 
-Route::get('/contact', function () {
-    return view('pages.contact');
-});
 
-Route::get('/createAccount', function () {
-    return view('pages.createAccount');
-});
+Route::get('/codeOfConduct', [
+    'uses' => 'App\Http\Controllers\PagesController@viewCodeOfConductPage',
+    'as' => 'codeOfConduct'
+]);
+
+Route::get('/contact', [
+    'uses' => 'App\Http\Controllers\PagesController@viewContactPage',
+    'as' => 'contact'
+]);
+
+Route::get('/stayingSafe', [
+    'uses' => 'App\Http\Controllers\PagesController@viewStayingSafePage',
+    'as' => 'stayingSafe'
+]);
+
+Route::get('/login', [
+    'uses' => 'App\Http\Controllers\PagesController@viewLoginPage',
+    'as' => 'login'
+]);
+
+
+// Route::get('/createAccount', function () {
+//     return view('pages.createAccount');
+// });
+
+// Route::get('/createAccount', [
+//     'uses' => 'App\Http\Controllers\PagesController@viewCreateAccountPage',
+//     'as' => 'createAccount'
+// ]);
 
 Route::get('/401', function () {
     return view('errors.401');
 });
-
-// Route::get('/friendRequest', function () {
-//     return view('pages.friendRequest');
-// });
 
 Route::get('/friendRequest', [
     'uses' => 'App\Http\Controllers\FriendsController@getFriendRequests',
@@ -65,10 +81,6 @@ Route::get('/friendsProfile/{id}', [
     'as' => 'friendsProfile'
 ]);
 
-// Route::get('/friendsProfile', function () {
-//     return view('pages.friendsProfile');
-// });
-
 Route::get('/acceptFriendRequest/{id}', [
     'uses' => 'App\Http\Controllers\FriendsController@acceptFriendRequest',
     'as' => 'acceptFriendRequest'
@@ -83,19 +95,32 @@ Route::get('/rejectFriendRequest/{id}', [
 
 Route::match(['get', 'post'], '/add-friend/{name}', 'App\Http\Controllers\FriendsController@addFriend');
 
-// Route::get('/explore', function () {
-//     return view('pages.explore');
-// });
 
 Route::get('/explore', [
     'uses' => 'App\Http\Controllers\FriendsController@getSuggestions',
     'as' => 'explore'
 ]);
 
-Route::get('/stayingSafe', function () {
-    return view('pages.stayingSafe');
-});
 
+// Route::post('/comment/store', 'App\Http\Controllers\CommentsController@store')->name('comment.store');
+// Route::post('/reply/store', 'App\Http\Controllers\CommentsController@replyStore')->name('reply.add');
+
+Route::post('comment/create/{post}','App\Http\Controllers\CommentsController@addThreadComment')->name('threadcomment.store');
+
+Route::post('reply/create/{comment}','App\Http\Controllers\CommentsController@addReplyComment')->name('replycomment.store');
+
+Route::get('/blogDetails/{post:slug}', [
+    'uses' => 'App\Http\Controllers\PostsController@viewBlogDetailsPage',
+    'as' => 'blogDetails'
+]);
+
+
+// Route::post('/comment/store', 'App\Http\Controllers\CommentsController@store')->name('comment.add');
+// Route::post('/reply/store', 'App\Http\Controllers\CommentsController@replyStore')->name('reply.add');
+
+// Route::post('blogDetails', [
+//     'uses' => 'App\Http\Controllers\CommentsController@store'
+// ]);
 
 
 Auth::routes();
@@ -106,10 +131,10 @@ Route::get('/chat', [
     'as' => 'chat'
 ]);
 
-Route::get('/userslist', [
-    'uses' => 'App\Http\Controllers\ChatController@getUsersList',
-    //'as' => 'userslist'
-]);
+// Route::get('/userslist', [
+//     'uses' => 'App\Http\Controllers\ChatController@getUsersList',
+//     //'as' => 'userslist'
+// ]);
 
 Route::get('/message/{id}', [
     'uses' => 'App\Http\Controllers\ChatController@getMessage',
@@ -119,6 +144,26 @@ Route::get('/message/{id}', [
 Route::post('message', [
     'uses' => 'App\Http\Controllers\ChatController@sendMessage'
 ]);
+
+Route::get('createBlogPost', [
+    'uses' => 'App\Http\Controllers\postsController@getCreatePostPage'
+]);
+
+Route::get('blogAdminView', [
+    'uses' => 'App\Http\Controllers\postsController@blogAdminView'
+]);
+
+Route::post('createBlogPost', [
+    'uses' => 'App\Http\Controllers\postsController@createPost'
+]);
+
+Route::get('editPost/{post:slug}', [
+    'uses' => 'App\Http\Controllers\postsController@edit'
+]);
+
+Route::post('editPost/{post:slug}','App\Http\Controllers\PostsController@update')->name('post.update');
+
+Route::delete('blogAdminView/{post:slug}', [App\Http\Controllers\PostsController::class, 'destroy'])->name('post.delete');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

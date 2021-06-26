@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Post;
+use App\Models\User;
 
 class User extends Authenticatable
 {
@@ -55,6 +57,12 @@ class User extends Authenticatable
     public static function sender_id($receiver_id){
         $sender_id = Friend::select('user_id')->where('friend_id', $receiver_id)->first();
         return $sender->id;
+    }
+
+    public function posts() {
+  
+        return $this->hasMany(Post::class);
+     
     }
 
 }

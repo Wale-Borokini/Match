@@ -28,11 +28,12 @@ class FriendsController extends Controller
 
             // Check if a user has already sent a friend request to me to avoid a duplicate request
             
-             if(Friend::where('user_id', '=', $friend_id )->where('friend_id', '=', $user_id)->exists()){
-                return redirect()->back()->with('error', 'This user sent a request to You recently');
-            }
+                if(Friend::where('user_id', '=', $friend_id )->where('friend_id', '=', $user_id)->exists()){
+                    return redirect()->back()->with('error', 'This user sent a request to You recently');
+                }
             
             return redirect()->back()->with('success', 'Friend Request Sent');
+
         }else{
             abort(404);
         }
@@ -42,18 +43,18 @@ class FriendsController extends Controller
 
     public function getSuggestions()
     {
-        
+        $title = 'Explore';
+
         $users = DB::select("SELECT id, avatar, name from users WHERE id != " . Auth::id() . " AND id NOT IN ( SELECT friend_id from friends WHERE user_id = " . Auth::id() . " ) AND id NOT IN ( SELECT user_id from friends WHERE friend_id = " . Auth::id() . " ) ");
         
-
-        return view('pages.explore')->with(compact('users'));
+        return view('pages.explore')->with(compact('users', 'title'));
         
 
     }
 
     public function getFriendRequests()
     {
-    
+        $title = 'Friend Requests';
         // $friendRecv = Friend::pluck('friend_id')->all();
         // // $friendSender = Friend::pluck('user_id')->all();
         // $users = User::whereIn('id', $friendRecv)y
@@ -70,14 +71,15 @@ class FriendsController extends Controller
             // ->where('friends.accept', 0)
             ->get();
 
-        return view('pages.friendRequest')->with(compact('users'));
+        return view('pages.friendRequest')->with(compact('users', 'title'));
         
 
     }
 
     public function getFriendsList()
     {
-    
+        $title = 'Friends';
+
         $friendCount = Friend::join('users',  function ($join) {
             $join->on('friends.user_id', '=', 'users.id');
                 
@@ -104,7 +106,7 @@ class FriendsController extends Controller
                     ->get();
             }
 
-        return view('pages.friends')->with(compact('users'));
+        return view('pages.friends')->with(compact('users', 'title'));
         
 
     }
@@ -159,16 +161,17 @@ class FriendsController extends Controller
 
     public function viewFriendProfile($id)
     {
-    
+        $title = 'Profile';
+
             // Check if the user is friend or not
             $user_id = Auth::id();
             $friendCount = Friend::where(['user_id'=>$id, 'friend_id'=>$user_id, 'accept'=> 1])->count();
             $friendOfCount = Friend::where(['user_id'=>$user_id, 'friend_id'=>$id, 'accept'=> 1])->count();
             if($friendCount>0){
-                $users = User::find($id);
+                $user = User::find($id);
                 
             }elseif($friendOfCount >0){
-                $users = User::find($id);
+                $user = User::find($id);
                 
             }else{
                 return redirect('/401');
@@ -177,7 +180,7 @@ class FriendsController extends Controller
         
         
 
-        return view('pages.friendsProfile')->with(compact('users'));
+        return view('pages.friendsProfile')->with(compact('user', 'title'));
     }
 
 

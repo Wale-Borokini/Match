@@ -8,7 +8,7 @@
     <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
     <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
     <meta name="author" content="PIXINVENT">
-    <title>Blog</title>
+    <title> {{$title}} </title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/ico/favicon.ico') }}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
@@ -38,13 +38,8 @@
             @yield('content')
     </div>
 
-    <script>
-      var fade_out = function() {
-        $(".msgsdiv").fadeOut().empty();
-      }
-
-      setTimeout(fade_out, 5000);
-    </script>
+    
+    
 
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
@@ -60,9 +55,14 @@
     <script src="{{ asset('app-assets/js/scripts/pages/crypto-wallet.js') }}"></script>
     <!-- END PAGE LEVEL JS-->
     <script>
-      $(".click-away").on('click', function(){
-            window.location = "http://www.google.com/";    
-        });
+     
+    </script>
+    <script>
+      // var fade_out = function() {
+      //   $(".msgsdiv").fadeOut().empty();
+      // }
+
+      // setTimeout(fade_out, 5000);
     </script>
   </body>
 </html>
