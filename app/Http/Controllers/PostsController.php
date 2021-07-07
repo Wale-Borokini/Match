@@ -11,6 +11,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use Auth;
 use DB;
+use Purifier;
 
 class PostsController extends Controller
 {
@@ -46,9 +47,13 @@ class PostsController extends Controller
     public function viewBlogDetailsPage($slug){
         $title = 'Blog';
         $post = Post::where('slug', $slug)->firstOrFail();
+        $randomPosts = Post::where('slug', '!=', $slug)
+        ->inRandomOrder()->limit(2)->get();
+        $publiclyVis = 'Public';
+        $privatelyVis = 'Private';
         // $posts = Post::find($id);
         //return view('pages.index', compact('title'));
-        return view('pages.blogDetails')->with(compact('title', 'post'));
+        return view('pages.blogDetails')->with(compact('title', 'post', 'randomPosts','publiclyVis', 'privatelyVis'));
     }
 
 
@@ -66,7 +71,7 @@ class PostsController extends Controller
 
         $post = new Post;
         $post->title = $request->title;
-        $post->body = $request->body;
+        $post->body = Purifier::clean($request->body);
         $post->author = 'Author';
         $post->image = $profile_image_url;
         $post->save();
@@ -104,7 +109,7 @@ class PostsController extends Controller
         }
 
         $post->title = $request->input('title');
-        $post->body = $request->input('body');
+        $post->body = Purifier::clean($request->input('body'));
         if($request->hasFile('image')){
             $post->image = $profile_image_url;
         }

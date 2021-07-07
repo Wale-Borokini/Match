@@ -3,14 +3,14 @@
 @section('content')
     <div class="vertical-layout vertical-compact-menu  1-column bg-lighten-2 menu-expanded blank-page blank-page">
         <!-- First Page Section Start -->
-        <div class="bg-cyan">
+        <div id="bg-main-page" class="">
             <div class="container" >   
                 <nav class="header-navbar navbar-expand-sm navbar navbar-with-menu navbar-transparent border-grey border-lighten-2">
                     <div class="navbar-wrapper mt-3">
                         <div class="navbar-header">
                             <ul class="nav navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a href="{{ url('/') }}" class="navbar-brand nav-link"><img src="app-assets/images/logo/logo-dark2.png"
+                                    <a href="{{ url('/') }}" class="navbar-brand nav-link"><img class="brand-logo" src=" {{asset('app-assets/images/logo/Black-n-bg.png')}} "
                                             alt="branding logo"></a>
                                 </li>
                                 <li class="nav-item d-md-none float-right"><a data-toggle="collapse" data-target="#navbar-mobile10"
@@ -38,40 +38,40 @@
                             <section class="">
                             <!-- Row of the page contents -->
                                 <div class="row mt-5 mb-5">
-                                    <div class="col-md-0">
-                                        
+                                    <div class="col-md-0">                                        
                                     </div>
                                     <div class="col-md-5">
                                         <div class="box-shadow-2 p-0">
                                             <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
                                                 <div class="card-header border-0 pb-0">
-                                                    <div class="card-title text-center mb-3">
+                                                    <div class="card-title text-center mb-1">
                                                         <h1 class="crt-acc"><b>Create Account</b></h1>
                                                         <p>By clicking Log In, you agree to our Terms. Learn how we
                                                         process your data in our Privacy Policy and Cookie Policy.</p>
                                                     </div>
+                                                    <div class="card-body pt-0 text-center">
+                                                    <p>                                                            
+                                                        <input type="checkbox" class="form-check-input" id="checkCond" onclick="toggleCheck()">                                                                                                                            
+                                                        I accept the Terms & Conditions. My data is collected pursuant to the Privacy Policy.
+                                                    </p>
+                                                    </div>
                                                     
                                                 </div>
                                                 <div class="card-content">
-                                                    <div class="card-body pt-0">
-                                                    <a href="{{ route('register') }}" class="btn btn-outline-orange text-orange btn-block">Sign up with Email</a>
-                                                    </div>
-                                                    <div class="card-body pt-0">
-                                                        <a href="#" class="btn btn-outline-orange text-orange btn-block">Login with Facebook</a>
-                                                    </div>
-                                                    <div class="card-body pt-0">
-                                                        <a href="#" class="btn btn-outline-orange text-orange btn-block">Login with Google</a>
-                                                    </div>
-                                                    <div class="card-body pt-0">
-                                                        <a href="#" class="btn btn-outline-orange text-orange btn-block">Login with Phone Number</a>
+                                                    <div id="reg-form" class="hidden">
+                                                        <div class="card-body pt-0">
+                                                        <a href="{{ route('register') }}" class="btn btn-outline-orange text-orange btn-block">Sign up with Email</a>
+                                                        </div>
+                                                        <div class="card-body pt-0">
+                                                            <a href="{{ route('login.facebook') }}" class="btn btn-outline-orange text-orange btn-block">Login with Facebook</a>
+                                                        </div>
+                                                        <div class="card-body pt-0">
+                                                            <a href="{{ route('login.google') }}" class="btn btn-outline-orange text-orange btn-block">Login with Google</a>
+                                                        </div>                                                        
                                                     </div>
                                                     <div class="card-body pt-0 text-center">
                                                         <p><b>Already Registered?</b> <a class="text-link-orange" href="{{ route('login') }}">Log in</a></p>
-                                                    </div>
-                                                    <div class="card-body pt-0 text-center">
-                                                        <p>I accept the Terms & Conditions. My data is
-                                                        collected pursuant to the Privacy Policy.</p>
-                                                    </div>
+                                                    </div>                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -128,4 +128,9 @@
         </div>
         <!-- Second Page Section end -->
     </div>
+    <script>
+        function toggleCheck(){
+            $('#reg-form').toggleClass('hidden');
+        }
+    </script>
 @endsection

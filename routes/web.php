@@ -76,24 +76,36 @@ Route::get('/friends', [
     'as' => 'friends'
 ]);
 
-Route::get('/friendsProfile/{id}', [
+Route::get('/friendsProfile/{slug}', [
     'uses' => 'App\Http\Controllers\FriendsController@viewFriendProfile',
     'as' => 'friendsProfile'
 ]);
 
-Route::get('/acceptFriendRequest/{id}', [
+Route::get('/viewProfile', [
+    'uses' => 'App\Http\Controllers\PagesController@viewProfile',
+    'as' => 'profile'
+]);
+
+Route::get('/editProfile', [
+    'uses' => 'App\Http\Controllers\PagesController@editProfile',
+    'as' => 'editProfile'
+]);
+
+Route::post('editProfile','App\Http\Controllers\PagesController@update')->name('profile.update');
+
+Route::get('/acceptFriendRequest/{slug}', [
     'uses' => 'App\Http\Controllers\FriendsController@acceptFriendRequest',
     'as' => 'acceptFriendRequest'
 ]);
 
-Route::get('/rejectFriendRequest/{id}', [
+Route::get('/rejectFriendRequest/{slug}', [
     'uses' => 'App\Http\Controllers\FriendsController@rejectFriendRequest',
     'as' => 'rejectFriendRequest'
 ]);
 
 
 
-Route::match(['get', 'post'], '/add-friend/{name}', 'App\Http\Controllers\FriendsController@addFriend');
+Route::match(['get', 'post'], '/add-friend/{slug}', 'App\Http\Controllers\FriendsController@addFriend');
 
 
 Route::get('/explore', [
@@ -141,29 +153,15 @@ Route::get('/message/{id}', [
     'as' => 'message'
 ]);
 
+Route::get('/displaySugUser/{id}', [
+    'uses' => 'App\Http\Controllers\FriendsController@displaySugUser',
+    'as' => 'displaySugUser'
+]);
+
 Route::post('message', [
     'uses' => 'App\Http\Controllers\ChatController@sendMessage'
 ]);
 
-Route::get('createBlogPost', [
-    'uses' => 'App\Http\Controllers\postsController@getCreatePostPage'
-]);
-
-Route::get('blogAdminView', [
-    'uses' => 'App\Http\Controllers\postsController@blogAdminView'
-]);
-
-Route::post('createBlogPost', [
-    'uses' => 'App\Http\Controllers\postsController@createPost'
-]);
-
-Route::get('editPost/{post:slug}', [
-    'uses' => 'App\Http\Controllers\postsController@edit'
-]);
-
-Route::post('editPost/{post:slug}','App\Http\Controllers\PostsController@update')->name('post.update');
-
-Route::delete('blogAdminView/{post:slug}', [App\Http\Controllers\PostsController::class, 'destroy'])->name('post.delete');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -179,7 +177,27 @@ Route::get('login/facebook/callback', [App\Http\Controllers\Auth\LoginController
 
 // Admin Routes
 
-Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']],
-function() {
+Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function() {
+
+    Route::get('createBlogPost', [
+        'uses' => 'App\Http\Controllers\postsController@getCreatePostPage'
+    ]);
+    
+    Route::get('blogAdminView', [
+        'uses' => 'App\Http\Controllers\postsController@blogAdminView'
+    ]);
+    
+    Route::post('createBlogPost', [
+        'uses' => 'App\Http\Controllers\postsController@createPost'
+    ]);
+    
+    Route::get('editPost/{post:slug}', [
+        'uses' => 'App\Http\Controllers\postsController@edit'
+    ]);
+    
+    Route::post('editPost/{post:slug}','App\Http\Controllers\PostsController@update')->name('post.update');
+    
+    Route::delete('blogAdminView/{post:slug}', [App\Http\Controllers\PostsController::class, 'destroy'])->name('post.delete');
+    
 
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
+use Illuminate\Support\Facades\Input;
 use Auth;
 use DB;
 use Pusher\Pusher;
@@ -27,22 +28,27 @@ class ChatController extends Controller
     public function getChatPage()
     {
         $title = 'Chat';
-        $users = Message::join('users',  function ($join) {
-                    $join->on('messages.from', '=', 'users.id')
-                        ->orOn('messages.to', '=', 'users.id');
+        $users = User::join('messages',  function ($leftJoin) {
+                    $leftJoin->on('users.id', '=', 'messages.from')
+                        ->orOn('users.id', '=', 'messages.to');
                 })
                     ->select('messages.id', 'messages.from', 'messages.to', 'messages.message',
                      'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar', DB::raw('count(is_read) as unread'))
                      //->selectRaw('count(is_read) as unread')
                      
-                     
-                    ->where('messages.from', Auth::id())
+                    ->where('users.id', '!=', Auth::id())
+                    ->orWhere('messages.from', Auth::id())
                     ->orWhere('messages.to', Auth::id())
                     ->groupBy('messages.id', 'messages.from', 'messages.to', 'messages.message',
                     'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar')
                     ->orderBy('messages.created_at', 'desc')
                     ->get()
                     ->unique('id');
+
+        // $users = DB::select("select users.id, users.name, users.avatar, users.email,messages.message, count(is_read) as unread 
+        // from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
+        // where users.id != " . Auth::id() . " 
+        // group by messages.created_at, users.id, users.name, users.avatar, users.email, messages.message");
         
                     // event(new FetchUsers($users));
                 return view('pages.chat')->with(compact('users', 'title'));
@@ -98,6 +104,7 @@ class ChatController extends Controller
 
     public function sendMessage(Request $request)
     {
+       
         $from = Auth::id();
         $to = $request->receiver_id;
         $message = $request->message;
@@ -107,6 +114,28 @@ class ChatController extends Controller
         $datas->to = $to;
         $datas->message = $message;
         $datas->is_read = 0; //Message will be unread by default
+        // $datas->image = $profile_image_url;
+
+        if($request->hasFile('image')){
+            $profileImage = $request->file('image');
+            $profileImageSaveAsName = time() . Auth::id() . "-chat." . $profileImage->getClientOriginalExtension();
+    
+            $upload_path = 'chat_images/';
+            $profile_image_url = $upload_path . $profileImageSaveAsName;
+            $success = $profileImage->move($upload_path, $profileImageSaveAsName);
+
+            $data->image = $profileImage;
+        }
+
+        // if ($request->file('image')) {
+        //     $imagePath = $request->file('image');
+        //     $imageName = $imagePath->getClientOriginalName();
+
+        //     $path = $request->file('image')->storeAs('chat_images', $imageName, 'public');
+
+        //     $datas->image = $path;
+        // }
+
         $datas->save();
 
         

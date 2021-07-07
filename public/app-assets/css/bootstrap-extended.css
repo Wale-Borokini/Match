@@ -1356,7 +1356,8 @@ select.form-control
 }
 .header-navbar .navbar-header .navbar-brand .brand-logo
 {
-    width: 36px;
+    /*width: 36px;*/
+    width: 100%;
 }
 .header-navbar .navbar-header .navbar-brand .brand-text
 {

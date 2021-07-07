@@ -12,7 +12,7 @@
                                         class="hamburger-box"></span><span class="hamburger-inner"></span></button>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/') }}" class="navbar-brand nav-link"><img src="app-assets/images/logo/logo-dark4.png"
+                                <a href="{{ url('/') }}" class="navbar-brand nav-link"><img src="{{ asset('app-assets/images/logo/Black-n-bg.png') }}"
                                         alt="branding logo"></a>
                             </li>
                             <li class="nav-item d-md-none float-right"><a data-toggle="collapse" data-target="#navbar-mobile10"

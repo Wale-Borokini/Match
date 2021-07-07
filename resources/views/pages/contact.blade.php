@@ -1,4 +1,4 @@
-@extends('layouts.sidebarPages')
+@extends('layouts.mainFront')
 
 @section('content')
     <div class="app-content content">
@@ -25,27 +25,27 @@
 
                                     <!-- Contact Form -->
                                     <div class="mt-5 container">
-                                    <div class="form-group">
-                                        <input class="form-control border-cont-form-orange" type="text" placeholder="First Name" id="userinput1">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input class="form-control border-cont-form-orange" type="text" placeholder="Last Name" id="userinput2">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input class="form-control border-cont-form-orange" type="email" placeholder="Email" id="userinput5">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <textarea id="userinput8" rows="5" class="form-control border-cont-form-orange" name="bio" placeholder="Message"></textarea>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-group mt-5">
-                                        <button class="menu-title btn btn-orange btn-block">Submit</button>
+                                        <div class="form-group">
+                                            <input class="form-control border-cont-form-orange" type="text" placeholder="First Name" id="userinput1">
                                         </div>
-                                    </div>
+
+                                        <div class="form-group">
+                                            <input class="form-control border-cont-form-orange" type="text" placeholder="Last Name" id="userinput2">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input class="form-control border-cont-form-orange" type="email" placeholder="Email" id="userinput5">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <textarea id="userinput8" rows="5" class="form-control border-cont-form-orange" name="bio" placeholder="Message"></textarea>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group mt-5">
+                                            <button class="menu-title btn btn-orange btn-block">Submit</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

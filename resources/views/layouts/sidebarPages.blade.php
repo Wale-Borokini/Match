@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr">
   <head>
-    
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -24,10 +26,12 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/single-page.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/cryptocoins/cryptocoins.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/hospital-patient-profile.css') }}">
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <!-- END Custom CSS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
@@ -40,7 +44,7 @@
 
     
     
-
+    
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
     <!-- BEGIN VENDOR JS-->
@@ -54,15 +58,74 @@
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="{{ asset('app-assets/js/scripts/pages/crypto-wallet.js') }}"></script>
     <!-- END PAGE LEVEL JS-->
+    
+   
     <script>
-     
-    </script>
-    <script>
-      // var fade_out = function() {
-      //   $(".msgsdiv").fadeOut().empty();
-      // }
+      var sugUserId = '';
 
-      // setTimeout(fade_out, 5000);
+    $(document).ready(function () {
+          // ajax setup for csrf token
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+                                                
+          $('.userSug').click(function (){
+              //$("#userslist").remove();
+              // $('.user').removeClass('active');
+              // $(this).addClass('active');
+              // $(this).find('.pending').remove();
+
+              sugUserId = $(this).attr('id');
+              $.ajax({
+                  type:"get",
+                  url: "displaySugUser/" + sugUserId, //need to create their route
+                  data: "",
+                  cache: false,
+                  success: function (data) {
+                      $('#fetchSug').html(data);
+                      // scrollToBottomFunc();
+                  }
+              });
+          
+          });                                                            
+
+              
+    });
+
+
+      var fade_out = function() {
+        $(".msgsdiv").fadeOut().empty();
+      }
+
+      setTimeout(fade_out, 5000);
+
+      $("#bar").change(function() {
+
+      var value = $(this).val();
+
+      // if (value == 0) {
+      //    $("#slider").val("Freezing");
+      // } 
+      if (value == 25) {
+          $("#slider").val("Between 25 and 35");
+          } 
+          else if (value == 35) {
+          $("#slider").val("Between 35 and 45");
+          } 
+          else if (value == 45) {
+          $("#slider").val("Between 45 and 55");
+          }
+          else if (value == 55) {
+          $("#slider").val("Between 55 and 60");
+          }
+
+          $("#labelTemp").text($("#slider").val());
+
+          // console.log($("#slider").val());
+
+      });
     </script>
   </body>
 </html>

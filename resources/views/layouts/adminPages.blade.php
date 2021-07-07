@@ -30,6 +30,10 @@
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <!-- END Custom CSS-->
+    {{-- CKEditor CDN --}}
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
   </head>
   <body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
@@ -41,11 +45,36 @@
     </div>
 
     <script>
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#category-img').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#projectin").change(function(){
+        readURL(this);
+    });
+
       var fade_out = function() {
         $(".msgsdiv").fadeOut().empty();
       }
 
       setTimeout(fade_out, 5000);
+
+    
+    ClassicEditor
+    .create( document.querySelector( '#body' ) )
+    .catch( error => {
+    console.error( error );
+    } );
+
     </script>
 
     <!-- BEGIN VENDOR JS-->

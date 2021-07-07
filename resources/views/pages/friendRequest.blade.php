@@ -7,51 +7,34 @@
             </div>
             <div class="content-body">
                 <section class="">
-                <!-- Row of the page contents -->
-                    <div class="row mt-5 mb-5">
-                        
-                        <div class="col-md-6 offset-md-3">
-                            <div class="box-shadow-2 p-0">
-                                <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
-                                    <div class="card-header border-0 pb-0">
-                                        <div class="card-title text-center mb-2">
-                                            <h1 class="crt-acc"><b>Friend Requests</b></h1>
-                                        </div>
-                                        
+                <!-- Row of the page contents -->                                                                                                
+                    <div class=" border-0 pb-0 mb-3 mt-3">
+                        <div class="card-title bg-transparent text-center">
+                            <h1 class="crt-acc"><b>Friend Requests</b></h1>
+                        </div>                                        
+                    </div>                                                                                                             
+                    <div class="container" id="doctors-list">
+                        <div class="row match-height">
+                        @foreach($users as $user)
+                            <div class=" col-xl-4 col-lg-4 col-md-6">
+                                <div class="card">
+                                    <img src="{{ asset($user->avatar)}}" alt="{{$user->avatar}}" class="card-img-top img-fluid rounded-circle w-25 mx-auto mt-1">
+                                    <div class="card-body">
+                                        <h6 class="card-title font-large-1 mb-0 text-center">{{$user->name}}</h6>                                                        
+                                        <p class="font-medium-3 mb-2 text-center">{{$user->alias}}</p>
+                                        <p class="font-small-3 text-center">{{$user->bio}}</p>
+        
                                     </div>
-                                    <div class="card-content container">
-                                      {{-- \\\\\\\\\\\\\\ --}}
-                                    @foreach($users as $user)
-                                        <div class="text-center mb-2 card bg-gray p-2">
-                                            <a href="#" class=" border-0">
-                                                <div class="media-left pr-1">
-                                                    <span class="avatar avatar-md"><img class="media-object rounded-circle" src=" {{$user->avatar}} "
-                                                            alt="Generic placeholder image">
-                                                        <i></i>
-                                                    </span>
-                                                </div>
-                                                <div class="media-body w-100 mt-1">
-                                                    <h2 class="list-group-item-heading"> {{$user->name}} <span class="font-small-3 float-right info">
-                                                            </span></h2>
-                                                    <p class="list-group-item-text text-muted mb-0">
-                                                        <div class="text-center">
-                                                            <a class="btn btn-success btn-sm mr-1 mb-1" href=" {{url('acceptFriendRequest/'.$user->id)}} " role="button"><i class="la la-close">Accept</i></a>
-                                                            <a class="btn btn-danger btn-sm mr-1 mb-1" href="  {{url('rejectFriendRequest/'.$user->id)}}  " role="button"><i class="la la-close">Reject</i></a>
-                                                        </div>
-                                                </div>
-                                                <div>
-                                                    
-                                                </div>
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                     
+                                    {{-- <i class="la la-tick">Accept</i> --}}
+                                    <div class="card-footer mx-auto text-center">                                                    
+                                        <a class="btn btn-outline-info btn-min-width mr-1 mb-1" href=" {{url('acceptFriendRequest/'.$user->slug)}} ">Accept</a>
+                                        <a class="btn btn-outline-danger btn-min-width mr-1 mb-1" href="  {{url('rejectFriendRequest/'.$user->slug)}}  " >Reject</a>
                                     </div>
                                 </div>
                             </div>
+                        @endforeach  
                         </div>
-                        
-                    </div>
+                    </div>                                                                                                                                                                            
                 </section>
                     
 

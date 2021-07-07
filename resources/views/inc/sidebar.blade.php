@@ -12,16 +12,20 @@
         @if (Auth::user())
           <li class="nav-item"><a class="sidebar-txt-hov" href="{{ url('/friends') }}"><i class="la la-dot-circle-o"></i><span class="menu-title">Friends</span></a>
           </li>
-          <li class="nav-item"><a class="sidebar-txt-hov" href="{{ url('/friendRequest') }}"><i class="la la-dot-circle-o"></i><span class="menu-title">Friend Requests</span></a>
+          <li class="nav-item"><a class="sidebar-txt-hov" href="{{ url('/friendRequest') }}"><i class="la la-dot-circle-o"></i><span class="menu-title">Friend Requests
+            @if($countRequest >0)
+            <span class="badge badge-pill badge-warning"><b>{{$countRequest}}</b></span>
+            @endif
+            </span></a>
           </li>
           <li class="nav-item"><a class="sidebar-txt-hov" href="{{ url('/chat') }}"><i class="la la-comments"></i><span class="menu-title">Chat</span></a>
           </li>
         @endif
 
         
-      
+            
         <li class="mt-5 nav-item">
-          <a class="sidebar-txt-hov" href="#"><span class="menu-title">Settings</span></a>
+          <a class="sidebar-txt-hov" href=" {{url('/viewProfile')}} "><span class="menu-title">Settings</span></a>
         </li>
         <li class=" nav-item">
           <a class="sidebar-txt-hov" href=" {{ url('/codeOfConduct') }} "><span class="menu-title">Code of Conduct</span></a>
@@ -32,6 +36,7 @@
         <li class=" nav-item">
           <a class="sidebar-txt-hov" href=" {{ url('/contact') }} "><span class="menu-title">Contact</span></a>
         </li>
+
         @if (Auth::user())
           <li class=" nav-item mt-5">
             <a href="{{ route('logout') }}"

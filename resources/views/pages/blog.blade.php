@@ -12,7 +12,7 @@
                                 <a href="{{url('blogDetails/'.$post->slug)}}">
                                 <div class="card">
                                     <div class="card-content">
-                                    <img class="card-img-top img-fluid" src=" {{$post->image}} " alt="Card image cap">
+                                    <img class="card-img-top img-fluid" src=" {{asset($post->image)}} " alt="Card image cap">
                                     <div class="card-body">
                                         <h4 class="card-title"> {{$post->title}} </h4>
                                         <p class="card-text"> New Post </p>

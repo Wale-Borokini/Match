@@ -10,7 +10,7 @@
                 <!-- Row of the page contents -->
                     <div class="row mt-5 mb-5">
                         
-                        <div class="col-md-5 offset-md-3">
+                        <div class="col-md-8 offset-md-2">
                             <div class="box-shadow-2 p-0">
                                 <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
                                     <div class="card-header border-0 pb-0">
@@ -20,7 +20,7 @@
                                         
                                     </div>
                                     <div class="card-content container">
-                                        <form class="form" method="POST" action=" {{url('createBlogPost')}} " enctype="multipart/form-data">
+                                        <form class="form" method="POST" action=" {{url('admin/createBlogPost')}} " enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-body">
                                                 <div class="row">
@@ -31,12 +31,13 @@
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <input type="file" id="projectinput3" class="form-control" name="image">
+                                                            <img src="#" id="category-img" width="50px" height="50px">
+                                                            <input type="file" id="projectin" class="form-control" name="image">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <textarea id="userinput8" rows="5" class="form-control " name="body" placeholder="Body"></textarea>
+                                                            <textarea id="body" rows="5" class="form-control " name="body" placeholder=""></textarea>
                                                         </div>
                                                     </div>
                                                 
@@ -59,5 +60,10 @@
 
             </div>
         </div>
-    </div>    
+    </div>
+    <script>
+
+    
+    
+    </script>    
 @endsection

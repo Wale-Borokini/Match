@@ -45,3 +45,43 @@ public function getSuggestions(Request $request, $name)
         // $friendSender = Friend::pluck('user_id')->all();
         // $users = User::whereNotIn('id', $friendss)->whereIn('id', $friendSender) ->where('id', '!=', Auth::id())
         // ->select('name', 'avatar')->get();
+
+
+
+        // $friendCount = Friend::join('users',  function ($join) {
+            //     $join->on('friends.user_id', '=', 'users.id');
+                    
+            // })
+                // ->select('users.id', 'users.name', 'users.avatar', 'users.slug')
+                // ->where(['friends.friend_id'=> $user_id, 'friends.accept'=> 1])
+                // ->count();
+    
+                // $friendOfCount = Friend::join('users',  function ($join) {
+                //     $join->on('friends.friend_id', '=', 'users.id');
+                        
+                // })
+                //     ->select('users.id', 'users.name', 'users.avatar', 'users.slug')
+                //     ->where(['friends.user_id'=> $user_id, 'friends.accept'=> 1])
+                //     ->count();
+                
+    
+                // if($friendCount > 0){
+                //     $users = Friend::join('users',  function ($join) {
+                //         $join->on('friends.user_id', '=', 'users.id');
+                            
+                //     })
+                //         ->select('users.id', 'users.name', 'users.avatar', 'users.slug')
+                //         ->where(['friends.friend_id'=> $user_id, 'friends.accept'=> 1])
+                //         ->orderBy('friends.created_at', 'desc')
+                //         ->get();
+                // }else{
+                //     $users = Friend::join('users',  function ($join) {
+                //         $join->on('friends.friend_id', '=', 'users.id');
+                            
+                //     })
+                //         ->select('users.id', 'users.name', 'users.avatar', 'users.slug')
+                //         ->where(['friends.user_id'=> $user_id, 'friends.accept'=> 1])
+                //         ->orderBy('friends.created_at', 'desc')
+                //         ->get();
+                // }
+                

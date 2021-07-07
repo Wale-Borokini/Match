@@ -12,7 +12,7 @@
                                         class="hamburger-box"></span><span class="hamburger-inner"></span></button>
                             </li>
                             <li class="nav-item">
-                                <a href="index.html" class="navbar-brand nav-link"><img src="app-assets/images/logo/logo-dark4.png"
+                                <a href="{{url('/')}}" class="navbar-brand nav-link"><img src="{{asset('app-assets/images/logo/Black-n-bg.png')}}"
                                         alt="branding logo"></a>
                             </li>
                             <li class="nav-item d-md-none float-right"><a data-toggle="collapse" data-target="#navbar-mobile10"
@@ -68,16 +68,21 @@
                                                                 @enderror
                                                             </div>
                                                         </div>
+                                                       
                                                         {{-- <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <input type="text" id="projectinput2" class="form-control" placeholder="Last Name" name="lname">
                                                             </div>
                                                         </div> --}}
+                                                        {{-- <div class="slidecontainer col-md-12">
+                                                            <input name="age" type="range" min="25" max="55" value="output.innerHTML" class="slider" step="10" id="myRange">
+                                                            <p>Between: <span id="demo"></span></p>
+                                                          </div> --}}                                                         
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <input type="text" id="projectinput3" class="form-control @error('email') is-invalid @enderror" placeholder="E-mail" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                                                <input type="text" id="projectinput" class="form-control @error('email') is-invalid @enderror" placeholder="E-mail" name="email" value="{{ old('email') }}" required autocomplete="email">
                                                                 @error('email')
                                                                     <span class="invalid-feedback" role="alert">
                                                                         <strong>{{ $message }}</strong>
@@ -87,7 +92,7 @@
                                                         </div>
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <input type="file" id="projectinput3" class="form-control" name="avatar">
+                                                                <input type="file" id="projectinput3" class="form-control" name="avatar" required>
                                                                 @if ($errors->has('image'))
 
                                                                     <span class="text-danger">{{ $errors->first('image') }}</span>
@@ -107,7 +112,7 @@
                                                         </div>
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <input type="password" id="projectinput4" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Re-type Password">
+                                                                <input type="password" id="projectinput" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Re-type Password">
                                                             </div>
                                                         </div>
                                                     
@@ -120,9 +125,7 @@
                                                 </div>
                                             </form>
                                             <div class="card-body pt-0 text-center">
-                                                <p><b>Already Registered?</b> <a class="text-link-orange" href="{{ route('login') }}">Log in</a></p>
-                                                <p>I accept the Terms & Conditions. My data is
-                                                    collected pursuant to the Privacy Policy.</p>
+                                                <p><b>Already Registered?</b> <a class="text-link-orange" href="{{ route('login') }}">Log in</a></p>                                                
                                             </div>
                                         </div>
                                     </div>
@@ -139,4 +142,8 @@
 
         </div>
     </div>
+
+    <script>
+            
+    </script>
 @endsection

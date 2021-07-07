@@ -7,48 +7,36 @@
             </div>
             <div class="content-body">
                 <section class="">
-                <!-- Row of the page contents -->
-                    <div class="row mt-5 mb-5">
-                        
-                        <div class="col-md-6 offset-md-3">
-                            <div class="box-shadow-2 p-0">
-                                <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
-                                    <div class="card-header border-0 pb-0">
-                                        <div class="card-title text-center mb-2">
-                                            <h1 class="crt-acc"><b>Friends</b></h1>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="card-content container">
-                                      {{-- \\\\\\\\\\\\\\ --}}
-                                    @foreach($users as $user)
-                                        <div class="text-center mb-1 card bg-gray p-2">
-                                            <a href=" {{url('friendsProfile/'.$user->id)}} " class=" border-0">
-                                                <div class="media-left pr-1">
-                                                    <span class="avatar avatar-md"><img class="media-object rounded-circle" src=" {{$user->avatar}} "
-                                                            alt="Generic placeholder image">
-                                                        <i></i>
-                                                    </span>
-                                                </div>
-                                                <div class="media-body w-100 mt-1">
-                                                    <h2 class="list-group-item-heading"> {{$user->name}} <span class="font-small-3 float-right info">
-                                                            </span></h2>
-                                                    <p class="list-group-item-text text-muted mb-0">
-                                                        
-                                                </div>
-                                                <div>
-                                                    
-                                                </div>
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                     
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
+                    <div class="mt-4 mb-3">
+                        <div class="card-title text-center mb-2">
+                            <h1 class="crt-acc"><b>Friends {{$friendCount}}</b></h1>
+                        </div>                        
                     </div>
+                <!-- Row of the page contents -->
+
+                    <div class="container" id="doctors-list">
+                        <div class="row match-height">
+                        @foreach($users as $user)
+                            <div class=" col-xl-4 col-lg-4 col-md-6">
+                                <a href=" {{url('friendsProfile/'.$user->slug)}} " >
+                                    <div class="card text-center">
+                                        <img src="{{ asset($user->avatar) }}" alt="" class="card-img-top img-fluid rounded-circle w-25 mx-auto mt-1">
+                                        <div class="card-body">
+                                            <h6 class="card-title font-large-1 mb-0 text-center">{{$user->name}}</h6>                                                        
+                                            <p class="font-medium-3  text-center">{{$user->alias}}</p>
+                                            <p class="font-small-3 text-center">{{$user->bio}}</p>
+            
+                                        </div>                                    
+                                        <div class="card-footer mx-auto text-center">                                                    
+                                            <a class="btn btn-outline-warning btn-min-width mr-1 mb-1" href=" {{url('friendsProfile/'.$user->slug)}} ">View Profile</a>
+                                            {{-- <a class="btn btn-outline-danger btn-min-width mr-1 mb-1" href="  {{url('rejectFriendRequest/'.$user->slug)}}  " >Reject</a> --}}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach  
+                        </div>
+                    </div>  
                 </section>
                     
 

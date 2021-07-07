@@ -56,6 +56,8 @@
     <script src="{{ asset('app-assets/js/scripts/pages/chat-application.js') }}"></script>
     <!-- END PAGE LEVEL JS-->
     <script>
+
+
       var receiver_id = '';
       var my_id = "{{ Auth::id() }}";
       $(document).ready(function () {
@@ -151,16 +153,20 @@
           //
   
           $(document).on('click', '#sendMess', function (e) {
+              
               var message = $('#textMessage').val();
+              var image = $('#upload').val();
               //var submit = $(this).val();
-  
+              // message != '' && 
               // Check if enter key is pressed and mesage is not null also if receiver is selected
-              if (message != '' && receiver_id != '') {
+              if (receiver_id != '') {
                   $(this).val(''); //When pressed text box will be empty
   
-                  var datastr = "receiver_id=" + receiver_id + "&message=" + message;
+                  var datastr = "receiver_id=" + receiver_id + "&message=" + message + "&image=" + image;
+                
                   $.ajax({
                       type: "post",
+                      enctype: 'multipart/form-data',
                       url: "message", //nedd to create in controller
                       data: datastr,
                       cache: false,
@@ -186,7 +192,8 @@
           }, 50);
       }
 
-              
+    
+         
   </script>
   </body>
 </html>

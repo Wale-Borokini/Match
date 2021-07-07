@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+use App\Models\User;
+use App\Models\Message;
+use App\Models\Comment;
+use App\Models\Post;
+use DB;
+
 
 class PagesController extends Controller
 {
@@ -42,6 +50,45 @@ class PagesController extends Controller
         $title = 'Login';
         //return view('pages.index', compact('title'));
         return view('auth.login')->with('title', $title);
+    }
+
+
+    public function viewProfile()
+    {
+        $title = 'Profile';
+        
+        return view('pages.viewProfile')->with(compact('title'));
+
+    }
+
+    public function editProfile()
+    {
+        $title = 'Edit Profile';
+        
+        return view('pages.editProfile')->with(compact('title'));
+
+    }
+
+    public function update(Request $request, User $user)
+    {
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'body' => 'required'
+        // ]);
+        
+        $user = Auth::user();
+        $user->name = $request->input('name');
+        $user->sex = $request->input('sex');
+        $user->alias = $request->input('alias');
+        $user->visibility = $request->input('visibility');
+        $user->age = $request->input('age');
+        $user->country = $request->input('country');
+        $user->state = $request->input('state');
+        
+        $user->save();
+
+        return redirect('/editProfile')->with('success', 'User Updated');
+
     }
 
 

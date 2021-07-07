@@ -28,6 +28,8 @@
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <!-- END Custom CSS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('countries/countries.js')}}"></script>
 </head>
 <body class="bg-white" data-open="click" data-menu="vertical-compact-menu" data-col="1-column">
     <!-- ////////////////////////////////////////////////////////////////////////////-->
@@ -40,6 +42,7 @@
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
     <!-- BEGIN VENDOR JS-->
+    
     <script src="app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
@@ -52,5 +55,10 @@
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="app-assets/js/scripts/forms/form-login-register.js"></script>
     <!-- END PAGE LEVEL JS-->
+    <script language="javascript">
+        populateCountries("country", "state"); // first parameter is id of country drop-down and second parameter is id of state drop-down
+        // populateCountries("country2");
+        // populateCountries("country2");
+    </script>
 </body>
 </html>
