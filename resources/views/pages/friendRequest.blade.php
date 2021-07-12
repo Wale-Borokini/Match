@@ -27,8 +27,8 @@
                                     </div>
                                     {{-- <i class="la la-tick">Accept</i> --}}
                                     <div class="card-footer mx-auto text-center">                                                    
-                                        <a class="btn btn-outline-info btn-min-width mr-1 mb-1" href=" {{url('acceptFriendRequest/'.$user->slug)}} ">Accept</a>
-                                        <a class="btn btn-outline-danger btn-min-width mr-1 mb-1" href="  {{url('rejectFriendRequest/'.$user->slug)}}  " >Reject</a>
+                                        <a class="btn btn-outline-info btn-min-width mr-1 mb-1" href=" {{route('acceptFriendRequest', $user->slug)}} ">Accept</a>
+                                        <a class="btn btn-outline-danger btn-min-width mr-1 mb-1" href="  {{route('rejectFriendRequest', $user->slug)}}  " >Reject</a>
                                     </div>
                                 </div>
                             </div>

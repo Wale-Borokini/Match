@@ -13,7 +13,7 @@
                             <div class="col-xl-4 col-md-6 col-sm-12">
                                 <div class="card userSug" id="{{ $user->id }}">
                                     <div class="card-content">
-                                    <img class="card-img-top img-respx" src="{{ $user->avatar }}" alt="{{ $user->name }}">
+                                    <img class="card-img-top img-respx" src="{{ $user->avatar }}" alt="Image">
                                     <div class="card-body">
                                         @if($user->visibility == $publiclyVis)
                                             <h4 class="card-title">{{ $user->name }}</h4>
@@ -21,14 +21,12 @@
                                             <h4 class="card-title">{{ $user->alias }}</h4>
                                         @else
                                             <h4 class="card-title">{{ $user->name }}</h4>
-                                        @endif
-                                        {{-- <p class="card-text">  </p>
-                                            <div class="text-center">
-                                                <button class="btn btn-danger btn-md rounded-circle mr-2"><i class="la la-close"></i></button>
+                                        @endif                                         
+                                            <div class="text-center d-none">                                                
                                                 {{-- @if(!empty($friendrequest)) --}}
-                                                {{-- <a href="{{ url('/add-friend/'.$user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a> --}}
+                                                    <a href="{{ url('/add-friend/'.$user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
                                                 {{-- @endif --}}
-                                            {{-- </div>  --}}
+                                            </div> 
                                     </div>
                                     </div>
                                 </div>

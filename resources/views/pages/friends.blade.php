@@ -9,7 +9,7 @@
                 <section class="">
                     <div class="mt-4 mb-3">
                         <div class="card-title text-center mb-2">
-                            <h1 class="crt-acc"><b>Friends {{$friendCount}}</b></h1>
+                            <h1 class="crt-acc"><b>Friends ({{$friendCount}})</b></h1>
                         </div>                        
                     </div>
                 <!-- Row of the page contents -->
@@ -18,7 +18,7 @@
                         <div class="row match-height">
                         @foreach($users as $user)
                             <div class=" col-xl-4 col-lg-4 col-md-6">
-                                <a href=" {{url('friendsProfile/'.$user->slug)}} " >
+                                <a href=" {{route('friendsProfile', $user->slug)}} " >
                                     <div class="card text-center">
                                         <img src="{{ asset($user->avatar) }}" alt="" class="card-img-top img-fluid rounded-circle w-25 mx-auto mt-1">
                                         <div class="card-body">
@@ -28,7 +28,7 @@
             
                                         </div>                                    
                                         <div class="card-footer mx-auto text-center">                                                    
-                                            <a class="btn btn-outline-warning btn-min-width mr-1 mb-1" href=" {{url('friendsProfile/'.$user->slug)}} ">View Profile</a>
+                                            <a class="btn btn-outline-warning btn-min-width mr-1 mb-1" href=" {{route('friendsProfile', $user->slug)}} ">View Profile</a>
                                             {{-- <a class="btn btn-outline-danger btn-min-width mr-1 mb-1" href="  {{url('rejectFriendRequest/'.$user->slug)}}  " >Reject</a> --}}
                                         </div>
                                     </div>

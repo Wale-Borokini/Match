@@ -15,7 +15,9 @@
                         <div class="col-md-10 offset-md-1">
                             <div class="card">
                                 <div class="card-content">
-                                    <img class="card-img-top img-fluid" src="app-assets/images/carousel/couples-pic.png" alt="Card image cap"/>
+                                    <div id="about-cv">
+                                        <img class="card-img-top img-fluid" src="{{asset('app-assets/images/backgrounds/group-c-9.png')}}" alt="Card image cap"/>
+                                    </div>
                                     <div class="card-body">
                                         <div class="container mt-5">
                                             <p class="card-text">Jelly-o sesame snaps cheesecake topping. Cupcake fruitcake macaroon donut pastry gummies tiramisu chocolate bar muffin. Dessert bonbon caramels brownie chocolate bar chocolate tart dragée.</p>

@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/single-page.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/cryptocoins/cryptocoins.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/hospital-patient-profile.css') }}">
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
@@ -68,13 +69,18 @@
 
       setTimeout(fade_out, 5000);
 
-    
+      // .create( document.querySelector( '#body' ), {
+      //   toolbar: [ 'bold', 'italic', 'link', 'undo', 'redo', 'numberedList', 'bulletedList' ]
+      // } )
+
+
     ClassicEditor
     .create( document.querySelector( '#body' ) )
     .catch( error => {
     console.error( error );
     } );
 
+    
     </script>
 
     <!-- BEGIN VENDOR JS-->

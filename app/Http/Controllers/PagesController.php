@@ -91,5 +91,21 @@ class PagesController extends Controller
 
     }
 
+    public function adminDashboard()
+    {
+        $title = 'Admin Dashboard';
+        
+        return view('adminPages.adminDashboard')->with(compact('title'));
+
+    }
+
+    public function adminRoles()
+    {
+        $title = 'Admin Role';
+        
+        return view('adminPages.roles')->with(compact('title'));
+
+    }
+
 
 }

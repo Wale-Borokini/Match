@@ -182,13 +182,10 @@ class FriendsController extends Controller
                 
             }else{
                 return redirect('/401');
-            }
-            
-        
-        
+            }                        
 
         return view('pages.friendsProfile')->with(compact('user', 'title'));
     }
-
+    
 
 }

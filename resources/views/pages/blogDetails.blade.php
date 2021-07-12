@@ -1,12 +1,14 @@
 @extends('layouts.sidebarPages')
 
 @section('content')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
     <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-body container">
                 <section id="pagination">
                     <div class="row">                  
-                        <div class="col-md-3">
+                        <div class="col-md-3 d-none d-lg-block">
                             <div class="row match-height">
                                 @foreach($randomPosts as $randomPost)
                                     <div class="col-md-12 mb-3">
@@ -63,7 +65,7 @@
                                                                         <div class="row">
                                                                             <div class="col-md-12">
                                                                                 <div class="form-group">
-                                                                                    <textarea id="userinput8" rows="1" class="form-control " name="comment" placeholder="Add your Reply"></textarea>                                                    
+                                                                                    <textarea id="userinput8" rows="1" class="form-control editor" name="comment" placeholder="Add your Reply"></textarea>                                                    
                                                                                 </div>
                                                                             </div>                                                        
                                                                             <div class="col-md-12">
@@ -104,6 +106,26 @@
         function toggleReply(commentId){
             $('.reply-form-'+commentId).toggleClass('hidden');
         }
-    </script>
+
+        // ClassicEditor
+        // .create( document.querySelector( '#body' ), {
+        // toolbar: []
+        // } )
+        // .catch( error => {
+        // console.error( error );
+        // } );
+
+        var allEditors = document.querySelectorAll('.editor') ;
+        for (var i = 0; i < allEditors.length; ++i) {
+        ClassicEditor.create(allEditors[i], {
+            toolbar: []
+            });
+        }
+
+        // .create( document.querySelector( '#body' ), {
+      //   toolbar: [ 'bold', 'italic', 'link', 'undo', 'redo', 'numberedList', 'bulletedList' ]
+      // } )
+
+    </script>    
 @endsection
 

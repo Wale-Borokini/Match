@@ -8,6 +8,7 @@ use App\Models\Message;
 use App\Models\Comment;
 use App\Models\Post;
 use Auth;
+use Purifier;
 
 class CommentsController extends Controller
 {
@@ -28,7 +29,7 @@ class CommentsController extends Controller
         ]);
 
        $comment=new Comment();
-       $comment->comment=$request->comment;
+       $comment->comment=Purifier::clean($request->comment);
        $comment->user_id=auth()->user()->id;
 
        $post->comments()->save($comment);
@@ -48,7 +49,7 @@ class CommentsController extends Controller
 
         // $comment->addComment($request->comment);
         $reply = new Comment();
-        $reply->comment=$request->comment;
+        $reply->comment=Purifier::clean($request->comment);
         $reply->user_id = auth()->user()->id;
 
         $comment->comments()->save($reply);
@@ -72,70 +73,7 @@ class CommentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-      
-    //     $input = $request->all();
-        
-    //     Comment::create($input);
-
-    //     return back();
     
-    // }
-
-
-    // public function replyStore(Request $request)
-    // {
-    //     $reply = new Comment();
-
-    //     $reply->comment = $request->get('comment');
-
-    //     $reply->user()->associate($request->user());
-
-    //     $reply->parent_id = $request->get('comment_id');
-
-    //     $post = Post::find($request->get('post_id'));
-
-    //     $post->comments()->save($reply);
-
-    //     return back();
-
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     $comment = new Comment;
-
-    //     $comment->comment = $request->comment;
-
-    //     $comment->user()->associate($request->user());
-    //     // $comment->user_id = Auth::user()->id;
-
-    //     $post = Post::find($request->post_id);
-
-    //     $post->comments()->save($comment);
-
-    //     return back();
-    // }
-
-    // public function replyStore(Request $request)
-    // {
-    //     $reply = new Comment();
-
-    //     $reply->comment = $request->get('comment');
-
-    //     $reply->user()->associate($request->user());
-
-    //     $reply->parent_id = $request->get('comment_id');
-
-    //     $post = Post::find($request->get('post_id'));
-
-    //     $post->comments()->save($reply);
-
-    //     return back();
-
-    // }
-
     /**
      * Display the specified resource.
      *

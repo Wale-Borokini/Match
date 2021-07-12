@@ -1,7 +1,7 @@
  @foreach($sugUsers as $sugUser)   
     <div class="card">
         <div class="card-content">
-            <img class="img-res-syd card-img-top img-fluid" src="{{ $sugUser->avatar }}" alt="{{ $sugUser->name }}">
+            <img class="img-res-syd card-img-top img-fluid" src="{{ $sugUser->avatar }}" alt="">
             <div class="card-body">
                 @if($sugUser->visibility == $publiclyVis)
                     <h4 class="card-title">{{$sugUser->name}}</h4>
@@ -14,10 +14,9 @@
                     {{$sugUser->bio}}
                 </p>
 
-                <div class="text-center">
-                    <button class="btn btn-danger btn-md rounded-circle mr-2"><i class="la la-close"></i></button>
+                <div class="text-center">                   
                     {{-- @if(!empty($friendrequest)) --}}
-                    <a href="{{ url('/add-friend/'.$sugUser->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
+                        <a href="{{ url('/add-friend/'.$sugUser->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
                     {{-- @endif --}}
                 </div>
             </div>

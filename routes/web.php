@@ -16,36 +16,28 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [
-    'uses' => 'App\Http\Controllers\PagesController@viewIndexPage',
-    'as' => 'index'
-]);
+    'uses' => 'App\Http\Controllers\PagesController@viewIndexPage',    
+])->name('index');
 
 Route::get('/about', [
-    'uses' => 'App\Http\Controllers\PagesController@viewAboutPage',
-    'as' => 'about'
-]);
+    'uses' => 'App\Http\Controllers\PagesController@viewAboutPage',    
+])->name('about');
 
 Route::get('/blog', [
-    'uses' => 'App\Http\Controllers\PostsController@viewBlogPage',
-    'as' => 'blog'
-]);
-
-
+    'uses' => 'App\Http\Controllers\PostsController@viewBlogPage',    
+])->name('blog');
 
 Route::get('/codeOfConduct', [
-    'uses' => 'App\Http\Controllers\PagesController@viewCodeOfConductPage',
-    'as' => 'codeOfConduct'
-]);
+    'uses' => 'App\Http\Controllers\PagesController@viewCodeOfConductPage',    
+])->name('codeOfConduct');
 
 Route::get('/contact', [
-    'uses' => 'App\Http\Controllers\PagesController@viewContactPage',
-    'as' => 'contact'
-]);
+    'uses' => 'App\Http\Controllers\PagesController@viewContactPage',    
+])->name('contact');
 
 Route::get('/stayingSafe', [
-    'uses' => 'App\Http\Controllers\PagesController@viewStayingSafePage',
-    'as' => 'stayingSafe'
-]);
+    'uses' => 'App\Http\Controllers\PagesController@viewStayingSafePage',    
+])->name('stayingSafe');
 
 Route::get('/login', [
     'uses' => 'App\Http\Controllers\PagesController@viewLoginPage',
@@ -67,41 +59,34 @@ Route::get('/401', function () {
 });
 
 Route::get('/friendRequest', [
-    'uses' => 'App\Http\Controllers\FriendsController@getFriendRequests',
-    'as' => 'friendRequest'
-]);
+    'uses' => 'App\Http\Controllers\FriendsController@getFriendRequests',    
+])->name('friendRequest');
 
 Route::get('/friends', [
-    'uses' => 'App\Http\Controllers\FriendsController@getFriendsList',
-    'as' => 'friends'
-]);
+    'uses' => 'App\Http\Controllers\FriendsController@getFriendsList',    
+])->name('friends');
 
 Route::get('/friendsProfile/{slug}', [
-    'uses' => 'App\Http\Controllers\FriendsController@viewFriendProfile',
-    'as' => 'friendsProfile'
-]);
+    'uses' => 'App\Http\Controllers\FriendsController@viewFriendProfile',    
+])->name('friendsProfile');
 
 Route::get('/viewProfile', [
-    'uses' => 'App\Http\Controllers\PagesController@viewProfile',
-    'as' => 'profile'
-]);
+    'uses' => 'App\Http\Controllers\PagesController@viewProfile',    
+])->name('profile');
 
 Route::get('/editProfile', [
-    'uses' => 'App\Http\Controllers\PagesController@editProfile',
-    'as' => 'editProfile'
-]);
+    'uses' => 'App\Http\Controllers\PagesController@editProfile',    
+])->name('editProfile');
 
 Route::post('editProfile','App\Http\Controllers\PagesController@update')->name('profile.update');
 
 Route::get('/acceptFriendRequest/{slug}', [
-    'uses' => 'App\Http\Controllers\FriendsController@acceptFriendRequest',
-    'as' => 'acceptFriendRequest'
-]);
+    'uses' => 'App\Http\Controllers\FriendsController@acceptFriendRequest',    
+])->name('acceptFriendRequest');
 
 Route::get('/rejectFriendRequest/{slug}', [
-    'uses' => 'App\Http\Controllers\FriendsController@rejectFriendRequest',
-    'as' => 'rejectFriendRequest'
-]);
+    'uses' => 'App\Http\Controllers\FriendsController@rejectFriendRequest',    
+])->name('rejectFriendRequest');
 
 
 
@@ -109,9 +94,8 @@ Route::match(['get', 'post'], '/add-friend/{slug}', 'App\Http\Controllers\Friend
 
 
 Route::get('/explore', [
-    'uses' => 'App\Http\Controllers\FriendsController@getSuggestions',
-    'as' => 'explore'
-]);
+    'uses' => 'App\Http\Controllers\FriendsController@getSuggestions',    
+])->name('explore');
 
 
 // Route::post('/comment/store', 'App\Http\Controllers\CommentsController@store')->name('comment.store');
@@ -122,9 +106,8 @@ Route::post('comment/create/{post}','App\Http\Controllers\CommentsController@add
 Route::post('reply/create/{comment}','App\Http\Controllers\CommentsController@addReplyComment')->name('replycomment.store');
 
 Route::get('/blogDetails/{post:slug}', [
-    'uses' => 'App\Http\Controllers\PostsController@viewBlogDetailsPage',
-    'as' => 'blogDetails'
-]);
+    'uses' => 'App\Http\Controllers\PostsController@viewBlogDetailsPage',    
+])->name('blogDetails');
 
 
 // Route::post('/comment/store', 'App\Http\Controllers\CommentsController@store')->name('comment.add');
@@ -139,9 +122,8 @@ Auth::routes();
 
 
 Route::get('/chat', [
-    'uses' => 'App\Http\Controllers\ChatController@getChatpage',
-    'as' => 'chat'
-]);
+    'uses' => 'App\Http\Controllers\ChatController@getChatpage',    
+])->name('chat');
 
 // Route::get('/userslist', [
 //     'uses' => 'App\Http\Controllers\ChatController@getUsersList',
@@ -149,9 +131,8 @@ Route::get('/chat', [
 // ]);
 
 Route::get('/message/{id}', [
-    'uses' => 'App\Http\Controllers\ChatController@getMessage',
-    'as' => 'message'
-]);
+    'uses' => 'App\Http\Controllers\ChatController@getMessage',    
+])->name('message');
 
 Route::get('/displaySugUser/{id}', [
     'uses' => 'App\Http\Controllers\FriendsController@displaySugUser',
@@ -160,8 +141,7 @@ Route::get('/displaySugUser/{id}', [
 
 Route::post('message', [
     'uses' => 'App\Http\Controllers\ChatController@sendMessage'
-]);
-
+])->name('msg.send');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -179,25 +159,60 @@ Route::get('login/facebook/callback', [App\Http\Controllers\Auth\LoginController
 
 Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function() {
 
+
+    Route::get('adminDashboard', [
+        'uses' => 'App\Http\Controllers\AdminController@adminDashboard'
+    ])->name('adminDashboard');
+
+    Route::get('/viewUserProfile/{slug}', [
+        'uses' => 'App\Http\Controllers\AdminController@viewUserProfile',        
+    ])->name('viewUserProfile');
+
+    Route::get('/viewUsers', [
+        'uses' => 'App\Http\Controllers\AdminController@viewUsers',        
+    ])->name('viewUsers');
+
     Route::get('createBlogPost', [
-        'uses' => 'App\Http\Controllers\postsController@getCreatePostPage'
-    ]);
+        'uses' => 'App\Http\Controllers\PostsController@getCreatePostPage'
+    ])->name('createBlogPost');
     
     Route::get('blogAdminView', [
-        'uses' => 'App\Http\Controllers\postsController@blogAdminView'
-    ]);
+        'uses' => 'App\Http\Controllers\PostsController@blogAdminView'
+    ])->name('blogAdminView');
     
     Route::post('createBlogPost', [
-        'uses' => 'App\Http\Controllers\postsController@createPost'
-    ]);
+        'uses' => 'App\Http\Controllers\PostsController@createPost'
+    ])->name('create.blogPost');
     
     Route::get('editPost/{post:slug}', [
-        'uses' => 'App\Http\Controllers\postsController@edit'
-    ]);
+        'uses' => 'App\Http\Controllers\PostsController@edit'
+    ])->name('editBlogPost');
     
     Route::post('editPost/{post:slug}','App\Http\Controllers\PostsController@update')->name('post.update');
     
     Route::delete('blogAdminView/{post:slug}', [App\Http\Controllers\PostsController::class, 'destroy'])->name('post.delete');
     
+
+});
+
+// Super Admin Route
+
+Route::group(['prefix' =>'superadmin', 'middleware' => ['auth', 'superadmin']], function() {
+
+    Route::get('blogAdminView', [
+        'uses' => 'App\Http\Controllers\postsController@blogAdminView'
+    ])->name('blogAdminView');
+    
+    Route::get('roles', [
+        'uses' => 'App\Http\Controllers\AdminController@adminRoles'
+    ])->name('adminRole');
+
+    Route::get('giveAdminRole/{slug}', [
+        'uses' => 'App\Http\Controllers\AdminController@giveAdminRole',        
+    ])->name('giveAdminRole');
+
+    Route::get('removeAdminRole/{slug}', [
+        'uses' => 'App\Http\Controllers\AdminController@removeAdminRole',        
+    ])->name('removeAdminRole');
 
 });

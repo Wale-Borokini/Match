@@ -92,17 +92,20 @@
                                             <div class="card-header border-0 pb-0">
                                                 <div class="card-title mb-2">
                                                     <h3 class="crt-acc"><b>Location</b></h3>
+                                                    @if(Auth::user()->state && Auth::user()->country !== null)
+                                                        <p>Current Location: <b> {{Auth::user()->state}}, {{Auth::user()->country}} </b></p>
+                                                    @endif
                                                 </div>                                            
                                             </div>
                                             <div class="mt-1 container">
                                                 <div class="form-group col-md-6">                                                    
-                                                    <select id="country" name="country" class="form-control">
-                                                        <option>{{Auth::user()->country}}</option>
+                                                    <select onchange="print_state('state',this.selectedIndex);" id="country" name ="country" class="form-control"></select>
+                                                        {{-- <option>{{Auth::user()->country}}</option> --}}
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-6">                                                    
-                                                    <select id="state" name="state" class="form-control">
-                                                        <option>{{Auth::user()->state}}</option>
+                                                    <select name ="state" id ="state" class="form-control"></select>
+                                                        {{-- <option>{{Auth::user()->state}}</option> --}}
                                                     </select>
                                                 </div>                                                                                                                                          
                                             </div>
@@ -134,9 +137,8 @@
     
     <script src="{{ asset('countries/countries.js')}}"></script>
     <script>
-        populateCountries("country", "state"); // first parameter is id of country drop-down and second parameter is id of state drop-down
-        // populateCountries("country2");
-        // populateCountries("country2");    
+         
+        print_country("country");
     
     </script>
     @endsection

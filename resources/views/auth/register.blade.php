@@ -91,8 +91,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <input type="file" id="projectinput3" class="form-control" name="avatar" required>
+                                                            <div class="form-group text-center">
+                                                                <img class="mb-2 hidden" src="#" id="category-img" width="100px" height="100px">
+                                                                <input type="file" id="project22" class="form-control" name="avatar" onclick="toggleCheck()" required>
                                                                 @if ($errors->has('image'))
 
                                                                     <span class="text-danger">{{ $errors->first('image') }}</span>
@@ -144,6 +145,24 @@
     </div>
 
     <script>
-            
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function (e) {
+                    $('#category-img').attr('src', e.target.result);
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        $("#project22").change(function(){
+            readURL(this);
+        });
+
+        function toggleCheck(){
+            $('#category-img').toggleClass('hidden');
+        }
     </script>
 @endsection

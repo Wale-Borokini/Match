@@ -20,7 +20,7 @@
                                         
                                     </div>
                                     <div class="card-content container">
-                                        <form class="form" method="POST" action="{{ route('post.update', [$post->slug]) }}" enctype="multipart/form-data">
+                                        <form class="form" method="POST" action="{{ route('post.update', $post->slug) }}" enctype="multipart/form-data">
                                             @csrf
                                             {{-- @method('PUT') --}}
                                             <div class="form-body">

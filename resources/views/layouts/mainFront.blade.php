@@ -37,6 +37,7 @@
     <div id="app">
         @include('inc.mainNav')
             @yield('content')
+        @include('inc.footer')
     </div>
     <!-- First Section DIV END -->
     

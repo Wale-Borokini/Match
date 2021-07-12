@@ -1,4 +1,4 @@
-@extends('layouts.sidebarPages')
+@extends('layouts.adminPages')
 
     @section('content')
         <div class="app-content content">
@@ -30,6 +30,12 @@
                                                         </li>
                                                         <li>
                                                             <div class="patient-info-heading">State:</div> {{$user->state}}
+                                                        </li>
+                                                        <li>
+                                                            <div class="patient-info-heading">Visibility:</div> {{$user->visibility}}
+                                                        </li>
+                                                        <li>
+                                                            <div class="patient-info-heading">Age Range:</div> {{$user->age}}
                                                         </li>
                                                     </ul>
                                                 </div>

@@ -124,17 +124,10 @@ class ChatController extends Controller
             $profile_image_url = $upload_path . $profileImageSaveAsName;
             $success = $profileImage->move($upload_path, $profileImageSaveAsName);
 
-            $data->image = $profileImage;
+            $datas->image = $profile_image_url;
         }
 
-        // if ($request->file('image')) {
-        //     $imagePath = $request->file('image');
-        //     $imageName = $imagePath->getClientOriginalName();
-
-        //     $path = $request->file('image')->storeAs('chat_images', $imageName, 'public');
-
-        //     $datas->image = $path;
-        // }
+      
 
         $datas->save();
 

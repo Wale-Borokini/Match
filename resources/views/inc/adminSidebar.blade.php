@@ -21,16 +21,18 @@
         
       
         <li class="mt-5 nav-item">
-          <a class="sidebar-txt-hov" href="#"><span class="menu-title">Settings</span></a>
+          <a class="sidebar-txt-hov" href=" {{ route('adminDashboard') }} "><span class="menu-title">Dashboard</span></a>
         </li>
         <li class=" nav-item">
-          <a class="sidebar-txt-hov" href=" {{ url('/codeOfConduct') }} "><span class="menu-title">Code of Conduct</span></a>
+          <a class="sidebar-txt-hov" href=" {{ route('viewUsers') }} "><span class="menu-title">Users</span></a>
         </li>
+        @if(Auth::user()->super_admin)                    
+          <li class=" nav-item">
+            <a class="sidebar-txt-hov" href=" {{ route('adminRole') }} "><span class="menu-title">Roles</span></a>
+          </li>
+        @endif
         <li class=" nav-item">
-          <a class="sidebar-txt-hov" href=" {{ url('/stayingSafe') }} "><span class="menu-title">Staying Safe</span></a>
-        </li>
-        <li class=" nav-item">
-          <a class="sidebar-txt-hov" href=" {{ url('/contact') }} "><span class="menu-title">Contact</span></a>
+          <a class="sidebar-txt-hov" href=" {{ url('contact') }} "><span class="menu-title">Contact</span></a>
         </li>
         @if (Auth::user())
           <li class=" nav-item mt-5">

@@ -44,6 +44,8 @@ class PostsController extends Controller
         return view('pages.blog')->with(compact('posts', 'title'));
     }
 
+    // {{ str_limit($post->title, 25) }}
+
     public function viewBlogDetailsPage($slug){
         $title = 'Blog';
         $post = Post::where('slug', $slug)->firstOrFail();
@@ -69,10 +71,11 @@ class PostsController extends Controller
             $success = $profileImage->move($upload_path, $profileImageSaveAsName);
         }
 
+        $adminName = Auth::user()->name;
         $post = new Post;
         $post->title = $request->title;
         $post->body = Purifier::clean($request->body);
-        $post->author = 'Author';
+        $post->author = $adminName;
         $post->image = $profile_image_url;
         $post->save();
 
@@ -115,7 +118,7 @@ class PostsController extends Controller
         }
         $post->save();
 
-        return redirect('/blogAdminView')->with('success', 'Post Updated');
+        return redirect()->route('blogAdminView')->with('success', 'Post Updated');
 
     }
 

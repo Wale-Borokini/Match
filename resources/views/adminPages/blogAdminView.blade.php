@@ -18,11 +18,11 @@
                                         <p class="card-text text-center">
                                                                 
                                             
-                                            <form action="{{ route('post.delete', [$post->slug]) }}" method="post">
+                                            <form action="{{ route('post.delete', $post->slug) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a href="{{url('editPost/'.$post->slug)}}" class="btn btn-primary btn-md ">Edit</a>
-                                            <button type="submit" class="btn btn-danger btn-md  mr-2">Delete</button>
+                                                <a href="{{route('editBlogPost', $post->slug)}}" class="btn btn-outline-primary btn-md ">Edit</a>
+                                            <button type="submit" class="btn btn-outline-danger btn-md  mr-2">Delete</button>
                                 
                                             </form>                                            
                                         </p>

@@ -12,6 +12,27 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 
 /*MatchToBeOne Defined Colors*/
 
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: orange black;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 13px;
+}
+
+*::-webkit-scrollbar-track {
+  background: gray;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: orange;
+  border-radius: 50px;
+  border: 3px solid gray;
+}
+
 .header-match
 {
     color: #ff944d;
@@ -131,6 +152,33 @@ form .form-chats-send:-ms-input-placeholder
   height: 800px;
   width: 100%;
   background-image: url("../../app-assets/images/backgrounds/hero-img.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover
+}
+
+#ipad-img {
+  height: 800px;
+  width: 100%;
+  background-image: url("../../app-assets/images/backgrounds/iPad-mockup-x2.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover
+}
+
+#mask-group {
+  height: 400px;
+  width: 100%;
+  background-image: url("../../app-assets/images/backgrounds/mask-group-x2.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover
+}
+
+#about-cvr {
+  height: 500px;
+  width: 100%;
+  background-image: url("../../app-assets/images/backgrounds/group-c-9.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover

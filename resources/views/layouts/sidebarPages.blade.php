@@ -40,6 +40,7 @@
             @include('inc.sidebar')
             @include('inc.messages')
             @yield('content')
+        @include('inc.footer')
     </div>
 
     

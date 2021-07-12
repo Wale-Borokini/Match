@@ -3,14 +3,14 @@
 @section('content')
     <div class="vertical-layout vertical-compact-menu  1-column bg-lighten-2 menu-expanded blank-page blank-page">
         <!-- First Page Section Start -->
-        <div id="bg-main-page" class="">
+        <div id="bg-main-page" class="mb-5">
             <div class="container" >   
                 <nav class="header-navbar navbar-expand-sm navbar navbar-with-menu navbar-transparent border-grey border-lighten-2">
                     <div class="navbar-wrapper mt-3">
                         <div class="navbar-header">
                             <ul class="nav navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a href="{{ url('/') }}" class="navbar-brand nav-link"><img class="brand-logo" src=" {{asset('app-assets/images/logo/Black-n-bg.png')}} "
+                                    <a href="{{ url('/') }}" class="navbar-brand nav-link"><img class="brand-logo" src=" {{asset('app-assets/images/logo/group-16.png')}} "
                                             alt="branding logo"></a>
                                 </li>
                                 <li class="nav-item d-md-none float-right"><a data-toggle="collapse" data-target="#navbar-mobile10"
@@ -37,9 +37,7 @@
                         <div class="content-body">
                             <section class="">
                             <!-- Row of the page contents -->
-                                <div class="row mt-5 mb-5">
-                                    <div class="col-md-0">                                        
-                                    </div>
+                                <div class="row mt-5 mb-5">                                  
                                     <div class="col-md-5">
                                         <div class="box-shadow-2 p-0">
                                             <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
@@ -76,13 +74,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        
+                                    <div class="col-md-5">                                        
                                     </div>
                                 </div>
                             </section>
                             
-
                         </div>
                     </div>
                 </div>
@@ -90,13 +86,14 @@
         </div>
         <!-- First Page Section End -->
 
-        <!-- Second Page Section start -->
-        <div class="bg-white container mt-5">
+        <!-- Second Page Section start -->        
+        <div class="bg-white container">
             <div class="row">
-                <div class="col-md-5">
-                    <img class="card-img-top img-fluid" src="app-assets/images/carousel/home-bg-lft.png" alt="Card image cap"> 
+                <div id="ipad-im" class="col-md-5 mt-5 mb-3 d-none d-none d-lg-block">
+                    {{-- Contains a background Image --}}
+                    <img class="card-img-top img-fluid" src="{{asset('app-assets/images/backgrounds/iPad-mockup-x2.png')}}" alt="Card image cap"> 
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-7 mt-3 mb-3">
                     <div class="">
                         <div class="card-content">
                             <div class="card-body">
@@ -120,7 +117,9 @@
                                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                             </div>
-                            <img class="card-img-top img-fluid" src="app-assets/images/carousel/home-bg-rt.png" alt="Card image cap"> 
+                            <div id="mask-grop">
+                                <img class="card-img-top img-fluid" src="{{asset('app-assets/images/backgrounds/mask-group-x2.png')}}" alt="Card image cap"> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,6 +127,12 @@
         </div>
         <!-- Second Page Section end -->
     </div>
+    <footer class="footer footer-static footer-gray navbar-border navbar-shadow">
+        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2 col-11">
+          <span class="float-md-right d-block d-md-inline-blockd-none d-lg-block"><a class="footer-text-white" href="{{ url('/stayingSafe') }}">Staying Safe</a></span>
+          <span class="float-md-right d-block d-md-inline-blockd-none d-lg-block mr-lg-5"><a class="footer-text-white" href="{{ url('/codeOfConduct') }}">Code of Conduct</a></span>
+        </p>
+    </footer>
     <script>
         function toggleCheck(){
             $('#reg-form').toggleClass('hidden');

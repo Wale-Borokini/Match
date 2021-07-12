@@ -20,7 +20,7 @@
                                         
                                     </div>
                                     <div class="card-content container">
-                                        <form class="form" method="POST" action=" {{url('admin/createBlogPost')}} " enctype="multipart/form-data">
+                                        <form class="form" method="POST" action=" {{route('create.blogPost')}} " enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-body">
                                                 <div class="row">
@@ -30,9 +30,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <img src="#" id="category-img" width="50px" height="50px">
-                                                            <input type="file" id="projectin" class="form-control" name="image">
+                                                        <div class="form-group text-center">
+                                                            <img class="mb-2 hidden" src="#" id="category-img" width="100px" height="100px">
+                                                            <input type="file" id="projectin" class="form-control" name="image" onclick="toggleCheck()">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
@@ -63,7 +63,9 @@
     </div>
     <script>
 
-    
+         function toggleCheck(){
+            $('#category-img').toggleClass('hidden');
+        }
     
     </script>    
 @endsection

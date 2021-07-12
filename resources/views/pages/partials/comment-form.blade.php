@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <textarea id="userinput8" rows="5" class="form-control " name="comment" placeholder="Add your comment"></textarea>
+                            <textarea id="" rows="5" class="form-control editor" name="comment" placeholder="Add your comment"></textarea>
                         </div>
                     </div>
                 
