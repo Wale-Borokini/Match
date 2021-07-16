@@ -1,4 +1,4 @@
- @foreach($sugUsers as $sugUser)   
+@foreach($sugUsers as $sugUser)   
     <div class="card">
         <div class="card-content">
             <img class="img-res-syd card-img-top img-fluid" src="{{ $sugUser->avatar }}" alt="">

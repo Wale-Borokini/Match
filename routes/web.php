@@ -98,9 +98,6 @@ Route::get('/explore', [
 ])->name('explore');
 
 
-// Route::post('/comment/store', 'App\Http\Controllers\CommentsController@store')->name('comment.store');
-// Route::post('/reply/store', 'App\Http\Controllers\CommentsController@replyStore')->name('reply.add');
-
 Route::post('comment/create/{post}','App\Http\Controllers\CommentsController@addThreadComment')->name('threadcomment.store');
 
 Route::post('reply/create/{comment}','App\Http\Controllers\CommentsController@addReplyComment')->name('replycomment.store');
@@ -109,9 +106,6 @@ Route::get('/blogDetails/{post:slug}', [
     'uses' => 'App\Http\Controllers\PostsController@viewBlogDetailsPage',    
 ])->name('blogDetails');
 
-
-// Route::post('/comment/store', 'App\Http\Controllers\CommentsController@store')->name('comment.add');
-// Route::post('/reply/store', 'App\Http\Controllers\CommentsController@replyStore')->name('reply.add');
 
 // Route::post('blogDetails', [
 //     'uses' => 'App\Http\Controllers\CommentsController@store'
@@ -125,6 +119,10 @@ Route::get('/chat', [
     'uses' => 'App\Http\Controllers\ChatController@getChatpage',    
 ])->name('chat');
 
+Route::post('chat', [
+    'uses' => 'App\Http\Controllers\ChatController@sendMessage'
+])->name('msg.chat');
+
 // Route::get('/userslist', [
 //     'uses' => 'App\Http\Controllers\ChatController@getUsersList',
 //     //'as' => 'userslist'
@@ -134,14 +132,15 @@ Route::get('/message/{id}', [
     'uses' => 'App\Http\Controllers\ChatController@getMessage',    
 ])->name('message');
 
-Route::get('/displaySugUser/{id}', [
-    'uses' => 'App\Http\Controllers\FriendsController@displaySugUser',
-    'as' => 'displaySugUser'
+// Route::post('message', [
+//     'uses' => 'App\Http\Controllers\ChatController@sendMessage'
+// ])->name('msg.send');
+
+
+Route::get('/displaySugUser/{slug}', [
+    'uses' => 'App\Http\Controllers\FriendsController@displaySugUser',    
 ]);
 
-Route::post('message', [
-    'uses' => 'App\Http\Controllers\ChatController@sendMessage'
-])->name('msg.send');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

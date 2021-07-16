@@ -11,7 +11,7 @@
                         @foreach($users as $user)
                         {{-- @if($user->id != ) --}}
                             <div class="col-xl-4 col-md-6 col-sm-12">
-                                <div class="card userSug" id="{{ $user->id }}">
+                                <div class="card userSug" id="{{$user->slug}}">
                                     <div class="card-content">
                                     <img class="card-img-top img-respx" src="{{ $user->avatar }}" alt="Image">
                                     <div class="card-body">
@@ -22,7 +22,7 @@
                                         @else
                                             <h4 class="card-title">{{ $user->name }}</h4>
                                         @endif                                         
-                                            <div class="text-center d-none">                                                
+                                            <div class="text-center d-lg-none">                                                
                                                 {{-- @if(!empty($friendrequest)) --}}
                                                     <a href="{{ url('/add-friend/'.$user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
                                                 {{-- @endif --}}
@@ -36,7 +36,7 @@
 
                     </div>
                 </div>
-                <div class="col-md-4" id="fetchSug">
+                <div class="col-md-4 d-none d-lg-block" id="fetchSug">
                     
                 </div>
             </div>
@@ -44,4 +44,33 @@
         </div>
         </div>
     </div>
+    <script>
+        var sugUserId = '';
+        $(document).ready(function () {
+            // ajax setup for csrf token
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+                                                    
+            $('.userSug').click(function (){
+                
+                sugUserId = $(this).attr('id');
+                $.ajax({
+                    type:"get",
+                    url: "displaySugUser/" + sugUserId, //need to create their route
+                    data: "",
+                    cache: false,
+                    success: function (data) {
+                        $('#fetchSug').html(data);                        
+                    }
+                });
+            
+            });                                                            
+
+                
+        });
+
+    </script>
 @endsection

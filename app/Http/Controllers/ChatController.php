@@ -28,18 +28,33 @@ class ChatController extends Controller
     public function getChatPage()
     {
         $title = 'Chat';
-        $users = User::join('messages',  function ($leftJoin) {
-                    $leftJoin->on('users.id', '=', 'messages.from')
-                        ->orOn('users.id', '=', 'messages.to');
+
+        // User::join('messages', function ($leftJoin) {
+        //     $leftJoin->on('users.id', '=', 'messages.from')
+        //         ->orOn('users.id', '=', 'messages.to');
+                
+        // })
+
+        $users = DB::table('users')
+                ->join('messages', function ($join) {
+                    $join->on('users.id', '=', 'messages.msg_to')->orOn('users.id', '=', 'messages.msg_from');
                 })
-                    ->select('messages.id', 'messages.from', 'messages.to', 'messages.message',
-                     'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar', DB::raw('count(is_read) as unread'))
+                ->join('friends', function ($join) {
+                    $join->on('users.id', '=', 'friends.friend_id')->orOn('users.id', '=', 'friends.user_id')
+                    ->where('friends.accept', '=', 1 );
+                })
+                    ->select('messages.id', 'messages.msg_from','messages.is_read', 'messages.msg_to', 'messages.message',
+                     'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar')
+                    //  DB::raw('count(messages.is_read) as unread')
                      //->selectRaw('count(is_read) as unread')
-                     
-                    ->where('users.id', '!=', Auth::id())
-                    ->orWhere('messages.from', Auth::id())
-                    ->orWhere('messages.to', Auth::id())
-                    ->groupBy('messages.id', 'messages.from', 'messages.to', 'messages.message',
+
+                    ->where('friends.friend_id', '=', Auth::id())
+                    ->orWhere('friends.user_id', '=', Auth::id())
+                    // ->where('users.id', '!=', Auth::id())
+                    // ->where('users.id', '=', Auth::id())
+                    // ->where('messages.msg_from', Auth::id())
+                    // ->orWhere('messages.msg_to', Auth::id())
+                    ->groupBy('messages.id', 'messages.msg_from', 'messages.msg_to', 'messages.is_read', 'messages.message',
                     'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar')
                     ->orderBy('messages.created_at', 'desc')
                     ->get()
@@ -49,6 +64,11 @@ class ChatController extends Controller
         // from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
         // where users.id != " . Auth::id() . " 
         // group by messages.created_at, users.id, users.name, users.avatar, users.email, messages.message");
+
+        // $users = DB::select("SELECT * from users WHERE id != " . Auth::id() . " AND id IN 
+        // ( SELECT friend_id from friends WHERE user_id = " . Auth::id() . " AND accept = 1 ) OR id IN 
+        // ( SELECT user_id from friends WHERE friend_id = " . Auth::id() . " AND accept =1 ) 
+        // ORDER BY name ASC" );
         
                     // event(new FetchUsers($users));
                 return view('pages.chat')->with(compact('users', 'title'));
@@ -89,13 +109,13 @@ class ChatController extends Controller
         $my_id = Auth::id();
 
         // Make read all unread message
-        Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
+        Message::where(['msg_from' => $user_id, 'msg_to' => $my_id])->update(['is_read' => 1]);
 
         // Getting all messages For selected user
         $messages = Message::where(function ($query) use ($user_id, $my_id) {
-            $query->where('from', $user_id)->where('to', $my_id);
+            $query->where('msg_from', $user_id)->where('msg_to', $my_id);
         })->oRwhere(function ($query) use ($user_id, $my_id) {
-            $query->where('from', $my_id)->where('to', $user_id);
+            $query->where('msg_from', $my_id)->where('msg_to', $user_id);
         })->get();
 
         return view('messages.index', ['messages' => $messages]);
@@ -110,8 +130,8 @@ class ChatController extends Controller
         $message = $request->message;
 
         $datas = new Message();
-        $datas->from = $from;
-        $datas->to = $to;
+        $datas->msg_from = $from;
+        $datas->msg_to = $to;
         $datas->message = $message;
         $datas->is_read = 0; //Message will be unread by default
         // $datas->image = $profile_image_url;

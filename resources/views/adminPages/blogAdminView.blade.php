@@ -9,7 +9,7 @@
                     <div class="row match-height">
                         @foreach ($posts as $post)   
                             <div class="col-xl-3 col-md-6 col-sm-12 mb-2">
-                                <a href="{{url('blogDetails/'.$post->slug)}}">
+                                <a href="{{route('blogDetails', $post->slug)}}">
                                 <div class="card">
                                     <div class="card-content">
                                     <img class="card-img-top img-fluid" src=" {{asset($post->image)}} " alt="Card image cap">
@@ -21,8 +21,8 @@
                                             <form action="{{ route('post.delete', $post->slug) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a href="{{route('editBlogPost', $post->slug)}}" class="btn btn-outline-primary btn-md ">Edit</a>
-                                            <button type="submit" class="btn btn-outline-danger btn-md  mr-2">Delete</button>
+                                                <a href="{{ route('editBlogPost', $post->slug) }}" class="btn btn-outline-primary btn-sm ">Edit</a>
+                                            <button type="submit" class="btn btn-outline-danger btn-sm  mr-2">Delete</button>
                                 
                                             </form>                                            
                                         </p>

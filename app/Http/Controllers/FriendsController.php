@@ -62,7 +62,7 @@ class FriendsController extends Controller
 
     }
 
-    public function displaySugUser($id)
+    public function displaySugUser($slug)
     {
         
 
@@ -70,7 +70,8 @@ class FriendsController extends Controller
         $publiclyVis = 'Public';
         $privatelyVis = 'Private';
 
-        $sugUsers = DB::select("SELECT * From users WHERE id = $id ");
+        // $sugUsers = DB::select("SELECT * From users WHERE slug = $slug ");
+        $sugUsers = User::where('slug', $slug)->get();
         
         
         return view('pages.displaySugUser')->with(compact('sugUsers', 'publiclyVis', 'privatelyVis'));

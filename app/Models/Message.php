@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 class Message extends Model
 {
     use HasFactory;
-    protected $fillable = ['from', 'to', 'message', 'is_read', 'image'];
+    protected $fillable = ['msg_from', 'msg_to', 'message', 'is_read', 'image'];
 
     // public function messages()
     // {

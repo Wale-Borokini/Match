@@ -62,39 +62,7 @@
     
    
     <script>
-      var sugUserId = '';
-
-    $(document).ready(function () {
-          // ajax setup for csrf token
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-          });
-                                                
-          $('.userSug').click(function (){
-              //$("#userslist").remove();
-              // $('.user').removeClass('active');
-              // $(this).addClass('active');
-              // $(this).find('.pending').remove();
-
-              sugUserId = $(this).attr('id');
-              $.ajax({
-                  type:"get",
-                  url: "displaySugUser/" + sugUserId, //need to create their route
-                  data: "",
-                  cache: false,
-                  success: function (data) {
-                      $('#fetchSug').html(data);
-                      // scrollToBottomFunc();
-                  }
-              });
-          
-          });                                                            
-
-              
-    });
-
+    
 
       var fade_out = function() {
         $(".msgsdiv").fadeOut().empty();

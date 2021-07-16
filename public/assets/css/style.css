@@ -331,6 +331,11 @@ form .form-chats-send:-ms-input-placeholder
       background: #ff944d;
       cursor: pointer;
     }
+
+    /* give Min Width to a div */
+    .give-min-ht {
+      min-height: 600px;
+    }
         
 
     /*width: 100%;

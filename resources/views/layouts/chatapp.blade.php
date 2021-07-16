@@ -101,7 +101,7 @@
                     
 
                       $('.user').click(function (){
-                          //$("#userslist").remove();
+                        //   $("#userslist").hide();
                           $('.user').removeClass('active');
                           $(this).addClass('active');
                           $(this).find('.pending').remove();
@@ -125,7 +125,7 @@
   
           var channel = pusher.subscribe('my-channel');
               channel.bind('message-sent', function(data) {
-              // alert(JSON.stringify(data.datas));
+            //   alert(JSON.stringify(data.datas));
               if (my_id == data.datas.from) {
                   $('#' + data.datas.to).click();
               } else if (my_id == data.datas.to) {
@@ -136,11 +136,11 @@
                       // if receiver is not seleted, add notification for that user
                       var pending = parseInt($('#' + data.datas.from).find('.pending').html());
   
-                      if (pending) {
-                          $('#' + data.datas.from).find('.pending').html(pending + 1);
-                      } else {
-                          $('#' + data.datas.from).append('<span class="pending">1</span>');
-                      }
+                    //   if (pending) {
+                    //       $('#' + data.datas.from).find('.pending').html(pending + 1);
+                    //   } else {
+                    //       $('#' + data.datas.from).append('<span class="pending">1</span>');
+                    //   }
                   }
               }
   
@@ -152,24 +152,36 @@
   
           //
   
-          $(document).on('click', '#sendMess', function (e) {
-              
-              var message = $('#textMessage').val();
-              var image = $('#upload').val();
+          $(document).on('click', '#sendMess', function (e) {              
+            //   var message = $('#textMessage').val();
+            //   var image = $('#upload').val();
               //var submit = $(this).val();
               // message != '' && 
               // Check if enter key is pressed and mesage is not null also if receiver is selected
               if (receiver_id != '') {
-                  $(this).val(''); //When pressed text box will be empty
+                // alert(receiver_id);
+                 // $('#textMessage').val(''); //When pressed text box will be empty
   
-                  var datastr = "receiver_id=" + receiver_id + "&message=" + message + "&image=" + image;
+                //   var datastr = "receiver_id=" + receiver_id + "&message=" + message + "&image=" + image;
+                 
+                var image = document.querySelector('#myform input[name=image]');
+
+                // Creating an instance of FormData to submit the form.
+                var formData = new FormData();
+                
+                formData.append('message', $("#myform input[name=message]").val());
+                formData.append('image', image.files[0]);
+                formData.append('receiver_id', receiver_id);
+                
                 
                   $.ajax({
                       type: "post",
                       enctype: 'multipart/form-data',
-                      url: "message", //nedd to create in controller
-                      data: datastr,
+                      url: "chat", //nedd to create in controller
+                      data: formData,
                       cache: false,
+                      contentType: false,
+                      processData: false,
                       success: function (data) {
   
                       },
