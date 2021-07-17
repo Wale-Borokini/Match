@@ -2,72 +2,162 @@
 
     @section('content')
         <div class="app-content content">
-            <div class="content-wrapper">                
-                <div class="content-body" style="margin-bottom:250px;">                    
+            <div class="content-wrapper give-min-ht">                
+                <div class="content-body" >                    
                     <!-- Row of the page contents -->                                                                                                                            
                     
-                    <section class="mt-4" id="patient-profile">
-                        <div class="row match-height">
-                            <div class="col-lg-5 col-md-12">
-                                <div class="card">
+                    <section id="user-profile-cards-with-cover-image" class="row mt-2">                       
+                        <div class="col-xl-12 col-md-12 col-12">
+                            <div class="card profile-card-with-cover">
+                                <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
+                                <div class="card-img-top img-fluid bg-cover height-200" style="background: url({{asset('app-assets/images/carousel/wall.jpg')}});"></div>
+                                <div class="card-profile-image">
+                                    <img width="140" height="140" src="{{asset($user->avatar)}}" class="rounded-circle img-border box-shadow-1" alt="Card image">
+                                </div>
+                                <div class="profile-card-with-cover-content text-center">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 d-flex justify-content-around">
-                                                <div class="patient-img-name text-center">
-                                                    <img src="{{asset($user->avatar)}}" alt="{{$user->avatar}}" class="card-img-top mb-1 patient-img img-fluid rounded-circle">
-                                                    <h4>{{$user->name}}</h4>
-                                                    <p><i>{{$user->alias}}</i></p>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 d-flex justify-content-around">
-                                                <div class="patient-info">
-                                                    <ul class="list-unstyled">                                                        
-                                                        <li>
-                                                            <div class="patient-info-heading">Sex:</div> {{$user->sex}}
-                                                        </li>                                                      
-                                                        <li>
-                                                            <div class="patient-info-heading">Country:</div> {{$user->country}}
-                                                        </li>
-                                                        <li>
-                                                            <div class="patient-info-heading">State:</div> {{$user->state}}
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                        <h2 class="mt-1">{{$user->name}}</h2>
+                                        <h4 class="card-subtitle mt-1 mb-1 text-muted"><i>{{$user->alias}}</i></h4>
+                                        @if($user->state && $user->country != Null)                                        
+                                        <h6 class="card-subtitle text-muted">{{$user->state}}, {{$user->country}}</h6>
+                                        @else
+                                        <h6 class="card-subtitle text-muted"></h6>
+                                        @endif
+                                        <div class="badge mt-1 badge-pill badge-warning">{{$user->sex}}</div>
+                                    </div>                                   
+                                </div>
+                            </div>
+                        </div>                       
+                    </section>
+
+                    <section class="mt-2" id="patient-profile">
+                        <div class="row mt-5 mb-5">
+                            <div class="col-md-12">
+                                <div class="box-shadow-2 p-0">
+                                    <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                                        <div class="card-header border-0 pb-0">
+                                            <div class="card-title mb-2">
+                                                <h3 class="crt-acc"><b>Bio</b></h3>
+                                            </div>                                     
+                                        </div>
+                                        <div class="p-1">
+                                            <p>
+                                                {{$user->bio}}
+                                            </p>
+                                        </div>                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Row of the page contents -->
+                        <div class="row mt-5 mb-5">
+                            <div class="col-md-12">
+                                <div class="box-shadow-2 p-0">
+                                    <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                                        <div class="card-header border-0 pb-0">
+                                            <div class="card-title mb-0">
+                                                <h3 class="crt-acc"><b>Work</b></h3>
+                                            </div>                                            
+                                        </div> 
+                                        <div class="p-1">
+                                            <p>
+                                               {{$user->work}}
+                                            </p>
+                                        </div>                                                                                                                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Row of the page contents -->
+                        <div class="row mt-5 mb-5">
+                            <div class="col-md-12">
+                                <div class="box-shadow-2 p-0">
+                                    <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                                        <div class="card-header border-0 pb-0">
+                                            <div class="card-title mb-2">
+                                                <h3 class="crt-acc"><b>Education</b></h3>
+                                            </div>                                            
+                                        </div>
+                                        <div class="p-1">
+                                            <p>
+                                                {{$user->education}}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-7 col-md-6">
-                                <div class="card bg-gradient-y-warning">
-                                    <div class="card-header">
-                                        <h2 class="card-title text-white font-medium-3">Bio</h2>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text text-white font-medium-1"> {{$user->bio}} </p>                                       
-                                    </div>
-                                </div>
+                        </div>
+                                                                                                               
+                        <div class="card-content">
+                            <div class="card-body my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                                <div class="row">
+                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                        <a href="{{asset('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
+                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/1.jpg')}}" itemprop="thumbnail" alt="Image description" />
+                                        </a>
+                                    </figure>
+                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                        <a href="{{asset('app-assets/images/gallery/2.jpg')}}" itemprop="contentUrl" data-size="480x360">
+                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/2.jpg')}}" itemprop="thumbnail" alt="Image description" />
+                                        </a>
+                                    </figure>
+                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                        <a href="{{asset('app-assets/images/gallery/3.jpg')}}" itemprop="contentUrl" data-size="480x360">
+                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/3.jpg')}}" itemprop="thumbnail" alt="Image description" />
+                                        </a>
+                                    </figure>
+                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                        <a href="{{asset('app-assets/images/gallery/4.jpg')}}" itemprop="contentUrl" data-size="480x360">
+                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/4.jpg')}}" itemprop="thumbnail" alt="Image description" />
+                                        </a>
+                                    </figure>
+                                </div>                                                            
                             </div>
-                           
-                        </div>                                           
-                        <div class="row">
-                            <div class="col-lg-7 col-md-12">
-                                <div class="card bg-gradient-y-info">
-                                    <div class="card-header">
-                                        <h2 class="card-title font-medium-3 text-white">Work</h2>
+                            <!--/ Image grid -->
+                            <!-- Root element of PhotoSwipe. Must have class pswp. -->
+                            <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+                                <!-- Background of PhotoSwipe. 
+                              It's a separate element as animating opacity is faster than rgba(). -->
+                                <div class="pswp__bg"></div>
+                                <!-- Slides wrapper with overflow:hidden. -->
+                                <div class="pswp__scroll-wrap">
+                                    <!-- Container that holds slides. 
+                               PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                              Don't modify these 3 pswp__item elements, data is added later on. -->
+                                    <div class="pswp__container">
+                                        <div class="pswp__item"></div>
+                                        <div class="pswp__item"></div>
+                                        <div class="pswp__item"></div>
                                     </div>
-                                    <div class="card-body">
-                                        <p class="card-text font-medium-1 text-white"> {{$user->education}} </p>                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-md-12">
-                                <div class="card text-white bg-gradient-y-danger">
-                                    <div class="card-header">
-                                        <h2 class="card-title text-white font-medium-3">Education</h2>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text font-medium-1"> {{$user->work}} </p>                                        
+                                    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                                    <div class="pswp__ui pswp__ui--hidden">
+                                        <div class="pswp__top-bar">
+                                            <!--  Controls are self-explanatory. Order can be changed. -->
+                                            <div class="pswp__counter"></div>
+                                            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                                            <button class="pswp__button pswp__button--share" title="Share"></button>
+                                            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                                            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                                            <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                                            <!-- element will get class pswp__preloader-active when preloader is running -->
+                                            <div class="pswp__preloader">
+                                                <div class="pswp__preloader__icn">
+                                                    <div class="pswp__preloader__cut">
+                                                        <div class="pswp__preloader__donut"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                                            <div class="pswp__share-tooltip"></div>
+                                        </div>
+                                        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                                        </button>
+                                        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                                        </button>
+                                        <div class="pswp__caption">
+                                            <div class="pswp__caption__center"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -76,4 +166,8 @@
                 </div>
             </div>
         </div>
+        <script src="{{ asset('app-assets/vendors/js/gallery/masonry/masonry.pkgd.min.js') }}"></script>
+        <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js') }}"></script>
+        <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js') }}"></script>
+        <script src="{{ asset('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')}}"></script>
     @endsection

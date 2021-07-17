@@ -26,7 +26,7 @@
                                                 <h6 class="list-group-item-heading">{{ $user->name }}<span class="font-small-3 float-right info">
                                                     {{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</span></h6>
                                                 @if($user->msg_from == Auth::id() or $user->msg_to == Auth::id())
-                                                <p class="list-group-item-text text-muted mb-0"><i class=" primary font-small-2"></i> {{ $user->message}}
+                                                <p class="list-group-item-text text-muted mb-0" id="{{$user->id.'_message'}}"><i class=" primary font-small-2"></i> {{ $user->message}}
                                                 @endif                                            
                                             </div>
                                         </div>

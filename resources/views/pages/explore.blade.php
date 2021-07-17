@@ -24,7 +24,7 @@
                                         @endif                                         
                                             <div class="text-center d-lg-none">                                                
                                                 {{-- @if(!empty($friendrequest)) --}}
-                                                    <a href="{{ url('/add-friend/'.$user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
+                                                    <a href="{{ route('addFriend', $user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
                                                 {{-- @endif --}}
                                             </div> 
                                     </div>

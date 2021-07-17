@@ -34,8 +34,9 @@
 <body class="bg-white" data-open="click" data-menu="vertical-compact-menu" data-col="1-column">
     <!-- ////////////////////////////////////////////////////////////////////////////-->
     <!-- First Section DIV START -->
-    <div id="app">
+    <div id="app">        
             @yield('content')
+            @include('inc.messages')
     </div>
     <!-- First Section DIV END -->
     

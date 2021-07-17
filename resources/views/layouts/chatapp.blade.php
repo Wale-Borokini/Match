@@ -25,6 +25,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/fonts/simple-line-icons/style.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/chat-application.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/js/gallery/photo-swipe/default-skin/default-skin.css') }}">
+
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
@@ -54,6 +57,10 @@
     <!-- END MODERN JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="{{ asset('app-assets/js/scripts/pages/chat-application.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/gallery/masonry/masonry.pkgd.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')}}"></script>
     <!-- END PAGE LEVEL JS-->
     <script>
 
@@ -145,9 +152,13 @@
               }
   
           });
+
+          // channel.bind('client-message-delivered', onMessageDelivered);
   
-          
-              
+          // function onMessageDelivered(data) {
+          //     $("#" + data.id +'_message'.text("Some Content");
+          // }
+                        
               
   
           //
@@ -183,7 +194,8 @@
                       contentType: false,
                       processData: false,
                       success: function (data) {
-  
+                
+                            $('#' + receiver_id + '_message').text($("#myform input[name=message]").val())
                       },
                       error: function (jqXHR, status, err) {
                       },

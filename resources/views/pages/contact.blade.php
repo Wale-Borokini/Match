@@ -24,29 +24,37 @@
                                     </div>
 
                                     <!-- Contact Form -->
-                                    <div class="mt-5 container">
-                                        <div class="form-group">
-                                            <input class="form-control border-cont-form-orange" type="text" placeholder="First Name" id="userinput1">
-                                        </div>
+                                    <form action=" {{ route('contact.save') }} "  method="POST">
+                                        @csrf
+                                        @if(session('success'))
+                                            <div class="msgsdiv col-lg-6 offset-lg-3 alert alert-success text-center mt-1">
+                                                <h5 class="text-white"><b>{{session('success')}}</b></h5>
+                                            </div>
+                                        @endif
+                                        <div class="mt-5 container">
+                                            <div class="form-group">
+                                                <input class="form-control border-cont-form-orange" type="text" name="name" placeholder="Full Name" id="userinput1">
+                                            </div>
+                                        
+                                            <div class="form-group">
+                                                <input class="form-control border-cont-form-orange" type="email" name="email" placeholder="Email" id="userinput5">
+                                            </div>
 
-                                        <div class="form-group">
-                                            <input class="form-control border-cont-form-orange" type="text" placeholder="Last Name" id="userinput2">
-                                        </div>
+                                            <div class="form-group">
+                                                <input class="form-control border-cont-form-orange" type="text" name="subject" placeholder="Subject" id="userinput2">
+                                            </div>
 
-                                        <div class="form-group">
-                                            <input class="form-control border-cont-form-orange" type="email" placeholder="Email" id="userinput5">
-                                        </div>
+                                            <div class="form-group">
+                                                <textarea id="userinput8" rows="5" class="form-control border-cont-form-orange" name="message" placeholder="Message"></textarea>
+                                            </div>
 
-                                        <div class="form-group">
-                                            <textarea id="userinput8" rows="5" class="form-control border-cont-form-orange" name="bio" placeholder="Message"></textarea>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group mt-5">
-                                            <button class="menu-title btn btn-orange btn-block">Submit</button>
+                                            <div class="col-md-3">
+                                                <div class="form-group mt-5">
+                                                    <button type="submit" class="menu-title btn btn-orange btn-block">Submit</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

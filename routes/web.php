@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 //use App\Events\MessageSent;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,8 @@ Route::get('/codeOfConduct', [
 Route::get('/contact', [
     'uses' => 'App\Http\Controllers\PagesController@viewContactPage',    
 ])->name('contact');
+
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'storeContactForm'])->name('contact.save');
 
 Route::get('/stayingSafe', [
     'uses' => 'App\Http\Controllers\PagesController@viewStayingSafePage',    
@@ -90,7 +93,9 @@ Route::get('/rejectFriendRequest/{slug}', [
 
 
 
-Route::match(['get', 'post'], '/add-friend/{slug}', 'App\Http\Controllers\FriendsController@addFriend');
+Route::match(['get', 'post'], '/add-friend/{slug}', [
+    'uses' => 'App\Http\Controllers\FriendsController@addFriend',
+])->name('addFriend');
 
 
 Route::get('/explore', [

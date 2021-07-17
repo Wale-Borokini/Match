@@ -10,6 +10,7 @@ use Auth;
 use DB;
 use Pusher\Pusher;
 use App\Events\MessageSent;
+use App\Events\MessageDelivered;
 use App\Events\FetchUsers;
 
 class ChatController extends Controller

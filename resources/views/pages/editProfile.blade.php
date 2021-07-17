@@ -109,24 +109,97 @@
                                                     </select>
                                                 </div>                                                                                                                                          
                                             </div>
-                                            
+                                            <div id="userInputBio"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Row of the page contents -->
+                            
                             <div class="row mt-5 mb-5">
                                 <div class="col-md-8 offset-md-2">
                                     <div class="box-shadow-2 p-0">
-                                        <div class="card border-lighten-3 px-1 py-1 m-0">                                        
-                                            <div class="mt-1 container">
-                                                <div class="form-group col-md-12">
-                                                    <button type="submit" class="btn btn-orange btn-block">Submit</button>
-                                                </div>                                                                                                                                                                                    
+                                        <div  class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                                            <div class="card-header border-0 pb-0">
+                                                <div class="card-title mb-0">
+                                                    <h3 class="crt-acc"><b>Bio</b></h3>
+                                                </div>                                            
                                             </div>
-                                            
+                                            <div class="form-group mt-1 mb-0 p-2">
+                                                <div class="input-group" >
+                                                    <div class="mb-3">
+                                                        <label id=""></label>
+                                                    </div>
+                                                    <textarea  rows="2" class="form-control border-cont-form-orange" name="bio" placeholder="Message">{{Auth::user()->bio}}</textarea>
+                                                </div>
+                                                <div class="mt-2 p-1">
+                                                    <p><i>Bio.</i></p>
+                                                </div> 
+                                            </div>
+                                                <div id="userInputWork"></div>                            
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-5 mb-5">
+                                <div class="col-md-8 offset-md-2">
+                                    <div class="box-shadow-2 p-0">
+                                        <div  class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                                            <div class="card-header border-0 pb-0">
+                                                <div class="card-title mb-0">
+                                                    <h3 class="crt-acc"><b>Work</b></h3>
+                                                </div>                                            
+                                            </div>
+                                            <div class="form-group mt-1 mb-0 p-2">
+                                                <div class="input-group">
+                                                    <div class="mb-3">
+                                                        <label id=""></label>
+                                                    </div>
+                                                    <textarea id="userinput8" rows="2" class="form-control border-cont-form-orange" name="work" placeholder="Message">{{Auth::user()->work}}</textarea>
+                                                </div>
+                                                <div class="mt-2 p-1">
+                                                    <p><i>Work.</i></p>
+                                                </div> 
+                                            </div>                                                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-5 mb-5">
+                                <div class="col-md-8 offset-md-2">
+                                    <div class="box-shadow-2 p-0">
+                                        <div id="userInputEdu" class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                                            <div class="card-header border-0 pb-0">
+                                                <div class="card-title mb-0">
+                                                    <h3 class="crt-acc"><b>Education</b></h3>
+                                                </div>                                            
+                                            </div>
+                                            <div class="form-group mt-1 mb-0 p-2">
+                                                <div class="input-group">
+                                                    <div class="mb-3">
+                                                        <label id=""></label>
+                                                    </div>
+                                                    <textarea id="userinput8" rows="2" class="form-control border-cont-form-orange" name="education" placeholder="Message">{{Auth::user()->education}}</textarea>
+                                                </div>
+                                                <div class="mt-2 p-1">
+                                                    <p><i>Education.</i></p>
+                                                </div> 
+                                            </div>
+                                                                                
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Row of the page contents -->
+                            <div class="row mt-5 mb-5">
+                                <div class="col-md-8 offset-md-2">                                                                                                                    
+                                    <div class="mt-1 container">
+                                        <div class="form-group col-md-12">
+                                            <button type="submit" class="btn btn-orange btn-block">Submit</button>
+                                        </div>                                                                                                                                                                                    
+                                    </div>                                                                                                                        
                                 </div>
                             </div>
                         </form>
