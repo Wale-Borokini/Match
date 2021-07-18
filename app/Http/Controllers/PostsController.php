@@ -40,7 +40,7 @@ class PostsController extends Controller
     public function viewBlogPage(){
         $title = 'Blog';
         //return view('pages.index', compact('title'));
-        $posts = Post::orderBy('created_at','desc')->paginate(10);
+        $posts = Post::orderBy('created_at','desc')->paginate(20);
         return view('pages.blog')->with(compact('posts', 'title'));
     }
 

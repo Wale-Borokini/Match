@@ -17,7 +17,14 @@
                                 <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
                                 <div class="card-img-top img-fluid bg-cover height-200" style="background: url({{asset('app-assets/images/carousel/wall.jpg')}});"></div>
                                 <div class="card-profile-image">
-                                    <img width="140" height="140" src="{{asset(Auth::user()->avatar)}}" class="rounded-circle img-border box-shadow-1" alt="Card image">
+                                    <a href="">
+                                        <img width="140" height="140" src="{{asset(Auth::user()->avatar)}}" id="upload_link" class="rounded-circle img-border box-shadow-1" alt="Card image">                                        
+                                    </a>
+                                    <form action="{{route('profile.change')}}" method="POST" enctype="multipart/form-data" id="myform">
+                                        @csrf
+                                        <input id="upload" name="avatar" type="file"/>
+                                        {{-- <button type="submit" class="btn btn-orange">Submit</button> --}}
+                                    </form>
                                 </div>
                                 <div class="profile-card-with-cover-content text-center">
                                     <div class="card-body">
@@ -180,4 +187,49 @@
                 </div>
             </div>
         </div>
+        <script>
+             $(function(){
+                $("#upload_link").on('click', function(e){
+                    e.preventDefault();
+                    $("#upload:hidden").trigger('click');
+                });
+            });
+
+
+
+            $(document).ready(function () {
+                // ajax setup for csrf token
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $("#upload").change(function(e)  {                          
+                                
+                    
+                    var image = document.querySelector('#myform input[name=avatar]');
+
+                    // Creating an instance of FormData to submit the form.
+                    var formData = new FormData();                                
+                    formData.append('avatar', image.files[0]);
+                                                    
+                      $.ajax({
+                          type: "post",
+                          enctype: 'multipart/form-data',
+                          url: "{{route('profile.change')}}", //nedd to create in controller
+                          data: formData,
+                          cache: false,
+                          contentType: false,
+                          processData: false,
+                          success: function (data) {
+                            
+                          },
+                          error: function (jqXHR, status, err) {
+                          }                      
+                      })              
+                });
+            });
+
+        </script>
     @endsection

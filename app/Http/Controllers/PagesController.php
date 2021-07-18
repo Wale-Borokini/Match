@@ -91,6 +91,24 @@ class PagesController extends Controller
 
     }
 
+    public function changeProfile(Request $request, User $user)
+    {        
+
+        $user = Auth::user();
+        if($request->hasFile('avatar')){
+            $profileImage = $request->file('avatar');
+            $profileImageSaveAsName = time() . Auth::id() . "-profile." . $profileImage->getClientOriginalExtension();
+    
+            $upload_path = 'profile_images/';
+            $profile_image_url = $upload_path . $profileImageSaveAsName;
+            $success = $profileImage->move($upload_path, $profileImageSaveAsName);
+        }
+        $user->avatar = $profile_image_url;
+        $user->save();
+               
+
+    }
+
     public function adminDashboard()
     {
         $title = 'Admin Dashboard';

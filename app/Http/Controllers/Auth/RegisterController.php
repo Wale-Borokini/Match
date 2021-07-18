@@ -53,11 +53,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'avatar' => ['required', 'mimes:jpg'],
-            'password' => ['required', 'string', 'min:4', 'confirmed'],
-
             // 'avatar' => ['required', 'mimes:jpg'],
-            
+            'password' => ['required', 'string', 'min:4', 'confirmed'],
+                        
         ]);
     }
 
@@ -72,13 +70,18 @@ class RegisterController extends Controller
         $request = request();
 
         
-
-        $profileImage = $request->file('avatar');
-        $profileImageSaveAsName = time() . Auth::id() . "-profile." . $profileImage->getClientOriginalExtension();
-   
-        $upload_path = 'profile_images/';
-        $profile_image_url = $upload_path . $profileImageSaveAsName;
-        $success = $profileImage->move($upload_path, $profileImageSaveAsName);
+        if($request->hasFile('avatar')){
+            $profileImage = $request->file('avatar');
+            $profileImageSaveAsName = time() . Auth::id() . "-profile." . $profileImage->getClientOriginalExtension();
+    
+            $upload_path = 'profile_images/';
+            $profile_image_url = $upload_path . $profileImageSaveAsName;
+            $success = $profileImage->move($upload_path, $profileImageSaveAsName);
+        }else{
+            $profileImageSaveAsName = 'noimage.png';
+            $upload_path = 'profile_images/';
+            $profile_image_url = $upload_path . $profileImageSaveAsName;
+        }
 
         return User::create([
             'name' => $data['name'],

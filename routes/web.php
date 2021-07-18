@@ -15,6 +15,7 @@ use App\Http\Controllers\ContactController;
 |
 */
 
+// Unauthenticated Routes
 
 Route::get('/', [
     'uses' => 'App\Http\Controllers\PagesController@viewIndexPage',    
@@ -27,6 +28,10 @@ Route::get('/about', [
 Route::get('/blog', [
     'uses' => 'App\Http\Controllers\PostsController@viewBlogPage',    
 ])->name('blog');
+
+Route::get('/blogDetails/{post:slug}', [
+    'uses' => 'App\Http\Controllers\PostsController@viewBlogDetailsPage',    
+])->name('blogDetails');
 
 Route::get('/codeOfConduct', [
     'uses' => 'App\Http\Controllers\PagesController@viewCodeOfConductPage',    
@@ -42,10 +47,10 @@ Route::get('/stayingSafe', [
     'uses' => 'App\Http\Controllers\PagesController@viewStayingSafePage',    
 ])->name('stayingSafe');
 
-Route::get('/login', [
-    'uses' => 'App\Http\Controllers\PagesController@viewLoginPage',
-    'as' => 'login'
-]);
+// Route::get('/login', [
+//     'uses' => 'App\Http\Controllers\PagesController@viewLoginPage',
+//     'as' => 'login'
+// ]);
 
 
 // Route::get('/createAccount', function () {
@@ -61,55 +66,74 @@ Route::get('/401', function () {
     return view('errors.401');
 });
 
-Route::get('/friendRequest', [
-    'uses' => 'App\Http\Controllers\FriendsController@getFriendRequests',    
-])->name('friendRequest');
 
-Route::get('/friends', [
-    'uses' => 'App\Http\Controllers\FriendsController@getFriendsList',    
-])->name('friends');
+// Authenticated Routes For Users
 
-Route::get('/friendsProfile/{slug}', [
-    'uses' => 'App\Http\Controllers\FriendsController@viewFriendProfile',    
-])->name('friendsProfile');
+Route::group([ 'middleware' => ['auth']], function() {
 
-Route::get('/viewProfile', [
-    'uses' => 'App\Http\Controllers\PagesController@viewProfile',    
-])->name('profile');
+    Route::get('/explore', [
+        'uses' => 'App\Http\Controllers\FriendsController@getSuggestions',    
+    ])->name('explore');
+    
+    Route::get('/friendRequest', [
+        'uses' => 'App\Http\Controllers\FriendsController@getFriendRequests',    
+    ])->name('friendRequest');
 
-Route::get('/editProfile', [
-    'uses' => 'App\Http\Controllers\PagesController@editProfile',    
-])->name('editProfile');
+    Route::get('/friends', [
+        'uses' => 'App\Http\Controllers\FriendsController@getFriendsList',    
+    ])->name('friends');
 
-Route::post('editProfile','App\Http\Controllers\PagesController@update')->name('profile.update');
+    Route::get('/friendsProfile/{slug}', [
+        'uses' => 'App\Http\Controllers\FriendsController@viewFriendProfile',    
+    ])->name('friendsProfile');
 
-Route::get('/acceptFriendRequest/{slug}', [
-    'uses' => 'App\Http\Controllers\FriendsController@acceptFriendRequest',    
-])->name('acceptFriendRequest');
+    Route::get('/viewProfile', [
+        'uses' => 'App\Http\Controllers\PagesController@viewProfile',    
+    ])->name('profile');
 
-Route::get('/rejectFriendRequest/{slug}', [
-    'uses' => 'App\Http\Controllers\FriendsController@rejectFriendRequest',    
-])->name('rejectFriendRequest');
+    Route::post('/viewProfile', [
+        'uses' => 'App\Http\Controllers\PagesController@changeProfile',    
+    ])->name('profile.change');
 
+    Route::get('/editProfile', [
+        'uses' => 'App\Http\Controllers\PagesController@editProfile',    
+    ])->name('editProfile');
 
+    Route::post('editProfile','App\Http\Controllers\PagesController@update')->name('profile.update');
 
-Route::match(['get', 'post'], '/add-friend/{slug}', [
-    'uses' => 'App\Http\Controllers\FriendsController@addFriend',
-])->name('addFriend');
+    Route::get('/acceptFriendRequest/{slug}', [
+        'uses' => 'App\Http\Controllers\FriendsController@acceptFriendRequest',    
+    ])->name('acceptFriendRequest');
 
+    Route::get('/rejectFriendRequest/{slug}', [
+        'uses' => 'App\Http\Controllers\FriendsController@rejectFriendRequest',    
+    ])->name('rejectFriendRequest');
 
-Route::get('/explore', [
-    'uses' => 'App\Http\Controllers\FriendsController@getSuggestions',    
-])->name('explore');
+    Route::match(['get', 'post'], '/add-friend/{slug}', [
+        'uses' => 'App\Http\Controllers\FriendsController@addFriend',
+    ])->name('addFriend');
+    
+    Route::post('comment/create/{post}','App\Http\Controllers\CommentsController@addThreadComment')->name('threadcomment.store');
 
+    Route::post('reply/create/{comment}','App\Http\Controllers\CommentsController@addReplyComment')->name('replycomment.store');
 
-Route::post('comment/create/{post}','App\Http\Controllers\CommentsController@addThreadComment')->name('threadcomment.store');
+    Route::get('/chat', [
+        'uses' => 'App\Http\Controllers\ChatController@getChatpage',    
+    ])->name('chat');
+    
+    Route::post('chat', [
+        'uses' => 'App\Http\Controllers\ChatController@sendMessage'
+    ])->name('msg.chat');
 
-Route::post('reply/create/{comment}','App\Http\Controllers\CommentsController@addReplyComment')->name('replycomment.store');
+    Route::get('/message/{id}', [
+        'uses' => 'App\Http\Controllers\ChatController@getMessage',    
+    ])->name('message');
 
-Route::get('/blogDetails/{post:slug}', [
-    'uses' => 'App\Http\Controllers\PostsController@viewBlogDetailsPage',    
-])->name('blogDetails');
+    Route::get('/displaySugUser/{slug}', [
+        'uses' => 'App\Http\Controllers\FriendsController@displaySugUser',    
+    ]);
+
+});
 
 
 // Route::post('blogDetails', [
@@ -120,31 +144,21 @@ Route::get('/blogDetails/{post:slug}', [
 Auth::routes();
 
 
-Route::get('/chat', [
-    'uses' => 'App\Http\Controllers\ChatController@getChatpage',    
-])->name('chat');
 
-Route::post('chat', [
-    'uses' => 'App\Http\Controllers\ChatController@sendMessage'
-])->name('msg.chat');
 
 // Route::get('/userslist', [
 //     'uses' => 'App\Http\Controllers\ChatController@getUsersList',
 //     //'as' => 'userslist'
 // ]);
 
-Route::get('/message/{id}', [
-    'uses' => 'App\Http\Controllers\ChatController@getMessage',    
-])->name('message');
+
 
 // Route::post('message', [
 //     'uses' => 'App\Http\Controllers\ChatController@sendMessage'
 // ])->name('msg.send');
 
 
-Route::get('/displaySugUser/{slug}', [
-    'uses' => 'App\Http\Controllers\FriendsController@displaySugUser',    
-]);
+
 
 
 
@@ -203,10 +217,6 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 
 Route::group(['prefix' =>'superadmin', 'middleware' => ['auth', 'superadmin']], function() {
 
-    Route::get('blogAdminView', [
-        'uses' => 'App\Http\Controllers\postsController@blogAdminView'
-    ])->name('blogAdminView');
-    
     Route::get('roles', [
         'uses' => 'App\Http\Controllers\AdminController@adminRoles'
     ])->name('adminRole');

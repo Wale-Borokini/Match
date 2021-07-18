@@ -15,10 +15,11 @@
                                         <a href="{{url('blogDetails/'.$randomPost->slug)}}">
                                             <div class="card">
                                                 <div class="card-content">
-                                                <img class="card-img-top img-fluid" src=" {{asset($randomPost->image)}} " alt="Card image cap">
+                                                <img height="180" class="card-img-top" src=" {{asset($randomPost->image)}} " alt="Card image cap">
                                                 <div class="card-body">
-                                                    <h4 class="card-title"><b>{{$randomPost->title}}</b></h4>
-                                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+                                                    <h4 class="card-title"><b> {{ str_limit($randomPost->title, 21) }} </b></h4>
+                                                    <p class="card-text"> {{$randomPost->created_at->diffForHumans()}} </p>
+                                                    <p><i>Posted by {{$randomPost->author}}</i></p>
                                                 </div>
                                                 </div>
                                             </div>
@@ -32,7 +33,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-content">
-                                            <img class="card-img-top fixed-crop" src=" {{asset($post->image)}} " alt="Card image cap">
+                                            <img height="350" class="card-img-top" src=" {{asset($post->image)}} " alt="Card image cap">
                                             <div class="card-body">
                                                 <h4 class="card-title"><b> {{$post->title}} </b></h4>
                                                 <p class="card-text"> {!!$post->body!!} </p>

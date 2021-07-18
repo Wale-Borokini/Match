@@ -93,7 +93,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group text-center">
                                                                 <img class="mb-2 hidden" src="#" id="category-img" width="100px" height="100px">
-                                                                <input type="file" id="project22" class="form-control" name="avatar" onclick="toggleCheck()" required>
+                                                                <input type="file" id="project22" class="form-control" name="avatar" onclick="toggleCheck()">
                                                                 @if ($errors->has('image'))
 
                                                                     <span class="text-danger">{{ $errors->first('image') }}</span>

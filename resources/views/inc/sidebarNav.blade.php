@@ -11,18 +11,13 @@
       <div class="navbar-container content">
         <div class="container collapse navbar-collapse" id="navbar-mobile">
           <ul class="nav navbar-nav mr-auto float-left">         
-              <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"></a>
-                <form class="form-inline float-left">
-                  <input id="input-box-width" type="text" class="form-control mt-1 mb-1" id="inlineFormInput" placeholder="Search">
-                  <!-- <button type="submit" class="btn btn-primary mt-1">Submit</button> -->
-                </form>
-              </li>
+              
           </ul>
           <ul class="nav navbar-nav float-right">
             @if (Auth::user())
               <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                 <span class="mr-1">{{ Auth::user()->name }}<span class="user-name text-bold-700"></span></span>
-                <span class="avatar avater-md avatar-online"><img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}"><i></i></span></a>
+                <span class="avatar avater-md avatar-online"><img src="{{ asset(Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}"><i></i></span></a>
               </li>
             @endif
           </ul>

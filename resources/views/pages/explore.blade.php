@@ -22,10 +22,15 @@
                                         @else
                                             <h4 class="card-title">{{ $user->name }}</h4>
                                         @endif                                         
-                                            <div class="text-center d-lg-none">                                                
-                                                {{-- @if(!empty($friendrequest)) --}}
-                                                    <a href="{{ route('addFriend', $user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
-                                                {{-- @endif --}}
+                                            <div class="text-center d-lg-none">
+                                                @if($user->state && $user->country != Null)
+                                                <div class="badge text-center mb-1 badge-pill badge-success">{{$user->state}}, {{$user->country}}</div>
+                                                @else
+                                                <div class="badge text-center mb-1 badge-pill badge-success"></div>
+                                                @endif
+                                                <div>                                                                                                
+                                                    <a href="{{ route('addFriend', $user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>                                                
+                                                </div>
                                             </div> 
                                     </div>
                                     </div>

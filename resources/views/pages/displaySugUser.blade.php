@@ -13,11 +13,15 @@
                 <p class="card-text">
                     {{$sugUser->bio}}
                 </p>
-
-                <div class="text-center">                   
-                    {{-- @if(!empty($friendrequest)) --}}
-                        <a href="{{ url('/add-friend/'.$sugUser->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
-                    {{-- @endif --}}
+                <div class="text-center">
+                    @if($sugUser->state && $sugUser->country != Null)
+                        <div class="badge text-center mb-1 badge-pill badge-success">{{$sugUser->state}}, {{$sugUser->country}}</div>
+                    @else
+                    <div class="badge text-center mb-1 badge-pill badge-success"></div>
+                    @endif
+                </div>
+                <div class="text-center">                                       
+                        <a href="{{ url('/add-friend/'.$sugUser->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>                    
                 </div>
             </div>
         </div>
