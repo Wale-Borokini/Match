@@ -17,8 +17,9 @@
                                 <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
                                 <div class="card-img-top img-fluid bg-cover height-200" style="background: url({{asset('app-assets/images/carousel/wall.jpg')}});"></div>
                                 <div class="card-profile-image">
-                                    <a href="">
-                                        <img width="140" height="140" src="{{asset(Auth::user()->avatar)}}" id="upload_link" class="rounded-circle img-border box-shadow-1" alt="Card image">                                        
+                                    <a id="upload_link">
+                                        <img width="140" height="140" src="{{asset(Auth::user()->avatar)}}"  class="rounded-circle img-border box-shadow-1" alt="Card image">
+                                        <p class="text-blue-p">Change Profile Picture</p>
                                     </a>
                                     <form action="{{route('profile.change')}}" method="POST" enctype="multipart/form-data" id="myform">
                                         @csrf
@@ -28,7 +29,7 @@
                                 </div>
                                 <div class="profile-card-with-cover-content text-center">
                                     <div class="card-body">
-                                        <h2 class="mt-1">{{Auth::user()->name}}</h2>
+                                        <h2 class="mt-2">{{Auth::user()->name}}</h2>
                                         <h4 class="card-subtitle mt-1 mb-1 text-muted">{{Auth::user()->alias}}</h4>
                                         @if(Auth::user()->state && Auth::user()->country != Null)                                        
                                         <h6 class="card-subtitle text-muted">{{Auth::user()->state}}, {{Auth::user()->country}}</h6>
@@ -57,7 +58,7 @@
                                                 {{Auth::user()->bio}}
                                             </p>
                                             <div class="text-right">
-                                                <a href="{{route('editProfile', '#userInputBio')}}"><button type="" class="btn btn-orange">Edit</button></a>
+                                                <a href="{{route('editProfile', '#userInputBio')}}"><button type="" class="btn btn-sm btn-outline-warning">Edit</button></a>
                                             </div>
                                         </div>                                       
                                     </div>
@@ -79,7 +80,7 @@
                                                {{Auth::user()->work}}
                                             </p>
                                             <div class="text-right">
-                                                <a href="{{route('editProfile', '#userInputWork')}}"><button type="" class="btn btn-orange">Edit</button></a>
+                                                <a href="{{route('editProfile', '#userInputWork')}}"><button type="" class="btn btn-sm btn-outline-warning">Edit</button></a>
                                             </div>
                                         </div>                                                                                                                  
                                     </div>
@@ -101,7 +102,7 @@
                                                 {{Auth::user()->education}}
                                             </p>
                                             <div class="text-right">
-                                                <a href="{{route('editProfile', '#userInputEdu')}}"><button type="" class="btn btn-orange">Edit</button></a>
+                                                <a href="{{route('editProfile', '#userInputEdu')}}"><button type="" class="btn btn-sm btn-outline-warning">Edit</button></a>
                                             </div>
                                         </div>
                                     </div>
@@ -223,7 +224,7 @@
                           contentType: false,
                           processData: false,
                           success: function (data) {
-                            
+                            location.reload();
                           },
                           error: function (jqXHR, status, err) {
                           }                      

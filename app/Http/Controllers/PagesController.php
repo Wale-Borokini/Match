@@ -105,7 +105,8 @@ class PagesController extends Controller
         }
         $user->avatar = $profile_image_url;
         $user->save();
-               
+
+        return redirect()->back()->with('success', 'Post Created');        
 
     }
 

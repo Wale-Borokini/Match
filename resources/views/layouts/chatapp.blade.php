@@ -46,6 +46,7 @@
 
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
     <!-- BEGIN VENDOR JS-->
@@ -164,27 +165,29 @@
           //
   
           $(document).on('click', '#sendMess', function (e) {              
-            //   var message = $('#textMessage').val();
+              var message = $('#body').val();
+              var image = document.querySelector('#myform input[name=image]');
+              // Creating an instance of FormData to submit the form.
+              var formData = new FormData();
+
+              formData.append('message', $("#myform textarea[name=message]").val());
+              formData.append('image', image.files[0]);
+              formData.append('receiver_id', receiver_id);
             //   var image = $('#upload').val();
               //var submit = $(this).val();
               // message != '' && 
               // Check if enter key is pressed and mesage is not null also if receiver is selected
-              if (receiver_id != '') {
+              if (receiver_id != '' && message != '' || image.value.length != 0) {
                 // alert(receiver_id);
                  // $('#textMessage').val(''); //When pressed text box will be empty
   
                 //   var datastr = "receiver_id=" + receiver_id + "&message=" + message + "&image=" + image;
-                 
-                var image = document.querySelector('#myform input[name=image]');
+                
+               
+                
+                // Disable SendMessage Button onClick
+                $("#sendMess").prop('disabled', true);
 
-                // Creating an instance of FormData to submit the form.
-                var formData = new FormData();
-                
-                formData.append('message', $("#myform input[name=message]").val());
-                formData.append('image', image.files[0]);
-                formData.append('receiver_id', receiver_id);
-                
-                
                   $.ajax({
                       type: "post",
                       enctype: 'multipart/form-data',
@@ -194,7 +197,7 @@
                       contentType: false,
                       processData: false,
                       success: function (data) {
-                
+                        $("#sendMess").prop('disabled', false);
                             $('#' + receiver_id + '_message').text($("#myform input[name=message]").val())
                       },
                       error: function (jqXHR, status, err) {

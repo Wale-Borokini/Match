@@ -4,7 +4,7 @@
             <div class="navbar-header">
                 <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a href="{{ url('/') }}" class="navbar-brand nav-link"><img class="brand-logo" src=" {{asset('app-assets/images/logo/Black-n-bg.png')}} "
+                        <a href="{{ url('/') }}" class="navbar-brand nav-link"><img class="brand-logo" src=" {{asset('app-assets/images/logo/group-16.png')}} "
                                 alt="branding logo"></a>
                     </li>
                     <li class="nav-item d-md-none float-right"><a data-toggle="collapse" data-target="#navbar-mobile10"

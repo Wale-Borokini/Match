@@ -98,24 +98,21 @@
                         <div class="card-content">
                             <div class="card-body">
                                 <h1 class="thick-org-header mb-2">More than just dating</h1>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <p class="card-text">
+                                    <span style="font-size:2.0rem ;">W</span>elcome to our dating website where we have created an easy and convenient way for you to be matched. 
+                                    If this is your first time here, we really want to say welcome to Match To Be One. 
+                                    This is the best Christian dating website and get ready to be matched with your heart rob. 
+                                    <p>
+                                    To be part of this amazing community and enjoy some certain benefits, we implore you to sign 
+                                    up to our website. Our newsletters will be rolling out from time to time and we would love you to be one 
+                                    of the first persons to get them.
+                                    </p>
+                                    Signing up also helps in matching evenly and enables us know the type of persons that meets your dating match. 
+                                    There are guidelines and rules concerning our website and signing up would make you understand them very well.
+                                    <br>
+                                    Thank you for stopping by, have fun and do not forget to sign up.
+
+                                </p>
                             </div>
                             <div id="mask-grop">
                                 <img class="card-img-top img-fluid" src="{{asset('app-assets/images/backgrounds/mask-group-x2.png')}}" alt="Card image cap"> 

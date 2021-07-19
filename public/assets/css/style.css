@@ -336,6 +336,11 @@ form .form-chats-send:-ms-input-placeholder
     .give-min-ht {
       min-height: 600px;
     }
+
+    
+    .text-blue-p {
+      color: #006699;
+    }
         
 
     /*width: 100%;

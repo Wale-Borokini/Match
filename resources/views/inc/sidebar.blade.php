@@ -22,11 +22,13 @@
           </li>
         @endif
 
-        
-            
-        <li class="mt-5 nav-item">
+        <li class="mt-5"></li>
+
+        @if(Auth::user())           
+        <li class="nav-item">
           <a class="sidebar-txt-hov" href=" {{url('/viewProfile')}} "><span class="menu-title">My Profile</span></a>
         </li>
+        @endif
         <li class=" nav-item">
           <a class="sidebar-txt-hov" href=" {{ url('/codeOfConduct') }} "><span class="menu-title">Code of Conduct</span></a>
         </li>

@@ -69,11 +69,7 @@
 
       setTimeout(fade_out, 5000);
 
-      // .create( document.querySelector( '#body' ), {
-      //   toolbar: [ 'bold', 'italic', 'link', 'undo', 'redo', 'numberedList', 'bulletedList' ]
-      // } )
-
-
+      
     ClassicEditor
     .create( document.querySelector( '#body' ) )
     .catch( error => {

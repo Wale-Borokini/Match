@@ -96,7 +96,7 @@
                             <div class="form-control-position">
                             <i class="icon-emoticon-smile"></i>
                             </div>
-                            <input type="text" class="form-control" name="message" id="textMessage" class="submit" placeholder="Type your message">
+                            <textarea class="form-control" name="message" id="body" class="submit" placeholder="Type your message" autocomplete="on"></textarea>
                             <input id="receiver_id" name="receiver_id" type="hidden"/>
                             <div class="form-control-position control-position-right">
                             <input id="upload" name="image" type="file"/>
