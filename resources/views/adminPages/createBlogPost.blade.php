@@ -10,12 +10,12 @@
                 <!-- Row of the page contents -->
                     <div class="row mt-5 mb-5">
                         
-                        <div class="col-md-8 offset-md-2">
+                        <div class="col-md-10 offset-md-1">
                             <div class="box-shadow-2 p-0">
                                 <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
                                     <div class="card-header border-0 pb-0">
                                         <div class="card-title text-center mb-2">
-                                            <h1 class="crt-acc"><b>Create Post</b></h1>
+                                            <h1 class="crt-acc"><b>Create Blog Post</b></h1>
                                         </div>
                                         
                                     </div>
@@ -26,18 +26,27 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <input type="text" id="projectinput3" class="form-control" placeholder="Post Title" name="title">
+                                                            <input type="text" id="projectinput3" class="form-control @error('title') is-invalid @enderror" placeholder="Post Title" name="title" value="{{ old('title') }}">
+                                                            @if ($errors->has('title'))
+                                                                <span class="text-danger">{{ $errors->first('title') }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group text-center">
                                                             <img class="mb-2 hidden" src="#" id="category-img" width="100px" height="100px">
-                                                            <input type="file" id="projectin" class="form-control" name="image" onclick="toggleCheck()">
+                                                            <input type="file" id="projectin" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" onclick="toggleCheck()">
+                                                            @if ($errors->has('image'))
+                                                                <span class="text-danger">{{ $errors->first('image') }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <textarea id="body" rows="5" class="form-control " name="body" placeholder="Write a blog post"></textarea>
+                                                            <textarea id="body" rows="5" class="form-control @error('body') is-invalid @enderror" name="body" value="{{ old('image') }}" placeholder="Write a blog post"></textarea>
+                                                            @if ($errors->has('body'))
+                                                                <span class="text-danger">{{ $errors->first('body') }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 

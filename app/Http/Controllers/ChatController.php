@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
+use stdClass;
 use Illuminate\Support\Facades\Input;
 use Auth;
 use DB;
@@ -108,6 +109,8 @@ class ChatController extends Controller
     public function getMessage($user_id)
     {
         $my_id = Auth::id();
+        // $to = $request->receiver_id;
+        
 
         // Make read all unread message
         Message::where(['msg_from' => $user_id, 'msg_to' => $my_id])->update(['is_read' => 1]);
@@ -123,9 +126,21 @@ class ChatController extends Controller
 
     }
 
+    public function mobileUserDetails($user_id)
+    {
+        $mobileUser = User::where('id', $user_id)->first();
+
+
+        $ovbject = new stdClass;
+        $ovbject->FullName = $mobileUser->name;
+        $ovbject->UserPicture = $mobileUser->avatar;
+    
+        return  json_encode($ovbject);
+    }
+
     public function sendMessage(Request $request)
     {
-       
+        
         $from = Auth::id();
         $to = $request->receiver_id;
         $message = $request->message;

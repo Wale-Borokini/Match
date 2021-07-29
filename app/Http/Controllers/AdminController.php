@@ -19,8 +19,11 @@ class AdminController extends Controller
     public function adminDashboard()
     {
         $title = 'Admin Dashboard';
+        $users = User::all();
+        $blogPosts = Post::all();
+        $administrators = User::where('admin', '=', 1)->get();
         
-        return view('adminPages.adminDashboard')->with(compact('title'));
+        return view('adminPages.adminDashboard')->with(compact('title', 'users', 'blogPosts', 'administrators'));
 
     }
 
@@ -68,6 +71,80 @@ class AdminController extends Controller
         $users = User::where('id', '!=', $userId)->get();                 
 
         return view('adminPages.viewUsers')->with(compact('users', 'title'));
+    }
+
+
+    public function rolesSearch(Request $request){
+
+        $title = 'Search Results';
+        // Get the search value from the request
+        $search = $request->input('search');
+    
+        // Search in the title and body columns from the posts table
+        $users = User::query()
+            ->where('name', 'LIKE', "%{$search}%")
+            ->orWhere('alias', 'LIKE', "%{$search}%")
+            ->orWhere('email', 'LIKE', "%{$search}%")
+            ->get();
+    
+        // Return the search view with the resluts compacted
+        return view('adminPages.rolesSearch')->with(compact('users', 'title'));
+    }
+
+    function action(Request $request)
+    {
+     if($request->ajax())
+     {
+      $output = '';
+      $query = $request->get('query');
+      if($query != '')
+      {
+       $data = DB::table('users')
+         ->where('name', 'like', '%'.$query.'%')
+         ->orWhere('alias', 'like', '%'.$query.'%')         
+         ->orderBy('id', 'desc')
+         ->get();
+         
+      }
+      else
+      {
+       $data = DB::table('users')
+         ->orderBy('id', 'desc')
+         ->get();
+      }
+      $total_row = $data->count();
+      if($total_row > 0)
+      {
+       foreach($data as $row)
+       {
+        $output .= '
+        <tr>
+        <td class="text-truncate"><a class="text-truncate" href='.route('viewUserProfile', $row->slug).'>
+        <img class="media-object rounded-circle avatar avatar-sm pull-up" src='.asset($row->avatar).'>
+        <span class="mr-1">'.$row->name.'</span></a></td>        
+         <td>'.$row->alias.'</td>
+         <td>'.$row->email.'</td>
+         <td>'.$row->sex.'</td>
+         <td>'.$row->state.", ".$row->country.'</td>
+        </tr>
+        ';
+       }
+      }
+      else
+      {
+       $output = '
+       <tr>
+        <td align="center" colspan="5">No Data Found</td>
+       </tr>
+       ';
+      }
+      $data = array(
+       'table_data'  => $output,
+       'total_data'  => $total_row
+      );
+
+      echo json_encode($data);
+     }
     }
 
 

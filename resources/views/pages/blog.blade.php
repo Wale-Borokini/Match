@@ -4,6 +4,13 @@
     <div class="app-content content">
         <div class="content-wrapper">
         <div class="content-body container">
+            <div class="mt-4 mb-3">
+                <div class="card-title text-center mb-2">
+                    @if(count($posts) <0)
+                        <h1 class="crt-acc">No Blog Posts</h1>
+                    @endif
+                </div>                        
+            </div>
             <section id="pagination">
                 <div>
                     <div class="row match-height">
@@ -14,9 +21,11 @@
                                     <div class="card-content">
                                     <img height="180" class="card-img-top" src=" {{asset($post->image)}} " alt="Card image cap">
                                     <div class="card-body">
-                                        <h4 class="card-title"><b> {{ str_limit($post->title, 21) }} </b></h4>
-                                        <p class="card-text"> {{$post->created_at->diffForHumans()}} </p>
-                                        <p><i>Posted by {{$post->author}}</i></p>
+                                        <h4 class="card-title"><b> {{ str_limit($post->title, 21) }} </b></h4> 
+                                        <p>{!! str_limit($post->body, 25) !!}</p>                                       
+                                            {{$post->created_at->diffForHumans()}}
+                                        <br>
+                                        <b><i>Posted by {{$post->author}}</i></b>
                                     </div>
                                     </div>
                                 </div>

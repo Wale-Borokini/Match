@@ -334,12 +334,16 @@ form .form-chats-send:-ms-input-placeholder
 
     /* give Min Width to a div */
     .give-min-ht {
-      min-height: 600px;
+      min-height: 700px;
     }
 
     
     .text-blue-p {
       color: #006699;
+    }
+    
+    .orange-p-text {
+      color: #ff944d;
     }
         
 

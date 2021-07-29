@@ -2,7 +2,7 @@
 
     @section('content')
         <div class="app-content content">
-            <div class="content-wrapper">
+            <div class="content-wrapper give-min-ht">
                 <div class="content-header row">
                 </div>
                 <div class="content-body">
@@ -37,6 +37,9 @@
                                         <h6 class="card-subtitle text-muted"></h6>
                                         @endif
                                         <div class="badge mt-1 badge-pill badge-warning">{{Auth::user()->sex}}</div>
+                                        <div class="mt-2">
+                                            <a href="{{route('editProfile')}}"><button type="" class="btn btn-sm btn-outline-warning">Edit Profile</button></a>
+                                        </div>
                                     </div>                                   
                                 </div>
                             </div>
@@ -55,7 +58,7 @@
                                         </div>
                                         <div class="p-1">
                                             <p>
-                                                {{Auth::user()->bio}}
+                                                {!!Auth::user()->bio!!}
                                             </p>
                                             <div class="text-right">
                                                 <a href="{{route('editProfile', '#userInputBio')}}"><button type="" class="btn btn-sm btn-outline-warning">Edit</button></a>
@@ -77,7 +80,7 @@
                                         </div> 
                                         <div class="p-1">
                                             <p>
-                                               {{Auth::user()->work}}
+                                               {!!Auth::user()->work!!}
                                             </p>
                                             <div class="text-right">
                                                 <a href="{{route('editProfile', '#userInputWork')}}"><button type="" class="btn btn-sm btn-outline-warning">Edit</button></a>
@@ -99,7 +102,7 @@
                                         </div>
                                         <div class="p-1">
                                             <p>
-                                                {{Auth::user()->education}}
+                                                {!!Auth::user()->education!!}
                                             </p>
                                             <div class="text-right">
                                                 <a href="{{route('editProfile', '#userInputEdu')}}"><button type="" class="btn btn-sm btn-outline-warning">Edit</button></a>
@@ -110,15 +113,22 @@
                             </div>
                         </div>
                                                                                                                
-                        <div class="card-content">
+                        <div style="" class="card-content">
                             <div class="card-body my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
                                 <div class="row">
+                                @if(Auth::user()->gallery_images != null)
+
+                                    @foreach(json_decode(Auth::user()->gallery_images) as $key => $gallery_image)
                                     <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a href="{{asset('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/1.jpg')}}" itemprop="thumbnail" alt="Image description" />
+                                        <a class="float-right" href=""><b><i style="color:red;" class="la la-close"></i></b></a>
+                                        <a href="{{asset($gallery_image)}}" itemprop="contentUrl" data-size="480x360">
+                                            <img width="100%" height="200px" class="img-thumbnail" src="{{asset($gallery_image)}}" itemprop="thumbnail" alt="Gallery Image" />
                                         </a>
                                     </figure>
-                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                    @endforeach
+
+                                @endif
+                                    {{-- <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                         <a href="{{asset('app-assets/images/gallery/2.jpg')}}" itemprop="contentUrl" data-size="480x360">
                                             <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/2.jpg')}}" itemprop="thumbnail" alt="Image description" />
                                         </a>
@@ -132,7 +142,7 @@
                                         <a href="{{asset('app-assets/images/gallery/4.jpg')}}" itemprop="contentUrl" data-size="480x360">
                                             <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/4.jpg')}}" itemprop="thumbnail" alt="Image description" />
                                         </a>
-                                    </figure>
+                                    </figure> --}}
                                 </div>                                                            
                             </div>
                             <!--/ Image grid -->
@@ -184,10 +194,15 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </section> 
                 </div>
             </div>
         </div>
+        <script src="{{ asset('app-assets/vendors/js/gallery/masonry/masonry.pkgd.min.js') }}"></script>
+        <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js') }}"></script>
+        <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js') }}"></script>
+        <script src="{{ asset('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')}}"></script>
         <script>
              $(function(){
                 $("#upload_link").on('click', function(e){

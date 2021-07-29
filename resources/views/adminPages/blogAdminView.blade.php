@@ -12,11 +12,13 @@
                                 <a href="{{route('blogDetails', $post->slug)}}">
                                 <div class="card">
                                     <div class="card-content">
-                                    <img height="180" class="card-img-top" src=" {{asset($post->image)}} " alt="Card image cap">
+                                    <img height="180" class="card-img-top" src=" {{asset($post->image)}} " alt="Blog Image">
                                     <div class="card-body">
-                                        <h4 class="card-title"> {{$post->title}} </h4>
-                                        <p class="card-text"> {{$post->created_at->diffForHumans()}} </p>
-                                        <p><i>Posted by {{$post->author}}</i></p>
+                                        <h4 class="card-title"><b> {{$post->title}} </b></h4>
+                                        <p>{!! str_limit($post->body, 25) !!}</p>
+                                        {{$post->created_at->diffForHumans()}}
+                                        <br>
+                                        <b><i>Posted by {{$post->author}}</i></b>
                                                                 
                                             <div class="text-center mt-1">
                                                 <form action="{{ route('post.delete', $post->slug) }}" method="post">

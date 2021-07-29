@@ -644,8 +644,8 @@ mark,
 
 .img-thumbnail
 {
-    max-width: 100%;
-    height: auto; 
+    /* max-width: 100%;
+    height: auto;  */
     padding: .25rem;
 
     border: 1px solid #626e82;

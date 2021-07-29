@@ -6,13 +6,17 @@
             <div class="container mt-5"> <!-- Main Page Section Start -->   
                     <div class="mt-4 mb-3">
                         <div class="card-title text-center mt-2 ">
-                            <h1 class="crt-acc"><b>Give Admin Role</b></h1>
-                        </div>                                              
+                            <h1 class="crt-acc"><b>Search Results(Users)</b></h1>
+                        </div>                        
                     </div>                       
                     <div id="recent-appointments" class="col-12 mt-3">
                     <div class="card">
                         <div class="card-header">
-                        <h4 class="card-title"></h4>
+                        @if(count($users) > 0)
+                        <h4 class="card-title">Results ({{count($users)}})</h4>
+                        @elseif(count($users) < 1)
+                        <h4 class="card-title">No Records Found</h4>
+                        @endif
                         <form class="mt-1" action="{{ route('roles.search') }}" method="GET">
                             <div class="chat-app-input d-flex">
                                 <fieldset class="form-group position-relative col-md-4 m-0">                                   
@@ -24,7 +28,7 @@
                             </div>                            
                         </form> 
                         <div class="heading-elements">
-                        
+                            
                         </div>
                         </div>
                         <div class="card-content mt-1">

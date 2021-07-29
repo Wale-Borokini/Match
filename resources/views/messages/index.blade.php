@@ -1,11 +1,23 @@
 <div class="content-wrapper">
+
+    <div class="card text-center">
+        <img width="50" height="50" class="media-object rounded-circle" id="mobileUserImage" src="" alt="image">
+        <h5 class="card-title" id="mobileUserFullName">
+            <span class="avatar avatar-sm avatar">
+               
+            </span> 
+           
+        </h5>
+        
+    </div>
     <div class="overflow-class-chat">
-        <div class="content-body">
-            <section class="chat-app-window message-wrapper">
+        <div class="content-body">            
+            <section class="chat-app-window message-wrapper">                
+                
             <div class="badge badge-default mb-1">
                 Chat History
             </div>
-            <div class="chats message-wrapper">
+            <div class="chats message-wrapper">                
                 <div class="chats">
                     @foreach($messages as $message)
                         <div class="{{ ($message->msg_from == Auth::id()) ? 'chat' : 'chat-left' }}">

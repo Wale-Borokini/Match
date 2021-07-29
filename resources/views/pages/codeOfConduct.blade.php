@@ -12,7 +12,7 @@
                     <div class="col-xl-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="card-content">
-                                <img class="card-img-top img-fluid" src="app-assets/images/carousel/couples-pic.png" alt="Card image cap"/>
+                                <img class="card-img-top img-fluid" src="{{ asset('app-assets/images/backgrounds/stay-safe.png') }}" alt="Card image cap"/>
                                 <div class="card-body">
                                     <div class="container mt-3">
                                         <h1 class="mb-3 mt-3">Code Of Conduct</h1>

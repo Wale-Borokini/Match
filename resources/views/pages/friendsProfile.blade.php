@@ -12,18 +12,17 @@
                                 <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
                                 <div class="card-img-top img-fluid bg-cover height-200" style="background: url({{asset('app-assets/images/carousel/wall.jpg')}});"></div>
                                 <div class="card-profile-image">
-                                    <img width="140" height="140" src="{{asset($user->avatar)}}" class="rounded-circle img-border box-shadow-1" alt="Card image">
+                                    <img width="140" height="140" src="{{asset($user->avatar)}}" class="rounded-circle img-border box-shadow-1" alt="Profile Picture">
                                 </div>
                                 <div class="profile-card-with-cover-content text-center">
                                     <div class="card-body">
                                         <h2 class="mt-1">{{$user->name}}</h2>
-                                        <h4 class="card-subtitle mt-1 mb-1 text-muted"><i>{{$user->alias}}</i></h4>
+                                        <h4 class="card-subtitle mt-1 mb-1 text-muted">{{$user->alias}}</h4>
                                         @if($user->state && $user->country != Null)                                        
                                         <h6 class="card-subtitle text-muted">{{$user->state}}, {{$user->country}}</h6>
                                         @else
                                         <h6 class="card-subtitle text-muted"></h6>
-                                        @endif
-                                        <div class="badge mt-1 badge-pill badge-warning">{{$user->sex}}</div>
+                                        @endif                                        
                                     </div>                                   
                                 </div>
                             </div>
@@ -42,7 +41,7 @@
                                         </div>
                                         <div class="p-1">
                                             <p>
-                                                {{$user->bio}}
+                                                {!!$user->bio!!}
                                             </p>
                                         </div>                                       
                                     </div>
@@ -61,7 +60,7 @@
                                         </div> 
                                         <div class="p-1">
                                             <p>
-                                               {{$user->work}}
+                                               {!!$user->work!!}
                                             </p>
                                         </div>                                                                                                                  
                                     </div>
@@ -80,7 +79,7 @@
                                         </div>
                                         <div class="p-1">
                                             <p>
-                                                {{$user->education}}
+                                                {!!$user->education!!}
                                             </p>
                                         </div>
                                     </div>
@@ -91,26 +90,18 @@
                         <div class="card-content">
                             <div class="card-body my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
                                 <div class="row">
+                                @if($user->gallery_images != null)
+
+                                    @foreach(json_decode($user->gallery_images) as $key => $gallery_image)
                                     <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a href="{{asset('app-assets/images/gallery/1.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/1.jpg')}}" itemprop="thumbnail" alt="Image description" />
+                                        <a class="float-right" href=""><b><i style="color:red;" class="la la-close"></i></b></a>
+                                        <a href="{{asset($gallery_image)}}" itemprop="contentUrl" data-size="480x360">
+                                            <img width="100%" height="200px" class="img-thumbnail" src="{{asset($gallery_image)}}" itemprop="thumbnail" alt="Gallery Image" />
                                         </a>
                                     </figure>
-                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a href="{{asset('app-assets/images/gallery/2.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/2.jpg')}}" itemprop="thumbnail" alt="Image description" />
-                                        </a>
-                                    </figure>
-                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a href="{{asset('app-assets/images/gallery/3.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/3.jpg')}}" itemprop="thumbnail" alt="Image description" />
-                                        </a>
-                                    </figure>
-                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a href="{{asset('app-assets/images/gallery/4.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/4.jpg')}}" itemprop="thumbnail" alt="Image description" />
-                                        </a>
-                                    </figure>
+                                    @endforeach
+                                    
+                                @endif
                                 </div>                                                            
                             </div>
                             <!--/ Image grid -->
@@ -162,7 +153,10 @@
                                 </div>
                             </div>
                         </div>
-                    </section>                                                                                                                                                          
+                    </section>                                         
+                    <div class="col-6 offset-5 mt-5">
+                        <a id="confirm-unfriend" href="#"><button type="button" class="btn btn-sm btn-outline-warning">Unfriend</button></a>
+                    </div>                                                                                                                                                         
                 </div>
             </div>
         </div>
@@ -170,4 +164,9 @@
         <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js') }}"></script>
         <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js') }}"></script>
         <script src="{{ asset('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')}}"></script>
+        <script>
+            $('#confirm-unfriend').on('click', function () {
+                return confirm('Are You sure You want to unfriend this user?');
+            })
+        </script>
     @endsection

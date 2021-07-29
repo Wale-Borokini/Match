@@ -182,6 +182,36 @@ $(document).ready(function(){
 		});
 	});
 
+	$('#confirm-make-admin').on('click',function(){
+		swal({
+		    title: "Confirm Admin Role",
+		    text: "Do You want to make this user an admin?",
+		    icon: "warning",
+		    buttons: {
+                cancel: {
+                    text: "No, cancel plx!",
+                    value: null,
+                    visible: true,
+                    className: "",
+                    closeModal: false,
+                },
+                confirm: {
+                    text: "Admin Role Given!!!",
+                    value: true,
+                    visible: true,
+                    className: "",
+                    closeModal: false
+                }
+		    }
+		}).then(isConfirm => {
+		    if (isConfirm) {
+		        swal("Role Given!", "The user is now an admin!!", "success");
+		    } else {
+		        swal("Cancelled", "It's safe.", "error");
+		    }
+		});
+	});
+
 	$('#confirm-color').on('click',function(){
 		swal({
 		    title: "Are you sure?",

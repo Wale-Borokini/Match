@@ -15,6 +15,7 @@
                 <div id="navbar-mobile10" class="bg-white rounded collapse navbar-collapse">
                     <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link"></a></li>
+                        <li class="nav-item"><a class="nav-link active" href="{{ url('/') }}">Home</a></li>
                         <li class="nav-item"><a class="nav-link active" href="{{ url('/about') }}">About</a></li>
                         <li class="nav-item"><a class="nav-link " href="{{ url('/blog') }}" role="button">Blog</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url('/contact') }}">Contact</a></li>

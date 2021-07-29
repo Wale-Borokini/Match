@@ -121,9 +121,13 @@ Route::group([ 'middleware' => ['auth']], function() {
         'uses' => 'App\Http\Controllers\ChatController@getChatpage',    
     ])->name('chat');
     
-    Route::post('chat', [
-        'uses' => 'App\Http\Controllers\ChatController@sendMessage'
-    ])->name('msg.chat');
+    Route::get('mobileUserDetails/{id}', [
+        'uses' => 'App\Http\Controllers\ChatController@mobileUserDetails'
+    ])->name('mobile.details');
+
+    Route::get('/message/{id}', [
+        'uses' => 'App\Http\Controllers\ChatController@getMessage',    
+    ])->name('message');
 
     Route::get('/message/{id}', [
         'uses' => 'App\Http\Controllers\ChatController@getMessage',    
@@ -190,6 +194,8 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
         'uses' => 'App\Http\Controllers\AdminController@viewUsers',        
     ])->name('viewUsers');
 
+    Route::get('/viewUsers/action', 'App\Http\Controllers\AdminController@action')->name('viewUsers.action');
+
     Route::get('createBlogPost', [
         'uses' => 'App\Http\Controllers\PostsController@getCreatePostPage'
     ])->name('createBlogPost');
@@ -220,6 +226,8 @@ Route::group(['prefix' =>'superadmin', 'middleware' => ['auth', 'superadmin']], 
     Route::get('roles', [
         'uses' => 'App\Http\Controllers\AdminController@adminRoles'
     ])->name('adminRole');
+
+    Route::get('rolesSearch/', 'App\Http\Controllers\AdminController@rolesSearch')->name('roles.search');
 
     Route::get('giveAdminRole/{slug}', [
         'uses' => 'App\Http\Controllers\AdminController@giveAdminRole',        

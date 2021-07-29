@@ -22,11 +22,10 @@
                     <div class="navbar-container content float-right">
                         <div id="navbar-mobile10" class="bg-white rounded collapse navbar-collapse">
                             <ul class="nav navbar-nav mr-auto">
-                                <li class="nav-item"><a class="nav-link"></a></li>
-                                <li class="nav-item"><a class="nav-link active" href="#">About</a></li>
-                                <li class="nav-item"><a class="nav-link " href="#" role="button">Blog</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                                <li class="nav-item"><a class="nav-link active"></a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
+                                <li class="nav-item"><a class="nav-link active" href="{{ url('about') }}">About</a></li>
+                                <li class="nav-item"><a class="nav-link " href="{{ url('blog') }}" role="button">Blog</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ url('contact') }}">Contact</a></li>                                
                             </ul>
                         </div>
                     </div>
@@ -67,17 +66,7 @@
                                                                     </span>
                                                                 @enderror
                                                             </div>
-                                                        </div>
-                                                       
-                                                        {{-- <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <input type="text" id="projectinput2" class="form-control" placeholder="Last Name" name="lname">
-                                                            </div>
-                                                        </div> --}}
-                                                        {{-- <div class="slidecontainer col-md-12">
-                                                            <input name="age" type="range" min="25" max="55" value="output.innerHTML" class="slider" step="10" id="myRange">
-                                                            <p>Between: <span id="demo"></span></p>
-                                                          </div> --}}                                                         
+                                                        </div>                                                                                                    
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
@@ -93,10 +82,10 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group text-center">
                                                                 <img class="mb-2 hidden" src="#" id="category-img" width="100px" height="100px">
-                                                                <input type="file" id="project22" class="form-control" name="avatar" onclick="toggleCheck()">
-                                                                @if ($errors->has('image'))
+                                                                <input type="file" id="project22" class="form-control  @error('avatar') is-invalid @enderror" name="avatar" onclick="toggleCheck()">
+                                                                @if ($errors->has('avatar'))
 
-                                                                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                                                                    <span class="text-danger">{{ $errors->first('avatar') }}</span>
 
                                                                 @endif
                                                             </div>

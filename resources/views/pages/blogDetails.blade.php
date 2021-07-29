@@ -35,7 +35,7 @@
                                         <div class="card-content">
                                             <img height="350" class="card-img-top" src=" {{asset($post->image)}} " alt="Card image cap">
                                             <div class="card-body">
-                                                <h4 class="card-title"><b> {{$post->title}} </b></h4>
+                                                <h4 class="card-title text-center"><b> {{$post->title}} </b></h4>
                                                 <p class="card-text"> {!!$post->body!!} </p>
 
 

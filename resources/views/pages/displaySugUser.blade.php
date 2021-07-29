@@ -1,4 +1,5 @@
 @foreach($sugUsers as $sugUser)   
+<div class="p-1">
     <div class="card">
         <div class="card-content">
             <img class="img-res-syd card-img-top img-fluid" src="{{ $sugUser->avatar }}" alt="">
@@ -11,7 +12,7 @@
                     <h4 class="card-title">{{$sugUser->name}}</h4>
                 @endif
                 <p class="card-text">
-                    {{$sugUser->bio}}
+                    {!!$sugUser->bio!!}
                 </p>
                 <div class="text-center">
                     @if($sugUser->state && $sugUser->country != Null)
@@ -26,4 +27,5 @@
             </div>
         </div>
     </div>
+</div>
 @endforeach

@@ -40,7 +40,7 @@
                                 <div class="row mt-5 mb-5">                                  
                                     <div class="col-md-5">
                                         <div class="box-shadow-2 p-0">
-                                            <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                                            <div id="sign-up-crt" class="card border-grey border-lighten-3 px-1 py-1 m-0">
                                                 <div class="card-header border-0 pb-0">
                                                     <div class="card-title text-center mb-1">
                                                         <h1 class="crt-acc"><b>Create Account</b></h1>
@@ -89,7 +89,7 @@
         <!-- Second Page Section start -->        
         <div class="bg-white container">
             <div class="row">
-                <div id="ipad-im" class="col-md-5 mt-5 mb-3 d-none d-none d-lg-block">
+                <div id="ipad-im" class="col-md-5 mt-5 mb-3 d-none d-lg-block">
                     {{-- Contains a background Image --}}
                     <img class="card-img-top img-fluid" src="{{asset('app-assets/images/backgrounds/iPad-mockup-x2.png')}}" alt="Card image cap"> 
                 </div>
@@ -110,7 +110,7 @@
                                     Signing up also helps in matching evenly and enables us know the type of persons that meets your dating match. 
                                     There are guidelines and rules concerning our website and signing up would make you understand them very well.
                                     <br>
-                                    Thank you for stopping by, have fun and do not forget to sign up.
+                                    Thank you for stopping by, have fun and do not forget to <a class="text-link-orange" href="#sign-up-crt">sign up</a>.
 
                                 </p>
                             </div>

@@ -7,9 +7,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
-    <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
-    <meta name="author" content="PIXINVENT">
+    <meta name="description" content="Christian dating platform">
+    <meta name="keywords" content="Christian dating, Relationship, dating, love, marriage courtship">
+    <meta name="author" content="Match To Be One">
     <title> {{$title}} </title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/ico/favicon.ico') }}">
@@ -65,7 +65,7 @@
     <!-- END PAGE LEVEL JS-->
     <script>
 
-
+      var user_selected_mobile = "";   
       var receiver_id = '';
       var my_id = "{{ Auth::id() }}";
       $(document).ready(function () {
@@ -76,7 +76,7 @@
               }
           });
   
-              
+        
   
           // Enable pusher logging - don't include this in production
           Pusher.logToConsole = true;
@@ -109,7 +109,12 @@
                     
 
                       $('.user').click(function (){
-                        //   $("#userslist").hide();
+                        var ww = $(window).width();
+                        if (ww < 500) {
+                          $("#userslist").hide();
+                        }
+                          
+
                           $('.user').removeClass('active');
                           $(this).addClass('active');
                           $(this).find('.pending').remove();
@@ -123,13 +128,30 @@
                               success: function (data) {
                                   $('#messages').html(data);
                                   scrollToBottomFunc();
+
+                                  poulateMobileuser(receiver_id);
                               }
                           });
                       
                          });
              
              
-  
+                         function poulateMobileuser(user_id){
+                          $.ajax({
+                              type:"get",
+                              url: "mobileUserDetails/" + user_id, 
+                              data: "",
+                              cache: false,
+                              success: function (data) {                                
+                                let newData = JSON.parse(data);
+                                let userImage = newData.UserPicture.includes('http') ? newData.UserPicture : '/match/public/' + newData.UserPicture;
+                                  $('#mobileUserImage').attr('src', userImage);
+
+                        
+                                  $('#mobileUserFullName').text(newData.FullName);
+                              }
+                          });
+                         }
   
           var channel = pusher.subscribe('my-channel');
               channel.bind('message-sent', function(data) {

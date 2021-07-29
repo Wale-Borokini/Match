@@ -20,16 +20,14 @@
                             <div class=" col-xl-4 col-lg-4 col-md-6">
                                 <a href=" {{route('friendsProfile', $user->slug)}} " >
                                     <div class="card text-center">
-                                        <img src="{{ asset($user->avatar) }}" alt="" class="card-img-top img-fluid rounded-circle w-25 mx-auto mt-1">
+                                        <img src="{{ asset($user->avatar) }}" alt="Profile Picture" class="card-img-top img-fluid rounded-circle w-25 mx-auto mt-1">
                                         <div class="card-body">
                                             <h6 class="card-title font-large-1 mb-0 text-center">{{$user->name}}</h6>                                                        
                                             <p class="font-medium-3  text-center">{{$user->alias}}</p>
-                                            <p class="font-small-3 text-center">{{$user->bio}}</p>
-            
+                                            <p class="font-small-3 text-center">{!!$user->bio!!}</p>        
                                         </div>                                    
                                         <div class="card-footer mx-auto text-center">                                                    
-                                            <a class="btn btn-outline-warning btn-min-width mr-1 mb-1" href=" {{route('friendsProfile', $user->slug)}} ">View Profile</a>
-                                            {{-- <a class="btn btn-outline-danger btn-min-width mr-1 mb-1" href="  {{url('rejectFriendRequest/'.$user->slug)}}  " >Reject</a> --}}
+                                            <a class="btn btn-outline-warning btn-min-width mr-1 mb-1" href=" {{route('friendsProfile', $user->slug)}} ">View Profile</a>                                            
                                         </div>
                                     </div>
                                 </a>

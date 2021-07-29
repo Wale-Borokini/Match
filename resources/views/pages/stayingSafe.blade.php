@@ -12,13 +12,13 @@
                     <div class="col-xl-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="card-content">
-                                <img class="card-img-top img-fluid" src="app-assets/images/carousel/couples-pic.png" alt="Card image cap"/>
+                                <img class="card-img-top img-fluid" src="{{ asset('app-assets/images/backgrounds/cont-img.png') }}" alt="Staying Safe"/>
                                 <div class="card-body">
                                     <div class="container mt-3">
-                                        <h1 class="mb-3 mt-3">Staying Safe</h1>
+                                        <h1 class="mb-1 mt-1">Staying Safe</h1>
                                         <p class="card-text">
                                             <span style="font-size:2.0rem ;">G</span>rowing a bond in an online relationship is not a day’s work, because you do not know the person too 
-                                            well, but does not mean that a healthy relationship is not achievable online.
+                                            well, but this does not mean that a healthy relationship is not achievable online.
                                             <br>
                                             We have compiled some do's and Don’ts that will help you scale through the hurdles that come with 
                                             online dating.
@@ -33,7 +33,7 @@
                                                 </p>
                                                 <p>
                                                     It is not a good idea to become too attached or possessive in the relationship, especially when you 
-                                                    both have not gotten to a particular level of closeness, hence give it time and.do not be in a rush
+                                                    both have not gotten to a particular level of closeness, hence give it time and do not be in a rush
                                                     to create a bond or use sweet names on each other. It is advisable to let it flow freely.
                                                 </p>
                                                 <p>

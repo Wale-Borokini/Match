@@ -16,5 +16,3 @@
         <p class=""><small class="text-muted">{{$comment->created_at->diffForHumans()}}</small></p>
     @endif    
 </div>
-
-    

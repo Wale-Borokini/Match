@@ -1,6 +1,7 @@
 @extends('layouts.adminPages')
 
 @section('content')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <div class="app-content content">
         <div class="content-body">
             <div class="container mt-5"> <!-- Main Page Section Start -->   
@@ -15,11 +16,14 @@
                         <h4 class="card-title">Users</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
-                        
+                            <div class="form-group">
+                                <input type="text" name="search" id="search" class="form-control" placeholder="Search Customer Data" />
+                            </div>
                         </div>
                         </div>
                         <div class="card-content mt-1">
                         <div class="table-responsive">
+                            <h3 align="center">Total Records : <span id="total_records"></span></h3>
                             <table id="recent-orders-doctors" class="table table-hover table-xl mb-0">
                                 <thead>
                             <tr>
@@ -31,20 +35,7 @@
                             </tr>
                                 </thead>
                                 <tbody>
-                            @foreach($users as $user)                        
-                            <tr class="pull-up">
-                                <td class="text-truncate"><a class="text-truncate" href="{{url('admin/viewUserProfile/'.$user->slug)}}"><img class="media-object rounded-circle avatar avatar-sm pull-up" src="{{asset($user->avatar)}}"
-                                        alt="Avatar"><span class="mr-1"></span> {{ $user->name }} </a></td>
-                                <td class="text-truncate"> {{$user->alias}} </td>
-                                <td class="text-truncate"> {{$user->email}} </td>
-                                <td class="text-truncate"> {{$user->sex}} </td>
-                                @if($user->country && $user->state !== Null)
-                                <td class="text-truncate"> {{$user->state}}, {{$user->country}} </td>
-                                @else
-                                <td class="text-truncate"></td>
-                                @endif                                
-                            </tr>
-                            @endforeach                     
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -53,5 +44,39 @@
                     </div>
             </div>  <!-- Main Page Section End --> 
         </div>
-    </div> 
+    </div>
+    <script>
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        
+         fetch_customer_data();
+        
+         function fetch_customer_data(query = '')
+         {
+        
+            
+
+          $.ajax({
+           url:"{{ route('viewUsers.action') }}",
+           method:'GET',
+           data:{query:query},
+           dataType:'json',
+           success:function(data)
+           {
+            $('tbody').html(data.table_data);
+            $('#total_records').text(data.total_data);
+           }
+          })
+         }
+        
+         $(document).on('keyup', '#search', function(){
+          var query = $(this).val();
+          fetch_customer_data(query);
+         });
+        });
+    </script> 
 @endsection

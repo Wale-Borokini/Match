@@ -11,6 +11,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use Auth;
 use DB;
+use File;
 use Purifier;
 
 class PostsController extends Controller
@@ -62,6 +63,12 @@ class PostsController extends Controller
     public function createPost(Request $request)
     {
 
+        $this->validate($request, [
+            'title' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'body' => 'required'
+        ]);
+
         if($request->hasFile('image')){
             $profileImage = $request->file('image');
             $profileImageSaveAsName = time() . Auth::id() . "-blog." . $profileImage->getClientOriginalExtension();
@@ -79,7 +86,7 @@ class PostsController extends Controller
         $post->image = $profile_image_url;
         $post->save();
 
-        return redirect()->back()->with('success', 'Post Created');
+        return redirect()->route('blogAdminView')->with('success', 'Post Created');
 
     }
 
@@ -102,6 +109,9 @@ class PostsController extends Controller
 
         
         if($request->hasFile('image')){
+            // Delete previous Image from blog_images folder
+            $this->deleteOldImage($post);
+
             $profileImage = $request->file('image');
             $profileImageSaveAsName = time() . Auth::id() . "-blog." . $profileImage->getClientOriginalExtension();
     
@@ -122,8 +132,20 @@ class PostsController extends Controller
 
     }
 
+
+    protected function deleteOldImage(Post $post)
+    {
+      if ($post->image){        
+        File::delete($post->image);        
+      }
+     }
+
+
     public function destroy(Post $post)
     {
+        // Delete Image from blog_images folder
+        $this->deleteOldImage($post);
+
         $post->delete();
         return redirect()->back()->with('success','Post deleted successfully!');
     }
