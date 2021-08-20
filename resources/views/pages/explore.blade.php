@@ -32,7 +32,7 @@
                                                         <div class="badge text-center mb-1 badge-pill badge-success"></div>
                                                         @endif
                                                         <div>                                                                                                
-                                                            <a href="{{ route('addFriend', $user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>                                                
+                                                            <a href="{{ route('addFriend', $user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
                                                         </div>
                                                     </div> 
                                             </div>

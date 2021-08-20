@@ -31,8 +31,8 @@ class MessageFactory extends Factory
         }   while ($from ===$to);
     
         return [
-            'from' => $from,
-            'to' => $to,
+            'msg_from' => $from,
+            'msg_to' => $to,
             'message' => $this->faker->sentence,
             'is_read' => $is_read
         ];

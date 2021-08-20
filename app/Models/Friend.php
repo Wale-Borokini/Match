@@ -10,9 +10,13 @@ class Friend extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     // public function messages()
     // {
     //     return $this->belongsToMany('Message');
     // }
+
+    
 
 }

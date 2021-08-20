@@ -1,14 +1,13 @@
 <div class="content-wrapper">
 
-    <div class="card text-center">
-        <img width="50" height="50" class="media-object rounded-circle" id="mobileUserImage" src="" alt="image">
+    <div class="card text-center d-lg-none">
+        <div class="text-center">
+            <img width="30" height="30" class="media-object rounded-circle" id="mobileUserImage" src="" alt="image">
+        </div>
         <h5 class="card-title" id="mobileUserFullName">
-            <span class="avatar avatar-sm avatar">
-               
-            </span> 
-           
-        </h5>
-        
+            <span class="avatar avatar-sm avatar">               
+            </span>            
+        </h5>        
     </div>
     <div class="overflow-class-chat">
         <div class="content-body">            
@@ -98,8 +97,9 @@
                     
                 </div>
             </div>
-            <img src="#" id="category-img-tag" width="50px" height="50px">
+            <img src="#" class="hidden" id="category-img-tag" width="50px" height="50px">
             </section>
+            @if($checkIfFriend)
             <section class="chat-app-form">
                 <form  method="POST" enctype="multipart/form-data" id="myform">
                     @csrf
@@ -112,7 +112,7 @@
                             <input id="receiver_id" name="receiver_id" type="hidden"/>
                             <div class="form-control-position control-position-right">
                             <input id="upload" name="image" type="file"/>
-                            <i class="ft-image" id="upload_link"></i>
+                            <i class="ft-image" id="upload_link" onclick="toggleCheck()"></i>
                             </div>
                         </fieldset>
                         <fieldset class="form-group position-relative has-icon-left col-2 m-0">
@@ -121,6 +121,12 @@
                     </div>
                 </form>
             </section>
+            @else
+                <div class="text-center mt-2">
+                    <h3>You are no longer friends with this User.</h3>
+                </div>
+            @endif
+
         </div>
     </div>
 </div>
@@ -129,6 +135,11 @@
 <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js') }}"></script>
 <script src="{{ asset('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')}}"></script>
 <script>
+
+        function toggleCheck(){
+            $('#category-img-tag').toggleClass('hidden');
+        }
+
     $(function(){
         $("#upload_link").on('click', function(e){
             e.preventDefault();

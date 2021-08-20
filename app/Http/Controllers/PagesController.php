@@ -131,7 +131,7 @@ class PagesController extends Controller
         $user->bio = Purifier::clean($request->input('bio'));
         $user->work = Purifier::clean($request->input('work'));
         $user->education = Purifier::clean($request->input('education'));
-        
+                
         $user->save();
 
         return redirect('/editProfile')->with('success', 'User Updated');
@@ -142,7 +142,7 @@ class PagesController extends Controller
     {        
         $this->validate($request, [
             
-            'avatar' => ['mimes:jpg']
+            'avatar' => ['mimes:jpeg,png,jpg,gif,svg|max:2048']
         ]);
 
         $user = Auth::user();

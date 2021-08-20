@@ -46,7 +46,8 @@
                                     <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
                                         <div class="card-header border-0 pb-0">
                                             <div class="card-title text-center mb-2">
-                                                <h1 class="crt-acc"><b>Log in</b></h1>
+                                                <h1 class="crt-acc"><b>Log in</b></h1>                                                
+                                                <p><a class="text-link-orange" href="{{ route('password.update') }}">Forgot Password?</a></p>                                                
                                             </div>
                                             
                                         </div>
@@ -85,8 +86,7 @@
                                                                     </span>
                                                                 @enderror
                                                             </div>
-                                                        </div>
-                                                        
+                                                        </div>                                                        
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <button type="submit" class="btn btn-orange btn-block">Log in</button>

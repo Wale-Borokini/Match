@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Friend;
 
 class User extends Authenticatable
 {
@@ -67,6 +68,19 @@ class User extends Authenticatable
 
 
     //Get User details for friends Table
+
+    //Get UserId to sned message to
+    public static function getUserIdMs($id){
+        $getUserIdMs = User::select('id')->where('id', $id)->first();
+        return $getUserIdMs->id;
+    }
+
+    //Get user slug to send message to
+    public static function getUserSlgMs($id){
+        $getUserSlgMs = User::select('slug')->where('id', $id)->first();
+        return $getUserSlgMs->slug;
+    }
+
     public static function getUserId($slug){
         $getUserId = User::select('id')->where('slug', $slug)->first();
         return $getUserId->id;
@@ -92,6 +106,11 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
      
     }
+
+    // public function friends()
+    // {
+    //     return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id');
+    // }
 
     public function isAdmin() {
         

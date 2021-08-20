@@ -46,6 +46,8 @@ class FriendsController extends Controller
         
     }
 
+    
+
     public function getSuggestions()
     {
         // Page Title
@@ -138,6 +140,26 @@ class FriendsController extends Controller
         // return redirect()->back()->with('Succexxful');
 
         return redirect()->back()->with('error', 'Friend Request Rejected');
+    }
+
+    public function deleteFriend(Friend $friend, $slug)
+    {
+        $userId = Auth::user()->id;
+        $friendCount = Friend::where(['user_slug'=>$slug, 'friend_id'=>$userId, 'accept'=> 1])->count();
+        $friendOfCount = Friend::where(['user_id'=>$userId, 'friend_slug'=>$slug, 'accept'=> 1])->count();
+        // Friend::where(['user_slug'=> $slug, 'friend_id'=>$userId, 'accept'=> 1])
+        //         ->orWhere(['friend_slug'=> $slug, 'user_id'=>$userId, 'accept'=> 1])->delete();
+        if($friendCount>0){
+            // $user = User::find($slug);
+            Friend::where(['user_slug'=>$slug, 'friend_id'=>$userId, 'accept'=> 1])->delete();
+            
+        }elseif($friendOfCount >0){
+            // $user = User::find($slug);
+            $friendOfCount = Friend::where(['user_id'=>$userId, 'friend_slug'=>$slug, 'accept'=> 1])->delete();
+            
+        }
+
+        return redirect()->route('friends')->with('error', 'Friend Deleted');
     }
 
     public function viewProfile($name)

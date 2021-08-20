@@ -105,7 +105,7 @@
                                             <div class="mt-1 container">
                                                 <div class="form-group col-md-6">                                                    
                                                     <select onchange="print_state('state',this.selectedIndex);" id="country" name ="country" class="form-control"></select>
-                                                        {{-- <option>{{Auth::user()->country}}</option> --}}
+                                                        {{-- <option value="{{Auth::user()->country}}">{{Auth::user()->country}}</option> --}}
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-6">                                                    
@@ -220,9 +220,18 @@
                 </div>
             </div>
         </div>
+
+        
     
     <script src="{{ asset('countries/countries.js')}}"></script>
     <script>
+        // var countryDet = "{{Auth::user()->country}}";
+        // if(! countryDet) {           
+        //     $("#country").attr('required', '');
+        // }else if(countryDet){
+        //     $('#country').val(countryDet);
+        // }    
+
         $(function(){
             $("#upload_link").on('click', function(e){
                 e.preventDefault();

@@ -1,6 +1,8 @@
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="mt-5 ml-2 main-menu-content">
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+          <li class=" nav-item"><a class="sidebar-txt-hov" href="{{ url('/') }}"><i class="la la-dot-circle-o"></i><span class="menu-title">Home</a>
+          </li>
         @if (Auth::user())
           <li class=" nav-item"><a class="sidebar-txt-hov" href="{{ url('/explore') }}"><i class="la la-th-large"></i><span class="menu-title">Explore</a>
           </li>
@@ -10,9 +12,9 @@
           <li class="nav-item"><a class="sidebar-txt-hov" href="{{ url('/blog') }}"><i class="la la-pencil-square"></i><span class="menu-title">Blog</span></a>
           </li>
         @if (Auth::user())
-          <li class="nav-item"><a class="sidebar-txt-hov" href="{{ url('/friends') }}"><i class="la la-dot-circle-o"></i><span class="menu-title">Friends</span></a>
+          <li class="nav-item"><a class="sidebar-txt-hov" href="{{ url('/friends') }}"><i class="la la-users"></i><span class="menu-title">Friends</span></a>
           </li>
-          <li class="nav-item"><a class="sidebar-txt-hov" href="{{ url('/friendRequest') }}"><i class="la la-dot-circle-o"></i><span class="menu-title">Friend Requests
+          <li class="nav-item"><a class="sidebar-txt-hov" href="{{ url('/friendRequest') }}"><i class="la la-user-plus"></i><span class="menu-title">Friend Requests
             @if($countRequest >0)
             <span class="badge badge-pill badge-warning"><b>{{$countRequest}}</b></span>
             @endif

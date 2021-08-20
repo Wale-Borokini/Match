@@ -87,6 +87,10 @@ Route::group([ 'middleware' => ['auth']], function() {
         'uses' => 'App\Http\Controllers\FriendsController@viewFriendProfile',    
     ])->name('friendsProfile');
 
+    Route::get('/deleteFriend/{slug}', [
+        'uses' => 'App\Http\Controllers\FriendsController@deleteFriend',    
+    ])->name('deleteFriend');
+
     Route::get('/viewProfile', [
         'uses' => 'App\Http\Controllers\PagesController@viewProfile',    
     ])->name('profile');
@@ -120,6 +124,22 @@ Route::group([ 'middleware' => ['auth']], function() {
     Route::get('/chat', [
         'uses' => 'App\Http\Controllers\ChatController@getChatpage',    
     ])->name('chat');
+
+    Route::get('/getNewChat', [
+        'uses' => 'App\Http\Controllers\ChatController@getNewChat',    
+    ])->name('getNewChat');
+
+    // Route::post('/makeNewChat', [
+    //     'uses' => 'App\Http\Controllers\ChatController@makeNewChat',    
+    // ])->name('makeNewChat');
+
+    Route::match(['get', 'post'], '/makeNewChat/{id}', [
+        'uses' => 'App\Http\Controllers\ChatController@makeNewChat',
+    ])->name('makeNewChat');
+
+    Route::post('chat', [
+        'uses' => 'App\Http\Controllers\ChatController@sendMessage'
+    ])->name('msg.send');
     
     Route::get('mobileUserDetails/{id}', [
         'uses' => 'App\Http\Controllers\ChatController@mobileUserDetails'

@@ -2,13 +2,16 @@
 
 @section('content')
     <div class="content">
-        <div class="row">
+        <div style="width: 100%;" class="row">
             {{-- id="userslist" --}}
             <div id="userslist" class="col-md-4">
                 <div class="my-custom-scrollbar my-custom-scrollbar-primary">
                     <div class="overflow-class-chat">
                         <div class="content-wrapper">
-                            @foreach($users as $user)
+                            <div class="text-center mb-2">                                                    
+                                <a class="btn btn-outline-warning btn-sm" href=" {{route('getNewChat')}} ">New Chat</a>                                            
+                            </div>
+                            @foreach($users as $user)                                
                                 @if(Auth::id() != $user->id)
                                     <div class="media-list mb-2 card user" id="{{ $user->id }}">            
                                         <div class="media border-0">

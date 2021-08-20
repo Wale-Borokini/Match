@@ -155,7 +155,7 @@
                         </div>
                     </section>                                         
                     <div class="col-6 offset-5 mt-5">
-                        <a id="confirm-unfriend" href="#"><button type="button" class="btn btn-sm btn-outline-warning">Unfriend</button></a>
+                        <a id="confirm-unfriend" href="{{route('deleteFriend', $user->slug)}}"><button type="button" class="btn btn-sm btn-outline-warning">Unfriend</button></a>
                     </div>                                                                                                                                                         
                 </div>
             </div>
