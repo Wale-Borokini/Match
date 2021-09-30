@@ -53,8 +53,7 @@
             </form>
 
           </li>
-        @endif
-        <!-- <button type="submit" class="btn btn-primary mt-1">Submit</button> -->
+        @endif        
       </ul>
     </div>
 </div>

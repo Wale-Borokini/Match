@@ -55,7 +55,7 @@ class User extends Authenticatable
             $addCurntTime = time();
             $randSlug = Str::random(40);
             $user->update(['slug' => $randSlug."-".$addCurntTime]);
-            // $post->update(['slug' => $post->title."-".$post->author]);
+            
         });
     }
     
@@ -70,14 +70,14 @@ class User extends Authenticatable
     //Get User details for friends Table
 
     //Get UserId to sned message to
-    public static function getUserIdMs($id){
-        $getUserIdMs = User::select('id')->where('id', $id)->first();
+    public static function getUserIdMs($slug){
+        $getUserIdMs = User::select('id')->where('slug', $slug)->first();
         return $getUserIdMs->id;
     }
 
     //Get user slug to send message to
-    public static function getUserSlgMs($id){
-        $getUserSlgMs = User::select('slug')->where('id', $id)->first();
+    public static function getUserSlgMs($slug){
+        $getUserSlgMs = User::select('slug')->where('slug', $slug)->first();
         return $getUserSlgMs->slug;
     }
 
@@ -107,10 +107,11 @@ class User extends Authenticatable
      
     }
 
-    // public function friends()
-    // {
-    //     return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id');
-    // }
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'user_id');
+    }
+    
 
     public function isAdmin() {
         
@@ -122,4 +123,5 @@ class User extends Authenticatable
         return $this->super_admin;
     }
 
+    
 }

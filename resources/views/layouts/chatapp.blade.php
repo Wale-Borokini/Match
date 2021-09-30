@@ -108,51 +108,9 @@
                     //   });
                     
 
-                      $('.user').click(function (){
-                        var ww = $(window).width();
-                        if (ww < 500) {
-                          $("#userslist").hide();
-                        }
-                          
-
-                          $('.user').removeClass('active');
-                          $(this).addClass('active');
-                          $(this).find('.pending').remove();
-  
-                          receiver_id = $(this).attr('id');
-                          $.ajax({
-                              type:"get",
-                              url: "message/" + receiver_id, //need to create their route
-                              data: "",
-                              cache: false,
-                              success: function (data) {
-                                  $('#messages').html(data);
-                                  scrollToBottomFunc();
-
-                                  poulateMobileuser(receiver_id);
-                              }
-                          });
-                      
-                         });
+                    getUserMessageBox(null);
              
-             
-                         function poulateMobileuser(user_id){
-                          $.ajax({
-                              type:"get",
-                              url: "mobileUserDetails/" + user_id, 
-                              data: "",
-                              cache: false,
-                              success: function (data) {                                
-                                let newData = JSON.parse(data);
-                                let userImage = newData.UserPicture.includes('http') ? newData.UserPicture : '/match/public/' + newData.UserPicture;
-                                  $('#mobileUserImage').attr('src', userImage);
-
-                        
-                                  $('#mobileUserFullName').text(newData.FullName);
-                              }
-                          });
-                         }
-  
+           
           var channel = pusher.subscribe('my-channel');
               channel.bind('message-sent', function(data) {
             //   alert(JSON.stringify(data.datas));
@@ -182,7 +140,6 @@
           //     $("#" + data.id +'_message'.text("Some Content");
           // }
                         
-              
   
           //
   
@@ -230,8 +187,14 @@
                   })
               }
           });
-  
-              
+          
+          const urlParams = new URLSearchParams(window.location.search);
+          const myParam = urlParams.get('xDFoPW');
+          if( myParam != null){
+            getUserMessageBox(myParam);
+          }
+
+
       });
   
       // make a function to scroll down auto
@@ -241,7 +204,59 @@
           }, 50);
       }
 
+      $('.user').click(function (){     
     
+        receiver_id = $(this).attr('id');
+     
+        getUserMessageBox(receiver_id);
+      });
+
+      function getUserMessageBox(value){     
+           var ww = $(window).width();
+            if (ww < 500) {
+              $("#userslist").hide();
+            }
+              
+              $('.user').removeClass('active');
+              $(this).addClass('active');
+              $(this).find('.pending').remove();
+
+              if(value != null){
+                $.ajax({
+                  type:"get",
+                  url: "message/" + value, //need to create their route
+                  data: "",
+                  cache: false,
+                  success: function (data) {
+                      $('#messages').html(data);
+                      scrollToBottomFunc();
+                      poulateMobileuser(receiver_id);
+                  },
+                  error: function (data){
+                    console.error(data);
+                  }
+              });  
+              }
+      }
+
+        
+      function poulateMobileuser(user_id){
+        $.ajax({
+            type:"get",
+            url: "mobileUserDetails/" + user_id, 
+            data: "",
+            cache: false,
+            success: function (data) {                                
+              let newData = JSON.parse(data);
+              let userImage = newData.UserPicture.includes('http') ? newData.UserPicture : '/match/public/' + newData.UserPicture;
+                $('#mobileUserImage').attr('src', userImage);
+
+      
+                $('#mobileUserFullName').text(newData.FullName);
+            }
+        });
+      }
+  
          
   </script>
   </body>

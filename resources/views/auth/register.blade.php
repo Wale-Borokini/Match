@@ -12,7 +12,7 @@
                                         class="hamburger-box"></span><span class="hamburger-inner"></span></button>
                             </li>
                             <li class="nav-item">
-                                <a href="{{url('/')}}" class="navbar-brand nav-link"><img src="{{asset('app-assets/images/logo/Black-n-bg.png')}}"
+                                <a href="{{url('/')}}" class="navbar-brand nav-link"><img src="{{asset('app-assets/images/logo/group-16.png')}}"
                                         alt="branding logo"></a>
                             </li>
                             <li class="nav-item d-md-none float-right"><a data-toggle="collapse" data-target="#navbar-mobile10"
@@ -81,7 +81,7 @@
                                                         </div>
                                                         <div class="col-md-12">
                                                             <div class="form-group text-center">
-                                                                <img class="mb-2 hidden" src="#" id="category-img" width="100px" height="100px">
+                                                                <img class="mb-2 hidden" src="#" id="category-img" width="100px" height="100px">                                                                
                                                                 <input type="file" id="project22" class="form-control  @error('avatar') is-invalid @enderror" name="avatar" onclick="toggleCheck()">
                                                                 @if ($errors->has('avatar'))
 

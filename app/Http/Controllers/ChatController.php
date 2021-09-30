@@ -41,16 +41,14 @@ class ChatController extends Controller
         
 
     }
+    
 
-    // $recvId = User::getUserIdMs($id);
-    // $user_id = Auth::user()->id;
-
-    public function makeNewChat($id)
+    public function makeNewChat($slug)
     {
-        $recvId = User::getUserIdMs($id);
+        $recvId = User::getUserIdMs($slug);
         $user_id = Auth::user()->id;
         $fromSlug = Auth::user()->slug;
-        $toSlug = User::getUserSlgMs($id);
+        $toSlug = User::getUserSlgMs($slug);
 
         if(Message::where([['msg_from', '=', $user_id], ['msg_to', '=', $recvId]])->orWhere([['msg_to', '=', $user_id], ['msg_from', '=', $recvId]])->exists()){
             return redirect()->route('chat');
@@ -63,10 +61,10 @@ class ChatController extends Controller
             $datas->message = Null;
             $datas->is_read = 1; //Message will be unread by default
             $datas->is_friend = 1;
-            // $datas->image = $profile_image_url;             
+
             $datas->save();
 
-        return redirect()->route('chat');
+        return redirect()->route('chat', ['xDFoPW'=> $recvId]);
         }
         
     }
@@ -98,32 +96,7 @@ class ChatController extends Controller
         
     }
 
-    // public function getUsersList(Request $request)
-    // {
-    //     $users = Message::join('users',  function ($join) {
-    //         $join->on('messages.from', '=', 'users.id')
-    //             ->orOn('messages.to', '=', 'users.id');
-    //     })
-    //         ->select('messages.id', 'messages.from', 'messages.to', 'messages.message',
-    //          'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar', DB::raw('count(is_read) as unread'))
-    //          //->selectRaw('count(is_read) as unread')
-             
-             
-    //         ->where('messages.from', Auth::id())
-    //         ->orWhere('messages.to', Auth::id())
-    //         ->groupBy('messages.id', 'messages.from', 'messages.to', 'messages.message',
-    //         'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar')
-    //         ->orderBy('messages.created_at', 'desc')
-    //         ->get()
-    //         ->unique('id');
-
-    //         event(new FetchUsers($users));
-    //     return view('messages.users', ['users' =>$users]);
-        
-
-    // }
-
-    
+      
 
     public function getMessage($user_id)
     {
@@ -178,7 +151,7 @@ class ChatController extends Controller
         $datas->from_slug =$fromSlug;
         $datas->to_slug =$toSlug;
         $datas->is_friend = 1;
-        // $datas->image = $profile_image_url;
+        
 
         if($request->hasFile('image')){
             $profileImage = $request->file('image');
@@ -191,10 +164,7 @@ class ChatController extends Controller
             $datas->image = $profile_image_url;
         }
 
-        
-
-      
-
+              
         $datas->save();
 
         

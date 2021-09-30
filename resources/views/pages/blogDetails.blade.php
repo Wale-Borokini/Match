@@ -107,14 +107,7 @@
         function toggleReply(commentId){
             $('.reply-form-'+commentId).toggleClass('hidden');
         }
-
-        // ClassicEditor
-        // .create( document.querySelector( '#body' ), {
-        // toolbar: []
-        // } )
-        // .catch( error => {
-        // console.error( error );
-        // } );
+        
 
         var allEditors = document.querySelectorAll('.editor') ;
         for (var i = 0; i < allEditors.length; ++i) {
@@ -122,11 +115,6 @@
             toolbar: []
             });
         }
-
-        // .create( document.querySelector( '#body' ), {
-      //   toolbar: [ 'bold', 'italic', 'link', 'undo', 'redo', 'numberedList', 'bulletedList' ]
-      // } )
-
+       
     </script>    
 @endsection
-

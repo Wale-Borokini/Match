@@ -47,24 +47,11 @@ Route::get('/stayingSafe', [
     'uses' => 'App\Http\Controllers\PagesController@viewStayingSafePage',    
 ])->name('stayingSafe');
 
-// Route::get('/login', [
-//     'uses' => 'App\Http\Controllers\PagesController@viewLoginPage',
-//     'as' => 'login'
-// ]);
-
-
-// Route::get('/createAccount', function () {
-//     return view('pages.createAccount');
-// });
-
-// Route::get('/createAccount', [
-//     'uses' => 'App\Http\Controllers\PagesController@viewCreateAccountPage',
-//     'as' => 'createAccount'
-// ]);
-
 Route::get('/401', function () {
     return view('errors.401');
 });
+
+
 
 
 // Authenticated Routes For Users
@@ -95,6 +82,18 @@ Route::group([ 'middleware' => ['auth']], function() {
         'uses' => 'App\Http\Controllers\PagesController@viewProfile',    
     ])->name('profile');
 
+    Route::get('/replacePicture', [
+        'uses' => 'App\Http\Controllers\PagesController@viewReplacePicturePage',    
+    ])->name('replacePicture');
+
+    Route::post('/replaceUserPicture', [
+        'uses' => 'App\Http\Controllers\pagesController@replaceUserPicture',
+    ])->name('replaceUserPicture');
+
+    Route::get('deleteUserPicture/{id}', [
+        'uses' => 'App\Http\Controllers\PagesController@deleteUserPicture',
+        ])->name('deleteUserPicture');
+
     Route::post('/viewProfile', [
         'uses' => 'App\Http\Controllers\PagesController@changeProfile',    
     ])->name('profile.change');
@@ -104,6 +103,10 @@ Route::group([ 'middleware' => ['auth']], function() {
     ])->name('editProfile');
 
     Route::post('editProfile','App\Http\Controllers\PagesController@update')->name('profile.update');
+
+    Route::match(['get', 'post'], '/removeImage/{$key}', [
+        'uses' => 'App\Http\Controllers\PagesController@removeImage',
+    ])->name('removeImage');
 
     Route::get('/acceptFriendRequest/{slug}', [
         'uses' => 'App\Http\Controllers\FriendsController@acceptFriendRequest',    
@@ -127,13 +130,9 @@ Route::group([ 'middleware' => ['auth']], function() {
 
     Route::get('/getNewChat', [
         'uses' => 'App\Http\Controllers\ChatController@getNewChat',    
-    ])->name('getNewChat');
+    ])->name('getNewChat');    
 
-    // Route::post('/makeNewChat', [
-    //     'uses' => 'App\Http\Controllers\ChatController@makeNewChat',    
-    // ])->name('makeNewChat');
-
-    Route::match(['get', 'post'], '/makeNewChat/{id}', [
+    Route::match(['get', 'post'], '/makeNewChat/{slug}', [
         'uses' => 'App\Http\Controllers\ChatController@makeNewChat',
     ])->name('makeNewChat');
 
@@ -160,33 +159,11 @@ Route::group([ 'middleware' => ['auth']], function() {
 });
 
 
-// Route::post('blogDetails', [
-//     'uses' => 'App\Http\Controllers\CommentsController@store'
-// ]);
-
-
 Auth::routes();
 
 
-
-
-// Route::get('/userslist', [
-//     'uses' => 'App\Http\Controllers\ChatController@getUsersList',
-//     //'as' => 'userslist'
-// ]);
-
-
-
-// Route::post('message', [
-//     'uses' => 'App\Http\Controllers\ChatController@sendMessage'
-// ])->name('msg.send');
-
-
-
-
-
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 // Google Login
 Route::get('login/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('login.google');
@@ -195,6 +172,8 @@ Route::get('login/google/callback', [App\Http\Controllers\Auth\LoginController::
 // Facebook Login
 Route::get('login/facebook', [App\Http\Controllers\Auth\LoginController::class, 'redirectToFacebook'])->name('login.facebook');
 Route::get('login/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleFacebookCallback']);
+
+
 
 
 // Admin Routes
@@ -238,6 +217,9 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
     
 
 });
+
+
+
 
 // Super Admin Route
 

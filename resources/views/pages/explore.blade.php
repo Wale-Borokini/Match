@@ -12,7 +12,7 @@
                         <div class="col-md-8 overflow-exp-chat">
                             <div class="row match-height">
                                 @foreach($users as $user)
-                                {{-- @if($user->id != ) --}}
+                                
                                     <div id="autoView" class="col-xl-4 col-md-6 col-sm-12">
                                         <div class="card userSug" id="{{$user->slug}}">
                                             <div class="card-content">
@@ -39,7 +39,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                {{-- @endif --}}
+                                
                                 @endforeach
 
                             </div>

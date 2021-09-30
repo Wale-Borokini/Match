@@ -16,11 +16,7 @@ use Purifier;
 
 class PostsController extends Controller
 {
-
-    // public function __construct()
-    // {
-    //    $this->middleware('auth');
-    // }
+    
 
     public function getCreatePostPage()
     {
@@ -38,15 +34,16 @@ class PostsController extends Controller
 
     }
 
+
     public function viewBlogPage(){
-        $title = 'Blog';
-        //return view('pages.index', compact('title'));
+        $title = 'Blog';       
         $posts = Post::orderBy('created_at','desc')->paginate(20);
+        
         return view('pages.blog')->with(compact('posts', 'title'));
+
     }
 
-    // {{ str_limit($post->title, 25) }}
-
+    
     public function viewBlogDetailsPage($slug){
         $title = 'Blog';
         $post = Post::where('slug', $slug)->firstOrFail();
@@ -54,9 +51,9 @@ class PostsController extends Controller
         ->inRandomOrder()->limit(2)->get();
         $publiclyVis = 'Public';
         $privatelyVis = 'Private';
-        // $posts = Post::find($id);
-        //return view('pages.index', compact('title'));
+                
         return view('pages.blogDetails')->with(compact('title', 'post', 'randomPosts','publiclyVis', 'privatelyVis'));
+
     }
 
 
@@ -91,17 +88,17 @@ class PostsController extends Controller
     }
 
     public function edit(Post $post)
-    {
-        // $post = Post::where('slug', $slug);
-        // $post = Post::find($slug);
+    {                
         $title = 'Edit Post';
+        
         return view('adminPages.editPost')->with(compact('title', 'post'));
+
     }
     
+
     public function update(Request $request, Post $post)
     {
-        // $post = Post::find($slug);
-        
+                
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required'
@@ -126,6 +123,7 @@ class PostsController extends Controller
         if($request->hasFile('image')){
             $post->image = $profile_image_url;
         }
+        
         $post->save();
 
         return redirect()->route('blogAdminView')->with('success', 'Post Updated');
@@ -138,7 +136,7 @@ class PostsController extends Controller
       if ($post->image){        
         File::delete($post->image);        
       }
-     }
+    }
 
 
     public function destroy(Post $post)

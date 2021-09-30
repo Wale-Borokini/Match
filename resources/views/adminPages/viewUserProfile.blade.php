@@ -8,8 +8,7 @@
                 
                 <section id="user-profile-cards-with-cover-image" class="row mt-2">                       
                     <div class="col-xl-12 col-md-12 col-12">
-                        <div class="card profile-card-with-cover">
-                            <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
+                        <div class="card profile-card-with-cover">                            
                             <div class="card-img-top img-fluid bg-cover height-200" style="background: url({{asset('app-assets/images/carousel/wall.jpg')}});"></div>
                             <div class="card-profile-image">
                                 <img width="140" height="140" src="{{asset($user->avatar)}}" class="rounded-circle img-border box-shadow-1" alt="Profile Picture">

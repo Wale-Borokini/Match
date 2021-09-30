@@ -13,8 +13,7 @@
                     </div>
                     <section id="user-profile-cards-with-cover-image" class="row mt-2">                       
                         <div class="col-xl-12 col-md-12 col-12">
-                            <div class="card profile-card-with-cover">
-                                <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
+                            <div class="card profile-card-with-cover">                                
                                 <div class="card-img-top img-fluid bg-cover height-200" style="background: url({{asset('app-assets/images/carousel/wall.jpg')}});"></div>
                                 <div class="card-profile-image">
                                     <a id="upload_link">
@@ -23,8 +22,7 @@
                                     </a>
                                     <form action="{{route('profile.change')}}" method="POST" enctype="multipart/form-data" id="myform">
                                         @csrf
-                                        <input id="upload" name="avatar" type="file"/>
-                                        {{-- <button type="submit" class="btn btn-orange">Submit</button> --}}
+                                        <input id="upload" name="avatar" type="file"/>                                       
                                     </form>
                                 </div>
                                 <div class="profile-card-with-cover-content text-center">
@@ -102,98 +100,85 @@
                                         </div>
                                         <div class="p-1">
                                             <p>
-                                                {!!Auth::user()->education!!}
+                                                {!!Auth::user()->education!!}                                                
                                             </p>
                                             <div class="text-right">
                                                 <a href="{{route('editProfile', '#userInputEdu')}}"><button type="" class="btn btn-sm btn-outline-warning">Edit</button></a>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                                                                                                               
-                        <div style="" class="card-content">
-                            <div class="card-body my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-                                <div class="row">
-                                @if(Auth::user()->gallery_images != null)
-
-                                    @foreach(json_decode(Auth::user()->gallery_images) as $key => $gallery_image)
-                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a class="float-right" href=""><b><i style="color:red;" class="la la-close"></i></b></a>
-                                        <a href="{{asset($gallery_image)}}" itemprop="contentUrl" data-size="480x360">
-                                            <img width="100%" height="200px" class="img-thumbnail" src="{{asset($gallery_image)}}" itemprop="thumbnail" alt="Gallery Image" />
-                                        </a>
-                                    </figure>
-                                    @endforeach
-
-                                @endif
-                                    {{-- <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a href="{{asset('app-assets/images/gallery/2.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/2.jpg')}}" itemprop="thumbnail" alt="Image description" />
-                                        </a>
-                                    </figure>
-                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a href="{{asset('app-assets/images/gallery/3.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/3.jpg')}}" itemprop="thumbnail" alt="Image description" />
-                                        </a>
-                                    </figure>
-                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a href="{{asset('app-assets/images/gallery/4.jpg')}}" itemprop="contentUrl" data-size="480x360">
-                                            <img class="img-thumbnail img-fluid" src="{{asset('app-assets/images/gallery/4.jpg')}}" itemprop="thumbnail" alt="Image description" />
-                                        </a>
-                                    </figure> --}}
-                                </div>                                                            
-                            </div>
-                            <!--/ Image grid -->
-                            <!-- Root element of PhotoSwipe. Must have class pswp. -->
-                            <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-                                <!-- Background of PhotoSwipe. 
-                              It's a separate element as animating opacity is faster than rgba(). -->
-                                <div class="pswp__bg"></div>
-                                <!-- Slides wrapper with overflow:hidden. -->
-                                <div class="pswp__scroll-wrap">
-                                    <!-- Container that holds slides. 
-                               PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                              Don't modify these 3 pswp__item elements, data is added later on. -->
-                                    <div class="pswp__container">
-                                        <div class="pswp__item"></div>
-                                        <div class="pswp__item"></div>
-                                        <div class="pswp__item"></div>
-                                    </div>
-                                    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-                                    <div class="pswp__ui pswp__ui--hidden">
-                                        <div class="pswp__top-bar">
-                                            <!--  Controls are self-explanatory. Order can be changed. -->
-                                            <div class="pswp__counter"></div>
-                                            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                                            <button class="pswp__button pswp__button--share" title="Share"></button>
-                                            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                                            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                                            <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                                            <!-- element will get class pswp__preloader-active when preloader is running -->
-                                            <div class="pswp__preloader">
-                                                <div class="pswp__preloader__icn">
-                                                    <div class="pswp__preloader__cut">
-                                                        <div class="pswp__preloader__donut"></div>
+                        {{-- IMAGE GALLERY  --}}
+                        @if(count($user->images) !== 0)                                                              
+                            <div style="" class="card-content">
+                                <div class="card-body my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                                    <div class="row">                                                                                                        
+                                        @foreach($user->images as  $userImage)                        
+                                        <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">                                    
+                                            <a href="{{asset($userImage->image_url)}}" itemprop="contentUrl" data-size="480x360">
+                                                <img width="100%" height="200px" class="img-thumbnail" src="{{asset($userImage->image_url)}}" itemprop="thumbnail" alt="Gallery Image" />
+                                            </a>
+                                        </figure>                                    
+                                        @endforeach                                                                   
+                                    </div>                                                            
+                                </div>
+                                <!--/ Image grid -->
+                                <!-- Root element of PhotoSwipe. Must have class pswp. -->
+                                <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <!-- Background of PhotoSwipe. 
+                                It's a separate element as animating opacity is faster than rgba(). -->
+                                    <div class="pswp__bg"></div>
+                                    <!-- Slides wrapper with overflow:hidden. -->
+                                    <div class="pswp__scroll-wrap">
+                                        <!-- Container that holds slides. 
+                                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                                Don't modify these 3 pswp__item elements, data is added later on. -->
+                                        <div class="pswp__container">
+                                            <div class="pswp__item"></div>
+                                            <div class="pswp__item"></div>
+                                            <div class="pswp__item"></div>
+                                        </div>
+                                        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                                        <div class="pswp__ui pswp__ui--hidden">
+                                            <div class="pswp__top-bar">
+                                                <!--  Controls are self-explanatory. Order can be changed. -->
+                                                <div class="pswp__counter"></div>
+                                                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                                                <button class="pswp__button pswp__button--share" title="Share"></button>
+                                                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                                                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                                                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                                                <!-- element will get class pswp__preloader-active when preloader is running -->
+                                                <div class="pswp__preloader">
+                                                    <div class="pswp__preloader__icn">
+                                                        <div class="pswp__preloader__cut">
+                                                            <div class="pswp__preloader__donut"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                                            <div class="pswp__share-tooltip"></div>
-                                        </div>
-                                        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                                        </button>
-                                        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                                        </button>
-                                        <div class="pswp__caption">
-                                            <div class="pswp__caption__center"></div>
+                                            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                                                <div class="pswp__share-tooltip"></div>
+                                            </div>
+                                            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                                            </button>
+                                            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                                            </button>
+                                            <div class="pswp__caption">
+                                                <div class="pswp__caption__center"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            
+                            <div class="text-center">
+                                <a href="{{route('replacePicture')}}"><button type="" class="btn btn-md  btn-outline-warning">Add or Delete Pictures</button></a>                            
+                            </div>
+                        @endif
                         
                     </section> 
                 </div>

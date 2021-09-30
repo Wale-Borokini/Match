@@ -49,7 +49,7 @@
                                                     </div>
                                                     <div class="card-body pt-0 text-center">
                                                     <p>                                                            
-                                                        <input type="checkbox" class="form-check-input" id="checkCond" onclick="toggleCheck()">                                                                                                                            
+                                                        <input type="checkbox" class="form-check-input" id="checkCond" onclick="toggleCheck()">                                                                                                                           
                                                         I accept the Terms & Conditions. My data is collected pursuant to the Privacy Policy.
                                                     </p>
                                                     </div>

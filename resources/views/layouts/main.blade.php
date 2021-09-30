@@ -57,9 +57,9 @@
     <script src="{{ asset('app-assets/js/scripts/forms/form-login-register.js') }}"></script>
     <!-- END PAGE LEVEL JS-->
     <script language="javascript">
+        
         populateCountries("country", "state"); // first parameter is id of country drop-down and second parameter is id of state drop-down
-        // populateCountries("country2");
-        // populateCountries("country2");
+       
     </script>
 </body>
 </html>

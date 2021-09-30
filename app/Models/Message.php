@@ -11,17 +11,10 @@ use App\Models\Friend;
 
 class Message extends Model
 {
+    
     use HasFactory;
     protected $fillable = ['msg_from', 'msg_to', 'message', 'is_read', 'image'];
 
-    // public function messages()
-    // {
-    //     return $this->belongsToMany('Message');
-    // }
-
-    // public function sent_messages()
-    // {
-    //     return $this->hasMany('Messages', 'from');
-    // }
+    
 }
 

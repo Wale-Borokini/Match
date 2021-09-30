@@ -12,31 +12,7 @@ class Comment extends Model
     use HasFactory;
 
     
-
-    // public function posts()
-    // {
-    //     return $this->belongsTo('App\Models\Post', 'post_id');
-    // }
-
-    // public function replies()
-    // {
-    //     return $this->hasMany('App\Models\Comment', 'parent_id');
-    // }
-    // protected $guarded = [];
     
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
-    
-    
-    // public function replies()
-    // {
-    //     return $this->hasMany(Comment::class, 'parent_id');
-    // }
-
-    // use CommentableTrait;
-
     protected $fillable=['comment','user_id'];
     /**
      * Get all of the owning commentable models.

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Input;
 use App\Models\User;
 use App\Models\Message;
 use App\Models\Comment;
+use App\Models\Image;
 use App\Models\Post;
 use DB;
 use File;
@@ -18,93 +19,165 @@ use Purifier;
 
 class PagesController extends Controller
 {
+
     public function viewIndexPage(){
+
         $title = 'Match To Be One!';
-        //return view('pages.index', compact('title'));
+        
         return view('pages.index')->with('title', $title);
+
     }
 
+
     public function viewAboutPage(){
+        
         $title = 'About';
-        //return view('pages.index', compact('title'));
+        
         return view('pages.about')->with('title', $title);
+
     }
 
     
     public function viewCodeOfConductPage(){
+        
         $title = 'Code Of Conduct';
-        //return view('pages.index', compact('title'));
+        
         return view('pages.codeOfConduct')->with('title', $title);
+
     }
+
 
     public function viewContactPage(){
+        
         $title = 'Contact';
-        //return view('pages.index', compact('title'));
+        
         return view('pages.contact')->with('title', $title);
+
     }
 
+
     public function viewStayingSafePage(){
+        
         $title = 'Staying Safe';
-        //return view('pages.index', compact('title'));
+        
         return view('pages.stayingSafe')->with('title', $title);
+
     }
+
 
     public function viewLoginPage(){
         $title = 'Login';
-        //return view('pages.index', compact('title'));
+        
         return view('auth.login')->with('title', $title);
+
     }
 
 
-    public function viewProfile()
+    public function viewReplacePicturePage(User $user){
+        
+        $title = 'Replace Picture';
+        $user = Auth::user();                
+        
+        return view('pages.replacePicture')->with(compact('title', 'user'));
+        
+    }
+
+
+    public function deleteUserPicture($id)
+    {
+                
+        $this->deleteGalleryImage($id);
+        Image::where('id', $id)->delete();
+
+        return redirect()->back()->with('error', 'Image Deleted');
+    }
+
+
+    public function replaceUserPicture(Request $request, User $user)
+    {
+        $user = Auth::user();
+
+        if($request->hasfile('image_url'))
+        {
+                       
+                $image = new Image;
+
+                $profileImage = $request->file('image_url');            
+                $profileImageSaveAsName = time() . Auth::id() . "-gallery_images." . $profileImage->getClientOriginalExtension();
+                
+                $upload_path = 'gallery_images/';            
+                $profile_image_url = $upload_path . $profileImageSaveAsName;
+                
+                $success = $profileImage->move($upload_path, $profileImageSaveAsName);
+
+               $image->image_url = $profile_image_url;
+               $image->user_id = $user->id;
+               
+               $user->images()->save($image);
+           
+       }
+        
+        
+
+        return redirect()->back()->with('success', 'Image Added');
+        
+    }
+
+
+    protected function deleteGalleryImage($id)
+    {
+        $getImageUrl = Image::where('id', $id)->pluck('image_url')->first();  
+        File::delete($getImageUrl);
+        
+      
+     }
+
+    public function viewProfile(User $user)
     {
         $title = 'Profile';
+
+        $user = Auth::user();        
         
-        return view('pages.viewProfile')->with(compact('title'));
+        return view('pages.viewProfile')->with(compact('title', 'user'));
 
     }
+
 
     public function editProfile()
     {
         $title = 'Edit Profile';
+        $user = Auth::user();
         
-        return view('pages.editProfile')->with(compact('title'));
+        return view('pages.editProfile')->with(compact('title', 'user'));
 
     }
 
     public function update(Request $request, User $user)
     {
-        // $this->validate($request, [
-        //     'title' => 'required',
-        //     'body' => 'required',
-        //     'avatar' => ['required', 'mimes:jpg']
-        // ]);
-        
-        $user = Auth::user();
+                
+        $user = Auth::user();      
 
-        // if($request->hasFile('gallery_images')){
-        //     foreach($request->file('gallery_images') as $profileImage)
-        //     {
-        //         $profileImage = $request->file('gallery_images');
-        //         $profileImageSaveAsName = time() . Auth::id() . "-gallery." . $profileImage->getClientOriginalExtension();
-        
-        //         $upload_path = 'gallery_images/';
-        //         $profile_image_url = $upload_path . $profileImageSaveAsName;
-        //         $success = $profileImage->move($upload_path, $profileImageSaveAsName);
+        if($request->hasfile('image_url'))
+         {  
+            $this->validate($request, [
+            
+                'image_url.*' => ['mimes:jpeg,png,jpg,gif,svg|max:2048']
+            ]);
+                                     
+            $imageNumbers = count($request->file('image_url'));
+            if( $imageNumbers > 4){
+                return redirect()->back()->with('error', 'You can only upload 4 images');
+            }
 
-        //         $user->gallery_images = json_encode($profile_image_url);
-        //     }
-        // }
 
-        if($request->hasfile('gallery_images'))
-         {
-            foreach($request->file('gallery_images') as $image)
-            {
-                $filenameWithExtPr = $image->getClientOriginalName();
+            foreach ($request->file('image_url') as $imagefile) {
+                $image = new Image;
+               
+                $filenameWithExtPr = $imagefile->getClientOriginalName();
                 // Get just filename
                 $filenamePr = pathinfo($filenameWithExtPr, PATHINFO_FILENAME);
                 // Get just ext
-                $extensionPr = $image->getClientOriginalExtension();
+                $extensionPr = $imagefile->getClientOriginalExtension();
                 // Filename to store
                 $fileNameToStorePr= $filenamePr.'_'.time().'.'.$extensionPr;
                 // Upload path
@@ -112,13 +185,15 @@ class PagesController extends Controller
                 // Upload Image
                 $path_url = $upload_path . $fileNameToStorePr;
 
-                $success = $image->move($upload_path, $fileNameToStorePr);
-                  
-                $images_data[] = $path_url;  
+                $success = $imagefile->move($upload_path, $fileNameToStorePr);
+
+                $image->image_url = $path_url;
+                $image->user_id = $user->id;
+                // $image->save();
+                $user->images()->save($image);
             }
 
-            $user->gallery_images = json_encode($images_data);
-         }
+        }
 
         
         $user->name = $request->input('name');
@@ -126,8 +201,11 @@ class PagesController extends Controller
         $user->alias = $request->input('alias');
         $user->visibility = $request->input('visibility');
         $user->age = $request->input('age');
-        $user->country = $request->input('country');
-        $user->state = $request->input('state');
+
+        if(!empty($request->country && $request->state)){
+            $user->country = $request->input('country');
+            $user->state = $request->input('state');
+        }
         $user->bio = Purifier::clean($request->input('bio'));
         $user->work = Purifier::clean($request->input('work'));
         $user->education = Purifier::clean($request->input('education'));
@@ -138,6 +216,7 @@ class PagesController extends Controller
 
     }
 
+
     public function changeProfile(Request $request, User $user)
     {        
         $this->validate($request, [
@@ -146,10 +225,7 @@ class PagesController extends Controller
         ]);
 
         $user = Auth::user();
-
-        
-        
-
+                
         if($request->hasFile('avatar')){     
             
             $this->deleteOldImage();
@@ -166,22 +242,19 @@ class PagesController extends Controller
         
         $user->avatar = $profile_image_url;
         $user->save();
-
-        
-
-        // return redirect()->back()->with('success', 'Post Created');        
-
+            
     }
 
     
     protected function deleteOldImage()
     {
-      if (Auth::user()->avatar){
-        // unlink(('profile_images/' . Auth::user()->avatar));
+        
+      if (Auth::user()->avatar){        
         File::delete(Auth::user()->avatar);
         
       }
-     }
+     
+    }
 
 
     public function adminDashboard()

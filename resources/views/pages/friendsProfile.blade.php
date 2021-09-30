@@ -8,8 +8,7 @@
                     
                     <section id="user-profile-cards-with-cover-image" class="row mt-2">                       
                         <div class="col-xl-12 col-md-12 col-12">
-                            <div class="card profile-card-with-cover">
-                                <!--<img class="card-img-top img-fluid" src="../../../app-assets/images/carousel/18.jpg" alt="Card cover image">-->
+                            <div class="card profile-card-with-cover">                                
                                 <div class="card-img-top img-fluid bg-cover height-200" style="background: url({{asset('app-assets/images/carousel/wall.jpg')}});"></div>
                                 <div class="card-profile-image">
                                     <img width="140" height="140" src="{{asset($user->avatar)}}" class="rounded-circle img-border box-shadow-1" alt="Profile Picture">
@@ -90,18 +89,17 @@
                         <div class="card-content">
                             <div class="card-body my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
                                 <div class="row">
-                                @if($user->gallery_images != null)
+                               
 
-                                    @foreach(json_decode($user->gallery_images) as $key => $gallery_image)
-                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                        <a class="float-right" href=""><b><i style="color:red;" class="la la-close"></i></b></a>
-                                        <a href="{{asset($gallery_image)}}" itemprop="contentUrl" data-size="480x360">
-                                            <img width="100%" height="200px" class="img-thumbnail" src="{{asset($gallery_image)}}" itemprop="thumbnail" alt="Gallery Image" />
+                                    @foreach($user->images as $userImage)
+                                    <figure class="col-md-3 col-sm-6 col-12" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">                                        
+                                        <a href="{{asset($userImage->image_url)}}" itemprop="contentUrl" data-size="480x360">
+                                            <img width="100%" height="200px" class="img-thumbnail" src="{{asset($userImage->image_url)}}" itemprop="thumbnail" alt="Gallery Image" />
                                         </a>
                                     </figure>
                                     @endforeach
                                     
-                                @endif
+                               
                                 </div>                                                            
                             </div>
                             <!--/ Image grid -->

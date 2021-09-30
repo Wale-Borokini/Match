@@ -33,10 +33,7 @@ class CommentsController extends Controller
        $comment->user_id=auth()->user()->id;
 
        $post->comments()->save($comment);
-
-        // $post->addComment($request->comment);
-
-        // $posts->user->notify(new RepliedToThread($posts));
+    
 
         return back()->with('success', 'comment created');
     }
@@ -46,8 +43,7 @@ class CommentsController extends Controller
         $this->validate($request,[
             'comment'=>'required'
         ]);
-
-        // $comment->addComment($request->comment);
+        
         $reply = new Comment();
         $reply->comment=Purifier::clean($request->comment);
         $reply->user_id = auth()->user()->id;

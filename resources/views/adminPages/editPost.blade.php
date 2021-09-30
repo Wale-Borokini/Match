@@ -22,7 +22,6 @@
                                     <div class="card-content container">
                                         <form class="form" method="POST" action="{{ route('post.update', $post->slug) }}" enctype="multipart/form-data">
                                             @csrf
-                                            {{-- @method('PUT') --}}
                                             <div class="form-body">
                                                 <div class="row">
                                                     <div class="col-md-12">
@@ -30,10 +29,7 @@
                                                             <input type="text" id="projectinput3" class="form-control" placeholder="Post Title" name="title" value=" {{$post->title}} ">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
-                                                        {{-- <div>
-                                                            <img width="100" height="100" src="{{asset($post->image)}}" alt="Post Image">
-                                                        </div> --}}
+                                                    <div class="col-md-12">                                                        
                                                         <div class="form-group">                                                                           
                                                             <input type="file" id="projectinput3" class="form-control" name="image">                                                           
                                                         </div>

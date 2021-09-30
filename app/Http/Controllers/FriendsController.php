@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
 use App\Models\Friend;
+use App\Models\Image;
 use Auth;
 use DB;
 
@@ -14,7 +15,7 @@ use DB;
 class FriendsController extends Controller
 {
     //
-
+    
     public function addFriend($slug){
         $userCount = User::where('slug', $slug)->count();
         if($userCount>0){
@@ -63,6 +64,7 @@ class FriendsController extends Controller
         
 
     }
+    
 
     public function displaySugUser($slug)
     {
@@ -71,11 +73,9 @@ class FriendsController extends Controller
         // Define User Visibility
         $publiclyVis = 'Public';
         $privatelyVis = 'Private';
-
-        // $sugUsers = DB::select("SELECT * From users WHERE slug = $slug ");
+        
         $sugUsers = User::where('slug', $slug)->get();
-        
-        
+                
         return view('pages.displaySugUser')->with(compact('sugUsers', 'publiclyVis', 'privatelyVis'));
         
 
@@ -84,20 +84,13 @@ class FriendsController extends Controller
     public function getFriendRequests()
     {
         $title = 'Friend Requests';
-        // $friendRecv = Friend::pluck('friend_id')->all();
-        // // $friendSender = Friend::pluck('user_id')->all();
-        // $users = User::whereIn('id', $friendRecv)y
-        // ->select('name', 'avatar')->get();
-        // $friends = Friend::all();
-        // $friends = Friend::where('friend_id', '=', Auth::id())->get();
-
+        
         $users = Friend::join('users',  function ($join) {
             $join->on('friends.user_id', '=', 'users.id');
                 
         })
             ->select('users.id', 'users.name', 'users.avatar', 'users.slug', 'users.alias', 'users.bio')
-            ->where(['friends.friend_id'=>Auth::id(), 'friends.accept'=> 0])
-            // ->where('friends.accept', 0)
+            ->where(['friends.friend_id'=>Auth::id(), 'friends.accept'=> 0])            
             ->get();
         
             $countRequest = count($users);
@@ -110,10 +103,10 @@ class FriendsController extends Controller
     public function getFriendsList()
     {
         $title = 'Friends';
-        // $user_id = Auth::user()->id;
-
-        $users = DB::select("SELECT * from users WHERE id != " . Auth::id() . " AND id IN ( SELECT friend_id from friends WHERE user_id = " . Auth::id() . " AND accept = 1 ) OR id IN ( SELECT user_id from friends WHERE friend_id = " . Auth::id() . " AND accept =1 ) ORDER BY name ASC" );
+        
+        $users = DB::select("SELECT name, avatar, bio, slug, alias  from users WHERE id != " . Auth::id() . " AND id IN ( SELECT friend_id from friends WHERE user_id = " . Auth::id() . " AND accept = 1 ) OR id IN ( SELECT user_id from friends WHERE friend_id = " . Auth::id() . " AND accept =1 ) ORDER BY name ASC" );
         $friendCount = count($users);
+
         return view('pages.friends')->with(compact('users', 'title', 'friendCount'));
         
 
@@ -123,44 +116,44 @@ class FriendsController extends Controller
     public function acceptFriendRequest($sender_slug)
     {
         
-        $receiver_id = Auth::user()->id;
-        // $sender_id = Friend::select('user_id')->where('friend_id', $receiver_id)->first();
+        $receiver_id = Auth::user()->id;        
         Friend::where(['user_slug'=> $sender_slug, 'friend_id'=>$receiver_id])->update(['accept'=>1]);
-        // return redirect()->back()->with('Succexxful');
+
         return redirect()->back()->with('success', 'Friend Request Accepted');
         
     }
 
+
     public function rejectFriendRequest($sender_slug)
     {
         
-        $receiver_id = Auth::user()->id;
-        // $sender_id = Friend::select('user_id')->where('friend_id', $receiver_id)->first();
-        Friend::where(['user_slug'=> $sender_slug, 'friend_id'=>$receiver_id])->delete();
-        // return redirect()->back()->with('Succexxful');
+        $receiver_id = Auth::user()->id;        
+        Friend::where(['user_slug'=> $sender_slug, 'friend_id'=>$receiver_id])->delete();        
 
         return redirect()->back()->with('error', 'Friend Request Rejected');
     }
+
 
     public function deleteFriend(Friend $friend, $slug)
     {
         $userId = Auth::user()->id;
         $friendCount = Friend::where(['user_slug'=>$slug, 'friend_id'=>$userId, 'accept'=> 1])->count();
         $friendOfCount = Friend::where(['user_id'=>$userId, 'friend_slug'=>$slug, 'accept'=> 1])->count();
-        // Friend::where(['user_slug'=> $slug, 'friend_id'=>$userId, 'accept'=> 1])
-        //         ->orWhere(['friend_slug'=> $slug, 'user_id'=>$userId, 'accept'=> 1])->delete();
+        
         if($friendCount>0){
-            // $user = User::find($slug);
+            
             Friend::where(['user_slug'=>$slug, 'friend_id'=>$userId, 'accept'=> 1])->delete();
             
         }elseif($friendOfCount >0){
-            // $user = User::find($slug);
+            
             $friendOfCount = Friend::where(['user_id'=>$userId, 'friend_slug'=>$slug, 'accept'=> 1])->delete();
             
         }
 
         return redirect()->route('friends')->with('error', 'Friend Deleted');
+
     }
+
 
     public function viewProfile($name)
     {
@@ -174,7 +167,6 @@ class FriendsController extends Controller
                 $friend_id = User::getUserId($name);
                 $friendCount = Friend::where(['user_id'=>$user_id, 'friend_id'=>$friend_id])->count();
                 if($friendCount>0){
-
 
                 }
             }else{
@@ -190,17 +182,19 @@ class FriendsController extends Controller
     public function viewFriendProfile($slug)
     {
         $title = 'Profile';
+                        
 
             // Check if the user is friend or not
             $user_id = Auth::id();
             $friendCount = Friend::where(['user_slug'=>$slug, 'friend_id'=>$user_id, 'accept'=> 1])->count();
             $friendOfCount = Friend::where(['user_id'=>$user_id, 'friend_slug'=>$slug, 'accept'=> 1])->count();
-            if($friendCount>0){
-                // $user = User::find($slug);
+
+            if($friendCount>0){ 
+
                 $user = User::where('slug', $slug)->firstOrFail();
                 
             }elseif($friendOfCount >0){
-                // $user = User::find($slug);
+
                 $user = User::where('slug', $slug)->firstOrFail();
                 
             }else{

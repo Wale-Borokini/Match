@@ -76,14 +76,7 @@
       }
 
       setTimeout(fade_out, 5000);
-
-      
-    // ClassicEditor
-    // .create( document.querySelector( '#body' ) )
-    // .catch( error => {
-    // console.error( error );
-    // } );
-
+          
     
     </script>
 

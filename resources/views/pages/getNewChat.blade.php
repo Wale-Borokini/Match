@@ -21,22 +21,20 @@
                                 <div class="card text-left">
                                     
                                     <div class="card-body">
-                                        
-                                        {{-- <input id="msg_from" name="msg_from" value="{{$my_id}}" placeholder="{{$my_id}}"/> --}}
+                                                                               
                                         @foreach($users as $user)
-                                        <a id="createChat" href="{{ route('makeNewChat', $user->id) }}">
-                                        {{-- <input id="msg_to" name="msg_to" value="{{$user->id}}" placeholder="{{$user->id}}" /> --}}
+                                        <a id="createChat" href="{{ route('makeNewChat', $user->slug) }}">                                        
                                                                                         
                                         <h5 class="card-title">
+                                            {{-- <i class="la la-comments"></i>  --}}
                                             <span class="avatar avatar-sm avatar"><img class="media-object rounded-circle" src=" {{asset($user->avatar)}} "
                                             alt="image"></span>
-                                            {{$user->name}}                                       
+                                            {{$user->name}}
                                         </h5>
                                         </a>
                                         @endforeach  
                                     </div>                                    
-                                    <div class="card-footer mx-auto text-center">                                                    
-                                        {{-- <a class="btn btn-outline-warning btn-min-width mr-1 mb-1" href=" {{route('friendsProfile', $user->slug)}} ">View Profile</a> --}}
+                                    <div class="card-footer mx-auto text-center">                                                                                            
                                     </div>
                                 </div>                                
                             </div>
@@ -45,11 +43,7 @@
                     </div>  
                 </section>
                     
-
             </div>
         </div>
-    </div>
-
-    
-
+    </div>    
 @endsection
