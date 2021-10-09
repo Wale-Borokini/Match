@@ -166,7 +166,7 @@ class PagesController extends Controller
                                      
             $imageNumbers = count($request->file('image_url'));
             if( $imageNumbers > 4){
-                return redirect()->back()->with('error', 'You can only upload 4 images');
+                return redirect()->back()->with('error', 'You can only upload a maximum of 4 images');
             }
 
 
@@ -212,7 +212,7 @@ class PagesController extends Controller
                 
         $user->save();
 
-        return redirect('/editProfile')->with('success', 'User Updated');
+        return redirect('/editProfile')->with('success', 'Your Information has been updated');
 
     }
 

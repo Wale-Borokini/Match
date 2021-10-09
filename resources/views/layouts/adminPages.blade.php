@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="Christian dating platform">
-    <meta name="keywords" content="Christian dating, Relationship, dating, love, marriage courtship">
+    <meta name="keywords" content="Christian dating, Relationship, dating, love, marriage, courtship">
     <meta name="author" content="Match To Be One">
     <title> {{$title}} </title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png') }}">

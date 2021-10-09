@@ -44,7 +44,7 @@ class AdminController extends Controller
     public function giveAdminRole($slug)
     {
                 
-        User::where(['slug'=> $slug, 'super_admin'=>null])->update(['admin'=>1]);
+        User::where('slug', $slug)->update(['admin'=>1]);
         return redirect()->back()->with('success', 'Role Given');
         
     }
@@ -53,9 +53,58 @@ class AdminController extends Controller
     public function removeAdminRole($slug)
     {
                 
-        User::where(['slug'=> $slug, 'super_admin'=>null])->update(['admin'=>null]);
+        User::where('slug', $slug)->update(['admin'=>null]);
         return redirect()->back()->with('success', 'Role Removed');
         
+    }
+
+    public function banUser()
+    {
+        $userId = Auth::id();
+        $title = 'Ban User';
+        $users = User::where('id', '!=', $userId)->get();
+
+        return view('adminPages.banned')->with(compact('title', 'users'));
+    }
+
+    public function getBanList()
+    {
+        $userId = Auth::id();
+        $title = 'Banned Users';
+        $users = User::where([ ['id', '!=', $userId], ['banned', '=', 1] ])->get();
+
+        return view('adminPages.bannedUsers')->with(compact('title', 'users'));
+    }
+
+    public function setBan($slug)
+    {
+                
+        User::where('slug', $slug)->update(['banned' => 1]);
+        return redirect()->back()->with('error', 'User has been banned.');
+        
+    }
+
+    public function unSetBan($slug)
+    {
+                
+        User::where('slug', $slug)->update(['banned' => null]);
+        return redirect()->back()->with('success', 'User has been Unbanned.');
+        
+    }
+
+    public function getBannedResult(Request $request){
+
+        $title = 'Search Results';
+        // Get the search value from the request
+        $search = $request->input('search');
+            
+        $users = User::query()            
+            ->where([['banned', 1], ['name', 'LIKE', "%{$search}%"]])
+            ->orWhere([['banned', 1], ['email', 'LIKE', "%{$search}%"]])
+            ->orWhere([['banned', 1], ['alias', 'LIKE', "%{$search}%"]])            
+            ->get();        
+            
+        return view('adminPages.bannedUserResult')->with(compact('users', 'title'));
     }
 
     public function viewUserProfile($slug)

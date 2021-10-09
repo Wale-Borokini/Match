@@ -211,12 +211,8 @@
                                                 </div>
                                                 <div class="form-group mt-1 mb-0 p-2">
                                                     <div class="input-group">
-                                                        <div class="mb-3">                                                                                                                
-                                                            <button id="upload_link" type="button" class="btn btn-success"><i class="la la-cloud-upload"> Select Picture(s)</i></button>
-                                                            <input id="upload" name="image_url[]" type="file" multiple/>
-                                                            @if(Request::hasfile('image_url'))
-                                                            <p>Images selected</p>
-                                                            @endif
+                                                        <div class="mb-3">                                                                                                                                                                            
+                                                            <input name="image_url[]" type="file" multiple/>                                                            
                                                         </div>                                                    
                                                     </div>                                                 
                                                 </div>                                                                                
@@ -267,15 +263,7 @@
                 toolbar: []
                 });
             }
-
-            $(function(){
-                $("#submitForm").on('click', function(){
-                var $fileUpload = $("input[type='file']");
-                if (parseInt($fileUpload.get(0).files.length) > 4){
-                    alert("You are only allowed to upload a maximum of 4 images");
-                }
-                });
-            });
+           
         
         </script>
     @endsection

@@ -140,17 +140,17 @@ Route::group([ 'middleware' => ['auth']], function() {
         'uses' => 'App\Http\Controllers\ChatController@sendMessage'
     ])->name('msg.send');
     
-    Route::get('mobileUserDetails/{id}', [
+    Route::get('mobileUserDetails/{slug}', [
         'uses' => 'App\Http\Controllers\ChatController@mobileUserDetails'
     ])->name('mobile.details');
 
-    Route::get('/message/{id}', [
+    Route::get('/message/{slug}', [
         'uses' => 'App\Http\Controllers\ChatController@getMessage',    
     ])->name('message');
 
-    Route::get('/message/{id}', [
-        'uses' => 'App\Http\Controllers\ChatController@getMessage',    
-    ])->name('message');
+    // Route::get('/message/{id}', [
+    //     'uses' => 'App\Http\Controllers\ChatController@getMessage',    
+    // ])->name('message');
 
     Route::get('/displaySugUser/{slug}', [
         'uses' => 'App\Http\Controllers\FriendsController@displaySugUser',    
@@ -192,6 +192,30 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
     Route::get('/viewUsers', [
         'uses' => 'App\Http\Controllers\AdminController@viewUsers',        
     ])->name('viewUsers');
+
+    Route::get('/banUser', [
+        'uses' => 'App\Http\Controllers\AdminController@banUser'
+    ])->name('banUser');
+
+    Route::get('setBan/{slug}', [
+        'uses' => 'App\Http\Controllers\AdminController@setBan',        
+    ])->name('setBan');
+
+    Route::get('unsetBan/{slug}', [
+        'uses' => 'App\Http\Controllers\AdminController@unsetBan',
+    ])->name('unsetBan');
+
+    // Route::get('/bannedSearch', [
+    //     'uses' => 'App\Http\Controllers\AdminController@bannedSearch'
+    // ])->name('banned.search');
+
+    Route::get('bannedUsersResults', [
+        'uses' => 'App\Http\Controllers\AdminController@getBannedResult'
+    ])->name('bannedUsersSearch');
+
+    Route::get('banList', [
+        'uses' => 'App\Http\Controllers\AdminController@getBanList'
+    ])->name('banList');
 
     Route::get('/viewUsers/action', 'App\Http\Controllers\AdminController@action')->name('viewUsers.action');
 

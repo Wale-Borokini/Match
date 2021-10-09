@@ -46,13 +46,19 @@
 
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script> --}}
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/30.0.0/ckeditor.min.js"></script> --}}
+    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script> --}}
+    
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
     <!-- END PAGE VENDOR JS-->
     <!-- BEGIN MODERN JS-->
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
     <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script>
     <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
     <!-- END MODERN JS-->
@@ -68,7 +74,10 @@
       var user_selected_mobile = "";   
       var receiver_id = '';
       var my_id = "{{ Auth::id() }}";
+      var my_slug = "{{ Auth::user()->slug }}";
+      var myEditor = ""; 
       $(document).ready(function () {
+
           // ajax setup for csrf token
           $.ajaxSetup({
               headers: {
@@ -89,46 +98,26 @@
               
   
           var channelFetch = pusher.subscribe('fetch-chats');
-          channelFetch.bind('fetch-users', function() {
-          
-              //users;
-              
-              
+          channelFetch.bind('fetch-users', function() {                                                    
       
           });
-  
-          
-            //   $.ajax({
-            //       type:"get",
-            //       url: "userslist", //need to create their route
-            //       data: "",
-            //       cache: false,
-            //       success: function (data) {
-            //           $('#userslist').html(data);
-                    //   });
-                    
-
+                                            
                     getUserMessageBox(null);
              
            
           var channel = pusher.subscribe('my-channel');
               channel.bind('message-sent', function(data) {
-            //   alert(JSON.stringify(data.datas));
+              //alert(JSON.stringify(data.datas));
               if (my_id == data.datas.from) {
-                  $('#' + data.datas.to).click();
-              } else if (my_id == data.datas.to) {
-                  if (receiver_id == data.datas.from) {
+                  $('#' + data.datas.to_slug).click();
+              } else if (my_slug == data.datas.to_slug) {
+                  if (receiver_id == data.datas.from_slug) {
                       //If receiver is selected, reload the selected user..
-                      $('#' + data.datas.from).click();
+                      $('#' + data.datas.from_slug).click();
                   } else {
                       // if receiver is not seleted, add notification for that user
-                      var pending = parseInt($('#' + data.datas.from).find('.pending').html());
-  
-                    //   if (pending) {
-                    //       $('#' + data.datas.from).find('.pending').html(pending + 1);
-                    //   } else {
-                    //       $('#' + data.datas.from).append('<span class="pending">1</span>');
-                    //   }
+                      var pending = parseInt($('#' + data.datas.from_slug).find('.pending').html());
+
                   }
               }
   
@@ -143,27 +132,23 @@
   
           //
   
-          $(document).on('click', '#sendMess', function (e) {              
-              var message = $('#body').val();
+          $(document).on('click', '#sendMess', function (e) { 
+           
+              // var message = $('#body').val();
+              // console.log('our value', CKEDITOR.instances['editor'].getData())           
+              message = $("#myform textarea[name=message]").val();                     
               var image = document.querySelector('#myform input[name=image]');
               // Creating an instance of FormData to submit the form.
               var formData = new FormData();
+                        
 
-              formData.append('message', $("#myform textarea[name=message]").val());
+              formData.append('message', myEditor.getData());
               formData.append('image', image.files[0]);
               formData.append('receiver_id', receiver_id);
-            //   var image = $('#upload').val();
-              //var submit = $(this).val();
-              // message != '' && 
+
               // Check if enter key is pressed and mesage is not null also if receiver is selected
-              if (receiver_id != '' && message != '' || image.value.length != 0) {
-                // alert(receiver_id);
-                 // $('#textMessage').val(''); //When pressed text box will be empty
-  
-                //   var datastr = "receiver_id=" + receiver_id + "&message=" + message + "&image=" + image;
-                
-               
-                
+              if (receiver_id != '' && myEditor.getData() != '' || image.value.length != 0) {                
+                                               
                 // Disable SendMessage Button onClick
                 $("#sendMess").prop('disabled', true);
 
@@ -177,7 +162,7 @@
                       processData: false,
                       success: function (data) {
                         $("#sendMess").prop('disabled', false);
-                            $('#' + receiver_id + '_message').text($("#myform input[name=message]").val())
+                            $('#' + receiver_id + '_message').text($("#myform textarea[name=message]").val())
                       },
                       error: function (jqXHR, status, err) {
                       },
@@ -204,18 +189,21 @@
           }, 50);
       }
 
-      $('.user').click(function (){     
+
+      $('.user').click(function (){ 
+        var ww = $(window).width();
+            if (ww < 500) {
+              $("#userslist").hide();
+            }    
     
         receiver_id = $(this).attr('id');
      
         getUserMessageBox(receiver_id);
+
       });
 
-      function getUserMessageBox(value){     
-           var ww = $(window).width();
-            if (ww < 500) {
-              $("#userslist").hide();
-            }
+
+      function getUserMessageBox(value){               
               
               $('.user').removeClass('active');
               $(this).addClass('active');
@@ -250,14 +238,14 @@
               let newData = JSON.parse(data);
               let userImage = newData.UserPicture.includes('http') ? newData.UserPicture : '/match/public/' + newData.UserPicture;
                 $('#mobileUserImage').attr('src', userImage);
-
       
                 $('#mobileUserFullName').text(newData.FullName);
             }
         });
       }
-  
+        
          
   </script>
-  </body>
+
+</body>
 </html>

@@ -5,41 +5,42 @@
         <div class="content-wrapper give-min-ht">
         <div class="content-body container">
             <section id="pagination">
-                @if(Auth::user()->alias !== Null && Auth::user()->avatar !== 'noimage.png' && Auth::user()->work !== Null && 
-                Auth::user()->education !== Null && Auth::user()->bio !== Null && Auth::user()->visibility !== Null && 
-                Auth::user()->sex !== Null && Auth::user()->age !== Null && Auth::user()->country !== Null && Auth::user()->state !== Null)
+                @if($lgnUser->alias !== Null && $lgnUser->avatar !== 'noimage.png' && $lgnUser->work !== Null && 
+                $lgnUser->education !== Null && $lgnUser->bio !== Null && $lgnUser->visibility !== Null && 
+                $lgnUser->sex !== Null && $lgnUser->age !== Null && $lgnUser->country !== Null && $lgnUser->state !== Null)
                     <div class="row">
                         <div class="col-md-8 overflow-exp-chat">
                             <div class="row match-height">
                                 @foreach($users as $user)
-                                
-                                    <div id="autoView" class="col-xl-4 col-md-6 col-sm-12">
-                                        <div class="card userSug" id="{{$user->slug}}">
-                                            <div class="card-content">
-                                            <img class="card-img-top img-respx" src="{{ $user->avatar }}" alt="Image">
-                                            <div class="card-body">
-                                                @if($user->visibility == $publiclyVis)
-                                                    <h4 class="card-title">{{ $user->name }}</h4>
-                                                @elseif($user->visibility == $privatelyVis)
-                                                    <h4 class="card-title">{{ $user->alias }}</h4>
-                                                @else
-                                                    <h4 class="card-title">{{ $user->name }}</h4>
-                                                @endif                                         
-                                                    <div class="text-center d-lg-none">
-                                                        @if($user->state && $user->country != Null)
-                                                        <div class="badge text-center mb-1 badge-pill badge-success">{{$user->state}}, {{$user->country}}</div>
-                                                        @else
-                                                        <div class="badge text-center mb-1 badge-pill badge-success"></div>
-                                                        @endif
-                                                        <div>                                                                                                
-                                                            <a href="{{ route('addFriend', $user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
-                                                        </div>
-                                                    </div> 
-                                            </div>
+
+                                    @if(!$user->banned)
+                                        <div id="autoView" class="col-xl-4 col-md-6 col-sm-12">
+                                            <div class="card userSug" id="{{$user->slug}}">
+                                                <div class="card-content">
+                                                <img class="card-img-top img-respx" src="{{ $user->avatar }}" alt="Image">
+                                                <div class="card-body">
+                                                    @if($user->visibility == $publiclyVis)
+                                                        <h4 class="card-title">{{ $user->name }}</h4>
+                                                    @elseif($user->visibility == $privatelyVis)
+                                                        <h4 class="card-title">{{ $user->alias }}</h4>
+                                                    @else
+                                                        <h4 class="card-title">{{ $user->name }}</h4>
+                                                    @endif                                         
+                                                        <div class="text-center d-lg-none">
+                                                            @if($user->state && $user->country != Null)
+                                                            <div class="badge text-center mb-1 badge-pill badge-success">{{$user->state}}, {{$user->country}}</div>
+                                                            @else
+                                                            <div class="badge text-center mb-1 badge-pill badge-success"></div>
+                                                            @endif
+                                                            <div>                                                                                                
+                                                                <a href="{{ route('addFriend', $user->slug) }}" class="btn btn-success btn-md rounded-circle"><i class="la la-heart"></i></a>
+                                                            </div>
+                                                        </div> 
+                                                </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                
+                                    @endif
                                 @endforeach
 
                             </div>

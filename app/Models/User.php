@@ -122,6 +122,6 @@ class User extends Authenticatable
         
         return $this->super_admin;
     }
-
+    
     
 }

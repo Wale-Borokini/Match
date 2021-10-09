@@ -57,10 +57,10 @@ class FriendsController extends Controller
         // Define User Visibility
         $publiclyVis = 'Public';
         $privatelyVis = 'Private';
-
-        $users = DB::select("SELECT id, avatar, visibility, alias, name, slug, state, country from users WHERE id != " . Auth::id() . " AND id NOT IN ( SELECT friend_id from friends WHERE user_id = " . Auth::id() . " ) AND id NOT IN ( SELECT user_id from friends WHERE friend_id = " . Auth::id() . " ) ");
+        $lgnUser = Auth::user();
+        $users = DB::select("SELECT id, avatar, visibility, alias, name, slug, state, country, banned from users WHERE id != " . Auth::id() . " AND id NOT IN ( SELECT friend_id from friends WHERE user_id = " . Auth::id() . " ) AND id NOT IN ( SELECT user_id from friends WHERE friend_id = " . Auth::id() . " ) ");
         
-        return view('pages.explore')->with(compact('users', 'title', 'publiclyVis', 'privatelyVis'));
+        return view('pages.explore')->with(compact('users', 'lgnUser', 'title', 'publiclyVis', 'privatelyVis'));
         
 
     }

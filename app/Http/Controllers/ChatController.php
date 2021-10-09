@@ -16,6 +16,7 @@ use Pusher\Pusher;
 use App\Events\MessageSent;
 use App\Events\MessageDelivered;
 use App\Events\FetchUsers;
+use Purifier;
 
 class ChatController extends Controller
 {
@@ -36,7 +37,7 @@ class ChatController extends Controller
         $title = 'New Chat';
         // $my_id = Auth::user()->id;
 
-        $users = DB::select("SELECT * from users WHERE id != " . Auth::id() . " AND id IN ( SELECT friend_id from friends WHERE user_id = " . Auth::id() . " AND accept = 1 ) OR id IN ( SELECT user_id from friends WHERE friend_id = " . Auth::id() . " AND accept =1 ) ORDER BY name ASC" );
+        $users = DB::select("SELECT id, slug, name, email, avatar, alias from users WHERE id != " . Auth::id() . " AND id IN ( SELECT friend_id from friends WHERE user_id = " . Auth::id() . " AND accept = 1 ) OR id IN ( SELECT user_id from friends WHERE friend_id = " . Auth::id() . " AND accept =1 ) ORDER BY name ASC" );
         return view('pages.getNewChat')->with(compact('users', 'title'));
         
 
@@ -64,7 +65,7 @@ class ChatController extends Controller
 
             $datas->save();
 
-        return redirect()->route('chat', ['xDFoPW'=> $recvId]);
+        return redirect()->route('chat', ['xDFoPW'=> $toSlug]);
         }
         
     }
@@ -80,11 +81,11 @@ class ChatController extends Controller
                 })
                 
                     ->select('messages.id', 'messages.msg_from','messages.is_read', 'messages.msg_to', 'messages.message',
-                     'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar')                    
+                     'messages.created_at', 'users.id', 'users.slug', 'users.name', 'users.email', 'users.avatar')                    
                     ->where('messages.msg_from', Auth::id())
                     ->orWhere('messages.msg_to', Auth::id())
                     ->groupBy('messages.id', 'messages.msg_from', 'messages.msg_to', 'messages.is_read', 'messages.message',
-                    'messages.created_at', 'users.id', 'users.name', 'users.email', 'users.avatar')
+                    'messages.created_at', 'users.id', 'users.slug', 'users.name', 'users.email', 'users.avatar')
                     ->orderBy('messages.created_at', 'desc')
                     ->get()
                     ->unique('id');
@@ -102,19 +103,24 @@ class ChatController extends Controller
     {
         $my_id = Auth::id();
         // $to = $request->receiver_id;
+        $recvId = User::getUserIdMs($user_id);
                 
 
-        $checkIfFriend = Friend::where([ ['user_id', '=', $my_id], ['friend_id', '=', $user_id], ['accept', '=', 1] ])->orWhere([['friend_id', '=', $my_id], ['user_id', '=', $user_id], ['accept', '=', 1]])->exists();
+        $checkIfFriend = Friend::where([ ['user_id', '=', $my_id], ['friend_slug', '=', $user_id], ['accept', '=', 1] ])
+        ->orWhere([['friend_id', '=', $my_id], ['user_slug', '=', $user_id], ['accept', '=', 1]])->exists();
 
         // Make read all unread message
-        Message::where(['msg_from' => $user_id, 'msg_to' => $my_id])->update(['is_read' => 1]);
+        Message::where(['from_slug' => $user_id, 'msg_to' => $my_id])->update(['is_read' => 1]);
 
         // Getting all messages For selected user
-        $messages = Message::where(function ($query) use ($user_id, $my_id) {
-            $query->where('msg_from', $user_id)->where('msg_to', $my_id);
-        })->oRwhere(function ($query) use ($user_id, $my_id) {
-            $query->where('msg_from', $my_id)->where('msg_to', $user_id);
+        $messages = Message::where(function ($query) use ($recvId, $my_id) {
+            $query->where('msg_from', $recvId)->where('msg_to', $my_id);
+        })->oRwhere(function ($query) use ($recvId, $my_id) {
+            $query->where('msg_from', $my_id)->where('msg_to', $recvId);
         })->get();
+
+        
+        
 
         return view('messages.index')->with(compact('messages', 'checkIfFriend'));
 
@@ -122,7 +128,7 @@ class ChatController extends Controller
 
     public function mobileUserDetails($user_id)
     {
-        $mobileUser = User::where('id', $user_id)->first();
+        $mobileUser = User::where('slug', $user_id)->first();
 
 
         $ovbject = new stdClass;
@@ -137,11 +143,11 @@ class ChatController extends Controller
     {
         
         $from = Auth::id();
-        $to = $request->receiver_id;
-        $message = $request->message;
+        $toSlug = $request->receiver_id;
+        $message = Purifier::clean($request->message);
 
         $fromSlug = Auth::user()->slug;
-        $toSlug = User::where('id', $to)->pluck('slug')->first();
+        $to = User::where('slug', $toSlug)->pluck('id')->first();
 
         $datas = new Message();
         $datas->msg_from = $from;
@@ -168,7 +174,7 @@ class ChatController extends Controller
         $datas->save();
 
         
-        $datas = ['from' => $from, 'to' => $to];
+        $datas = ['from' => $from, 'to' => $to, 'to_slug' => $toSlug, 'from_slug' => $fromSlug];
         event(new MessageSent($datas));
 
     }

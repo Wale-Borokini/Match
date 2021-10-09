@@ -70,7 +70,18 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+    
     <script>
+
+        ClassicEditor
+        .create( document.querySelector( '#body' ), {
+            toolbar: ['bold', 'italic', 'link', 'undo', 'redo', 'numberedList', 'bulletedList']
+        } )        
+        .catch( error => {
+            console.error( error );
+        } );
 
          function toggleCheck(){
             $('#category-img').toggleClass('hidden');

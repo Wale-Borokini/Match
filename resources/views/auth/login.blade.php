@@ -49,6 +49,14 @@
                                                 <h1 class="crt-acc"><b>Log in</b></h1>                                                
                                                 <p><a class="text-link-orange" href="{{ route('password.update') }}">Forgot Password?</a></p>                                                
                                             </div>
+
+                                            {{-- Error Message Div --}}
+                                            @if(session('banned_error'))
+                                                <div class="msgsdiv col-12 alert alert-danger text-center mt-1">
+                                                    <h5 class="text-white"><b>{{session('banned_error')}}</b></h5>
+                                                </div>
+                                            @endif
+                                            {{-- Error Message Div --}}
                                             
                                         </div>
                                         <div class="card-content container">

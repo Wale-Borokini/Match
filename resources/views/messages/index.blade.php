@@ -3,11 +3,12 @@
     <div class="card text-center d-lg-none">
         <div class="text-center">
             <img width="30" height="30" class="media-object rounded-circle" id="mobileUserImage" src="" alt="image">
-        </div>
+        </div>        
         <h5 class="card-title" id="mobileUserFullName">
             <span class="avatar avatar-sm avatar">               
-            </span>            
-        </h5>        
+            </span>                     
+        </h5>      
+        <a href="#">Chats</a>  
     </div>
     <div class="overflow-class-chat">
         <div class="content-body">            
@@ -23,7 +24,7 @@
                             <div class="chat-body">
                                 <div class="chat-content">
                                 @if($message->message !== null)
-                                    <p>{{ $message->message }}</p>
+                                    <p>{!! $message->message !!}</p>
                                 @endif
                                 </div>
                                 <div>
@@ -104,18 +105,17 @@
                 <form  method="POST" enctype="multipart/form-data" id="myform">
                     @csrf
                     <div class="chat-app-input d-flex">
-                        <fieldset class="form-group position-relative has-icon-left col-10 m-0">
-                            <div class="form-control-position">
-                            <i class="icon-emoticon-smile"></i>
+                        <fieldset class="form-group position-relative has-icon-left col-9 m-0">
+                            <div class="form-control-position">                            
                             </div>
-                            <textarea class="form-control" name="message" id="body" class="submit" placeholder="Type your message" autocomplete="on"></textarea>
+                            <textarea class="form-control"  name="message" id="editor" class="submit" placeholder="Type your message" autocomplete="on"></textarea>
                             <input id="receiver_id" name="receiver_id" type="hidden"/>
                             <div class="form-control-position control-position-right">
                             <input id="upload" name="image" type="file"/>
                             <i class="ft-image" id="upload_link" onclick="toggleCheck()"></i>
                             </div>
                         </fieldset>
-                        <fieldset class="form-group position-relative has-icon-left col-2 m-0">
+                        <fieldset class="form-group position-relative has-icon-left col-3 m-0">
                             <button type="button" class="btn btn-info" id="sendMess"><i class="la la-paper-plane-o"></i> <span class="d-none d-lg-block"></span></button>
                         </fieldset>
                     </div>
@@ -130,12 +130,34 @@
         </div>
     </div>
 </div>
+
 <script src="{{ asset('app-assets/vendors/js/gallery/masonry/masonry.pkgd.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe.min.js') }}"></script>
 <script src="{{ asset('app-assets/vendors/js/gallery/photo-swipe/photoswipe-ui-default.min.js') }}"></script>
 <script src="{{ asset('app-assets/js/scripts/gallery/photo-swipe/photoswipe-script.js')}}"></script>
 <script>
 
+        // $(document).ready(function () {
+        //     .create( document.querySelector( '#editor' ), {
+        //         toolbar: [ 'bold', 'italic', 'link', 'undo', 'redo', 'numberedList', 'bulletedList' ]
+        //     } )
+        //     .catch( error => {
+        //         console.log( error );
+        //     } );
+
+        // });
+
+        ClassicEditor
+        .create( document.querySelector( '#editor' ), {
+            toolbar: []
+        } )
+        .then( editor => {            
+            myEditor = editor;                        
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+        
         function toggleCheck(){
             $('#category-img-tag').toggleClass('hidden');
         }
@@ -164,15 +186,3 @@
     });
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-    

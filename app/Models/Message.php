@@ -13,7 +13,8 @@ class Message extends Model
 {
     
     use HasFactory;
-    protected $fillable = ['msg_from', 'msg_to', 'message', 'is_read', 'image'];
+
+    protected $fillable = ['msg_from', 'msg_to', 'message', 'is_read', 'image', 'from_slug', 'to_slug'];
 
     
 }

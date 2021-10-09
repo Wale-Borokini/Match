@@ -3,7 +3,7 @@
 @section('content')
     <div class="app-content content">
         <div class="content-body">
-        <div class="container mt-5"> 
+        <div class="container mt-5">
             <div class="row">
                 <div class="col-xl-4 col-lg-6 col-12">
                     <div class="card bg-gradient-directional-danger">
@@ -102,7 +102,7 @@
                 </div>  
                 @if(Auth::user()->super_admin)             
                     <div class="col-xl-3 col-lg-6 col-12">
-                        <a href="">
+                        <a href="{{route('adminRole')}}">
                         <div class="card pull-up">
                             <div class="card-content">
                                 <div class="card-body">
@@ -120,6 +120,24 @@
                         </a>
                     </div>
                 @endif
+                <div class="col-xl-3 col-lg-6 col-12">
+                    <a href="{{route('banUser')}}">
+                    <div class="card pull-up">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <div>
+                                        <i class="icon-close danger font-large-2"></i>
+                                    </div>
+                                    <div class="media-body text-center mt-1">                                        
+                                        <h6><b>Ban User</b></h6>
+                                    </div>                                    
+                                </div>                              
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
                  <!-- Row For Cards Start -->
             </div> <!-- Row For Cards End -->
                 {{-- Dashboard Table --}}                                                                    
